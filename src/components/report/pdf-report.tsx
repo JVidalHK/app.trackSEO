@@ -297,4 +297,3 @@ function LhBox({ label, data }: { label: string; data: any }) {
   );
 }
 
-export { PdfReport };
