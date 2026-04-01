@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: "grid" },
+  { href: "/dashboard", label: "+ New Report", icon: "grid" },
   { href: "/dashboard/reports", label: "My reports", icon: "list" },
   { href: "/dashboard/progress", label: "Progress tracker", icon: "clock" },
 ];
@@ -85,7 +85,7 @@ export function Sidebar({ user }: SidebarProps) {
         `}
       >
         {/* Logo + collapse toggle */}
-        <div className={`flex items-center px-3.5 pt-3.5 pb-2 ${collapsed ? "flex-col gap-2" : "gap-2"}`}>
+        <div className={`flex items-center px-3.5 pt-3.5 pb-5 ${collapsed ? "flex-col gap-2" : "gap-2"}`}>
           <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0">
             <defs><linearGradient id="lgSb" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
             <rect width="32" height="32" rx="7" fill="url(#lgSb)"/>
