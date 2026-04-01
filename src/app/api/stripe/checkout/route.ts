@@ -13,53 +13,71 @@ const PRICE_MAP: Record<string, { priceId: string; credits: number; package: str
   pack_20: { priceId: process.env.STRIPE_PRICE_PACK_20!, credits: 20, package: "pack_20" },
 };
 
+// Redirect GET requests back to credits page
+export async function GET(request: Request) {
+  return NextResponse.redirect(new URL("/dashboard/credits", request.url));
+}
+
 export async function POST(request: Request) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
 
-  const formData = await request.formData();
-  const pkg = formData.get("package") as string;
+    const formData = await request.formData();
+    const pkg = formData.get("package") as string;
 
-  const config = PRICE_MAP[pkg];
-  if (!config) {
-    return NextResponse.json({ error: "Invalid package" }, { status: 400 });
-  }
+    const config = PRICE_MAP[pkg];
+    if (!config || !config.priceId) {
+      console.error("Stripe checkout: invalid package or missing price ID", { pkg, priceId: config?.priceId });
+      return NextResponse.redirect(new URL("/dashboard/credits?error=invalid_package", request.url));
+    }
 
-  // Create a pending purchase record
-  const serviceClient = createServiceClient();
-  const { data: purchase } = await serviceClient.from("credit_purchases").insert({
-    user_id: user.id,
-    package: config.package,
-    credits_added: config.credits,
-    amount_cents: 0, // Will be updated by webhook with actual amount (may include tax)
-    status: "pending",
-  }).select("id").single();
-
-  // Create Stripe Checkout Session
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    line_items: [{ price: config.priceId, quantity: 1 }],
-    customer_creation: "always",
-    customer_email: user.email || undefined,
-    metadata: {
+    // Create a pending purchase record
+    const serviceClient = createServiceClient();
+    const { data: purchase } = await serviceClient.from("credit_purchases").insert({
       user_id: user.id,
-      credits: String(config.credits),
       package: config.package,
-      purchase_id: purchase?.id || "",
-    },
-    payment_method_types: ["card"],
-    payment_method_options: {
-      card: { request_three_d_secure: "any" },
-    },
-    automatic_tax: { enabled: true },
-    tax_id_collection: { enabled: true },
-    expires_at: Math.floor(Date.now() / 1000) + 1800, // 30 minutes
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?success=true&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?canceled=true`,
-  });
+      credits_added: config.credits,
+      amount_cents: 0,
+      status: "pending",
+    }).select("id").single();
 
-  return NextResponse.redirect(session.url!, 303);
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.trackseo.pro";
+
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [{ price: config.priceId, quantity: 1 }],
+      customer_creation: "always",
+      customer_email: user.email || undefined,
+      metadata: {
+        user_id: user.id,
+        credits: String(config.credits),
+        package: config.package,
+        purchase_id: purchase?.id || "",
+      },
+      payment_method_types: ["card"],
+      payment_method_options: {
+        card: { request_three_d_secure: "any" },
+      },
+      automatic_tax: { enabled: true },
+      tax_id_collection: { enabled: true },
+      expires_at: Math.floor(Date.now() / 1000) + 1800,
+      success_url: `${appUrl}/dashboard/credits?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${appUrl}/dashboard/credits?canceled=true`,
+    });
+
+    if (!session.url) {
+      console.error("Stripe checkout: no session URL returned");
+      return NextResponse.redirect(new URL("/dashboard/credits?error=stripe_error", request.url));
+    }
+
+    return NextResponse.redirect(session.url, 303);
+  } catch (err) {
+    console.error("Stripe checkout error:", err);
+    return NextResponse.redirect(new URL("/dashboard/credits?error=checkout_failed", request.url));
+  }
 }
