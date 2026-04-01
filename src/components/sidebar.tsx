@@ -76,8 +76,8 @@ export function Sidebar({ user }: SidebarProps) {
           ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
-        {/* Logo */}
-        <div className="flex items-center gap-2 px-3.5 pt-3.5 pb-2">
+        {/* Logo + collapse toggle */}
+        <div className={`flex items-center px-3.5 pt-3.5 pb-2 ${collapsed ? "flex-col gap-2" : "gap-2"}`}>
           <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0">
             <defs><linearGradient id="lgSb" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
             <rect width="32" height="32" rx="7" fill="url(#lgSb)"/>
@@ -85,21 +85,19 @@ export function Sidebar({ user }: SidebarProps) {
             <path d="M20 11L24 11L24 15" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           {!collapsed && (
-            <span className="text-sm font-medium text-text-primary">
+            <span className="text-sm font-medium text-text-primary flex-1">
               Track<span className={theme === "dark" ? "text-[#06B6D4]" : "text-[#2563EB]"} style={{ fontWeight: 600 }}>SEO</span>
             </span>
           )}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="hidden md:flex w-7 h-7 rounded-md border border-border items-center justify-center hover:bg-surface-hover transition-colors flex-shrink-0"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className={`transition-transform ${collapsed ? "rotate-180" : ""}`}>
+              <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
-
-        {/* Collapse toggle */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:flex mx-3.5 mb-2 w-7 h-7 rounded-md border border-border items-center justify-center hover:bg-surface-hover transition-colors"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className={`transition-transform ${collapsed ? "rotate-180" : ""}`}>
-            <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
 
         {/* Nav */}
         <nav className="flex-1 px-2 space-y-0.5">
