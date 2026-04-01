@@ -56,17 +56,18 @@ export function ProgressCharts({
 
   return (
     <div>
-      {domains.length > 1 && (
+      <div className="flex items-center gap-3 mb-5">
+        <label className="text-sm text-text-secondary whitespace-nowrap">Select your page:</label>
         <select
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
-          className="mb-4 h-8 px-2 text-sm bg-surface border border-border rounded-lg"
+          className="flex-1 max-w-xs h-9 px-3 text-sm bg-surface border border-border rounded-lg focus:border-accent focus:outline-none"
         >
           {domains.map((d) => (
             <option key={d} value={d}>{d}</option>
           ))}
         </select>
-      )}
+      </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
