@@ -1,5 +1,17 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
+
+export const runtime = "nodejs";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+const PRICE_MAP: Record<string, { priceId: string; credits: number; package: string }> = {
+  single_1: { priceId: process.env.STRIPE_PRICE_SINGLE!, credits: 1, package: "single_1" },
+  pack_5: { priceId: process.env.STRIPE_PRICE_PACK_5!, credits: 5, package: "pack_5" },
+  pack_10: { priceId: process.env.STRIPE_PRICE_PACK_10!, credits: 10, package: "pack_10" },
+  pack_20: { priceId: process.env.STRIPE_PRICE_PACK_20!, credits: 20, package: "pack_20" },
+};
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -10,40 +22,44 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const pkg = formData.get("package") as string;
-  const credits = parseInt(formData.get("credits") as string);
-  const amount = parseInt(formData.get("amount") as string);
 
-  if (!pkg || !credits || !amount) {
+  const config = PRICE_MAP[pkg];
+  if (!config) {
     return NextResponse.json({ error: "Invalid package" }, { status: 400 });
   }
 
-  // TODO: Create actual Stripe checkout session
-  // For now, create a pending purchase record and redirect to a placeholder
+  // Create a pending purchase record
   const serviceClient = createServiceClient();
-
-  await serviceClient.from("credit_purchases").insert({
+  const { data: purchase } = await serviceClient.from("credit_purchases").insert({
     user_id: user.id,
-    package: pkg,
-    credits_added: credits,
-    amount_cents: amount,
+    package: config.package,
+    credits_added: config.credits,
+    amount_cents: 0, // Will be updated by webhook with actual amount (may include tax)
     status: "pending",
+  }).select("id").single();
+
+  // Create Stripe Checkout Session
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [{ price: config.priceId, quantity: 1 }],
+    customer_creation: "always",
+    customer_email: user.email || undefined,
+    metadata: {
+      user_id: user.id,
+      credits: String(config.credits),
+      package: config.package,
+      purchase_id: purchase?.id || "",
+    },
+    payment_method_types: ["card"],
+    payment_method_options: {
+      card: { request_three_d_secure: "any" },
+    },
+    automatic_tax: { enabled: true },
+    tax_id_collection: { enabled: true },
+    expires_at: Math.floor(Date.now() / 1000) + 1800, // 30 minutes
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?success=true&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?canceled=true`,
   });
 
-  // Placeholder: directly add credits (replace with Stripe in production)
-  await serviceClient.rpc("add_credits", {
-    p_user_id: user.id,
-    p_amount: credits,
-  });
-
-  await serviceClient
-    .from("credit_purchases")
-    .update({ status: "completed" })
-    .eq("user_id", user.id)
-    .eq("status", "pending")
-    .order("created_at", { ascending: false })
-    .limit(1);
-
-  return NextResponse.redirect(
-    new URL("/dashboard/credits?success=true", request.url)
-  );
+  return NextResponse.redirect(session.url!, 303);
 }
