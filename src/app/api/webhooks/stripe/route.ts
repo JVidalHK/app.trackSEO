@@ -31,21 +31,69 @@ function verifySignature(payload: string, signature: string, secret: string): bo
   }
 }
 
-// Fetch receipt URL from Stripe API directly
-async function getReceiptUrl(paymentIntentId: string, stripeKey: string): Promise<{ receiptUrl: string | null; invoicePdfUrl: string | null }> {
+// Fetch full payment details from Stripe for invoice generation
+async function getPaymentDetails(paymentIntentId: string, stripeKey: string) {
+  const result = {
+    receiptUrl: null as string | null,
+    invoiceData: {} as Record<string, unknown>,
+  };
+
   try {
-    const res = await fetch(
+    // Get payment intent with charge expanded
+    const piRes = await fetch(
       `https://api.stripe.com/v1/payment_intents/${paymentIntentId}?expand[]=latest_charge`,
       { headers: { Authorization: `Bearer ${stripeKey}` } }
     );
-    const pi = await res.json();
+    const pi = await piRes.json();
     const charge = pi.latest_charge;
+
+    result.receiptUrl = charge?.receipt_url || null;
+
+    // Build invoice data from charge details
+    result.invoiceData = {
+      // Billing info
+      billing_name: charge?.billing_details?.name || null,
+      billing_email: charge?.billing_details?.email || pi.receipt_email || null,
+      billing_address: charge?.billing_details?.address || null,
+      // Card info (last 4 + brand only, never full number)
+      card_brand: charge?.payment_method_details?.card?.brand || null,
+      card_last4: charge?.payment_method_details?.card?.last4 || null,
+      card_exp_month: charge?.payment_method_details?.card?.exp_month || null,
+      card_exp_year: charge?.payment_method_details?.card?.exp_year || null,
+      // Payment details
+      amount: charge?.amount || pi.amount || 0,
+      amount_refunded: charge?.amount_refunded || 0,
+      currency: charge?.currency || pi.currency || "usd",
+      payment_intent_id: paymentIntentId,
+      charge_id: charge?.id || null,
+      paid_at: charge?.created ? new Date(charge.created * 1000).toISOString() : null,
+      // Tax (from checkout session total_details if available)
+      tax_amount: 0,
+      subtotal: 0,
+    };
+  } catch (err) {
+    console.error("Failed to fetch payment details:", err);
+  }
+
+  return result;
+}
+
+// Fetch checkout session for tax details
+async function getSessionTaxDetails(sessionId: string, stripeKey: string) {
+  try {
+    const res = await fetch(
+      `https://api.stripe.com/v1/checkout/sessions/${sessionId}?expand[]=total_details.breakdown`,
+      { headers: { Authorization: `Bearer ${stripeKey}` } }
+    );
+    const session = await res.json();
     return {
-      receiptUrl: charge?.receipt_url || null,
-      invoicePdfUrl: charge?.receipt_url ? `${charge.receipt_url}#pdf` : null,
+      subtotal: session.amount_subtotal || 0,
+      tax_amount: session.total_details?.amount_tax || 0,
+      total: session.amount_total || 0,
+      tax_breakdown: session.total_details?.breakdown?.taxes || [],
     };
   } catch {
-    return { receiptUrl: null, invoicePdfUrl: null };
+    return { subtotal: 0, tax_amount: 0, total: 0, tax_breakdown: [] };
   }
 }
 
@@ -95,14 +143,26 @@ export async function POST(request: Request) {
         break;
       }
 
-      // Get receipt URL
+      // Get full payment details for invoice generation
       let receiptUrl: string | null = null;
-      let invoicePdfUrl: string | null = null;
+      let invoiceData: Record<string, unknown> = {};
       if (session.payment_intent && stripeKey) {
-        const urls = await getReceiptUrl(session.payment_intent, stripeKey);
-        receiptUrl = urls.receiptUrl;
-        invoicePdfUrl = urls.invoicePdfUrl;
+        const details = await getPaymentDetails(session.payment_intent, stripeKey);
+        receiptUrl = details.receiptUrl;
+        invoiceData = details.invoiceData;
+
+        // Get tax details from session
+        const taxDetails = await getSessionTaxDetails(session.id, stripeKey);
+        invoiceData.subtotal = taxDetails.subtotal;
+        invoiceData.tax_amount = taxDetails.tax_amount;
+        invoiceData.total = taxDetails.total;
+        invoiceData.tax_breakdown = taxDetails.tax_breakdown;
       }
+
+      // Add product info to invoice data
+      invoiceData.product_name = formatPackageName(pkg);
+      invoiceData.credits = credits;
+      invoiceData.invoice_number = `INV-${Date.now().toString(36).toUpperCase()}`;
 
       const customerId = session.customer || null;
 
@@ -125,7 +185,7 @@ export async function POST(request: Request) {
         stripe_customer_id: customerId,
         stripe_event_id: event.id,
         receipt_url: receiptUrl,
-        invoice_pdf_url: invoicePdfUrl,
+        invoice_data: invoiceData,
       };
 
       if (purchaseId) {
@@ -193,4 +253,14 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ received: true });
+}
+
+function formatPackageName(pkg: string): string {
+  const map: Record<string, string> = {
+    single_1: "Single Report",
+    pack_5: "5 Report Pack",
+    pack_10: "10 Report Pack",
+    pack_20: "20 Report Pack",
+  };
+  return map[pkg] || pkg;
 }

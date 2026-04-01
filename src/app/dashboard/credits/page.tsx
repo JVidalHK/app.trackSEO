@@ -137,8 +137,8 @@ export default async function CreditsPage({
                       <StatusBadge status={p.status} />
                     </td>
                     <td className="px-4 py-2.5 text-center">
-                      {p.receipt_url ? (
-                        <Link href={p.receipt_url} target="_blank" title="Preview invoice" className="inline-block hover:scale-110 active:scale-95 transition-transform duration-150">
+                      {p.status === "completed" ? (
+                        <Link href={`/dashboard/invoice/${p.id}`} title="View invoice" className="inline-block hover:scale-110 active:scale-95 transition-transform duration-150">
                           <svg width="24" height="24" viewBox="0 0 32 32" className="inline-block">
                             <path d="M6 2h14l8 8v18a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" fill="#E8E5E0"/>
                             <path d="M20 2l8 8h-6a2 2 0 01-2-2V2z" fill="#CBC8C3"/>
@@ -156,10 +156,9 @@ export default async function CreditsPage({
                       )}
                     </td>
                     <td className="px-4 py-2.5 text-center">
-                      {p.invoice_pdf_url || p.receipt_url ? (
+                      {p.status === "completed" ? (
                         <Link
-                          href={p.invoice_pdf_url || p.receipt_url}
-                          target="_blank"
+                          href={`/dashboard/invoice/${p.id}`}
                           className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] hover:scale-105 active:scale-95 transition-all duration-150"
                           title="Download invoice PDF"
                         >
