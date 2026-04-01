@@ -139,9 +139,9 @@ export function ReportProgress({
               <stop offset="0%" stopColor="#2563EB" /><stop offset="100%" stopColor="#06B6D4" />
             </linearGradient>
           </defs>
-          <text x="65" y="65" textAnchor="middle" dominantBaseline="central" fill="#E2E8F0"
+          <text x="65" y="62" textAnchor="middle" dominantBaseline="middle" fill="#E2E8F0"
             fontFamily="system-ui" fontSize="32" fontWeight="600">{progress}%</text>
-          {!done && <text x="65" y="86" textAnchor="middle" dominantBaseline="central" fill="#64748B"
+          {!done && <text x="65" y="82" textAnchor="middle" dominantBaseline="middle" fill="#64748B"
             fontFamily="system-ui" fontSize="10">complete</text>}
         </svg>
       </div>
@@ -160,10 +160,10 @@ export function ReportProgress({
         </div>
       )}
 
-      {/* ETA */}
+      {/* Info text */}
       {!done && (
-        <div className="text-xs text-text-tertiary mt-2 mb-8 transition-opacity duration-400">
-          {eta > 0 ? `About ${eta} seconds remaining` : "Finalising..."}
+        <div className="text-xs text-text-tertiary mt-2 mb-8">
+          Reports usually take 60–90 seconds depending on the site
         </div>
       )}
 
