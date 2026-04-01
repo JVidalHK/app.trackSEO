@@ -85,7 +85,7 @@ export function InvoiceView({ purchase }: { purchase: any }) {
       </div>
 
       {/* Invoice */}
-      <div ref={invoiceRef} style={{ fontFamily: "-apple-system,system-ui,sans-serif", maxWidth: 620, margin: "0 auto", background: "#fff", borderRadius: 12, overflow: "hidden", color: "#0F172A" }}>
+      <div ref={invoiceRef} data-invoice style={{ fontFamily: "-apple-system,system-ui,sans-serif", maxWidth: 620, margin: "0 auto", background: "#fff", borderRadius: 12, overflow: "hidden", color: "#0F172A" }}>
 
         {/* Header */}
         <div style={{ padding: "32px 36px 24px", borderBottom: "2px solid #2563EB" }}>

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { DownloadInvoiceBtn } from "./download-btn";
 
 const PACKAGES = [
   { id: "single_1", name: "Single", credits: 1, price: 299, perReport: "$2.99", savings: null },
@@ -157,18 +158,7 @@ export default async function CreditsPage({
                     </td>
                     <td className="px-4 py-2.5 text-center">
                       {p.status === "completed" ? (
-                        <Link
-                          href={`/dashboard/invoice/${p.id}?download=true`}
-                          target="_blank"
-                          className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] hover:scale-105 active:scale-95 transition-all duration-150"
-                          title="Download invoice PDF"
-                        >
-                          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                            <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-                          </svg>
-                          PDF
-                        </Link>
+                        <DownloadInvoiceBtn purchaseId={p.id} />
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs text-text-tertiary opacity-25 cursor-default" title="Invoice unavailable">
                           <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
