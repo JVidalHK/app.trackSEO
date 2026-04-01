@@ -36,7 +36,6 @@ function mapProgressToStep(progress: number): number {
   if (progress <= 50) return 6;
   if (progress <= 65) return 7;
   if (progress <= 75) return 8;
-  if (progress <= 95) return 9;
   return 9;
 }
 
@@ -53,10 +52,8 @@ export function ReportProgress({
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [done, setDone] = useState(false);
   const [tipIdx, setTipIdx] = useState(0);
-  const [eta, setEta] = useState(60);
   const startTime = useRef(Date.now());
 
-  // Poll for status
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
@@ -64,10 +61,8 @@ export function ReportProgress({
         const data = await res.json();
         const newProgress = data.progress ?? 0;
         setProgress(newProgress);
-
         const newStep = mapProgressToStep(newProgress);
         if (newStep > activeStep) {
-          // Mark previous steps as completed
           setCompletedSteps((prev) => {
             const next = new Set(prev);
             for (let i = 0; i < newStep; i++) next.add(i);
@@ -75,14 +70,6 @@ export function ReportProgress({
           });
           setActiveStep(newStep);
         }
-
-        // Update ETA
-        const elapsed = (Date.now() - startTime.current) / 1000;
-        if (newProgress > 5) {
-          const estimated = (elapsed / newProgress) * (100 - newProgress);
-          setEta(Math.max(0, Math.round(estimated)));
-        }
-
         if (data.status === "completed") {
           setCompletedSteps(new Set(STEPS.map((_, i) => i)));
           setProgress(100);
@@ -90,28 +77,23 @@ export function ReportProgress({
           setDone(true);
           setTimeout(() => window.location.reload(), 2000);
         }
-
         if (data.status === "failed") {
           clearInterval(interval);
           setDone(true);
           setTimeout(() => window.location.reload(), 1000);
         }
-      } catch {
-        // Keep polling
-      }
+      } catch { /* keep polling */ }
     }, 3000);
-
     return () => clearInterval(interval);
   }, [reportId, activeStep]);
 
-  // Rotate tips
   useEffect(() => {
     const interval = setInterval(() => setTipIdx((i) => i + 1), 4500);
     return () => clearInterval(interval);
   }, []);
 
   const circumference = 2 * Math.PI * 57;
-  const offset = circumference - (progress / 100) * circumference;
+  const ringOffset = circumference - (progress / 100) * circumference;
   const STEP_H = 55;
   const trackY = 82 - activeStep * STEP_H;
 
@@ -121,35 +103,32 @@ export function ReportProgress({
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
         style={{ background: "radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, rgba(6,182,212,0.03) 40%, transparent 70%)" }} />
 
-      {/* Domain name */}
-      <div className="text-xs text-text-tertiary mb-1 tracking-wide">{/* domain shown in parent */}</div>
-
       {/* Title */}
-      {!done && <h2 className="text-xl font-semibold mb-7 transition-opacity duration-500">Generating your SEO report</h2>}
+      {!done && <h2 className="text-xl font-semibold mb-7 text-text-primary">Generating your SEO report</h2>}
 
       {/* Ring */}
       <div className={`transition-all duration-600 ${done ? "w-[100px] h-[100px]" : "w-[130px] h-[130px]"}`}>
         <svg width="100%" height="100%" viewBox="0 0 130 130">
-          <circle cx="65" cy="65" r="57" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="5" />
+          <circle cx="65" cy="65" r="57" fill="none" stroke="var(--color-border)" strokeWidth="5" />
           <circle cx="65" cy="65" r="57" fill="none" stroke="url(#ringGrad)" strokeWidth="5" strokeLinecap="round"
-            strokeDasharray={circumference} strokeDashoffset={offset}
+            strokeDasharray={circumference} strokeDashoffset={ringOffset}
             transform="rotate(-90 65 65)" style={{ transition: "stroke-dashoffset 0.8s ease-out" }} />
           <defs>
             <linearGradient id="ringGrad" x1="0" y1="0" x2="130" y2="130" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#2563EB" /><stop offset="100%" stopColor="#06B6D4" />
             </linearGradient>
           </defs>
-          <text x="65" y="62" textAnchor="middle" dominantBaseline="middle" fill="#E2E8F0"
+          <text x="65" y="62" textAnchor="middle" dominantBaseline="middle" fill="var(--color-text-primary)"
             fontFamily="system-ui" fontSize="32" fontWeight="600">{progress}%</text>
-          {!done && <text x="65" y="82" textAnchor="middle" dominantBaseline="middle" fill="#64748B"
+          {!done && <text x="65" y="82" textAnchor="middle" dominantBaseline="middle" fill="var(--color-text-tertiary)"
             fontFamily="system-ui" fontSize="10">complete</text>}
         </svg>
       </div>
 
       {/* Done state */}
       {done && (
-        <div className="text-center mt-4 animate-in" style={{ animation: "fadeIn 0.5s ease-out" }}>
-          <div className="text-xl font-semibold">Your report is ready</div>
+        <div className="text-center mt-4" style={{ animation: "fadeIn 0.5s ease-out" }}>
+          <div className="text-xl font-semibold text-text-primary">Your report is ready</div>
           <div className="text-sm text-text-tertiary mt-1">Loading your results...</div>
           <div className="flex gap-1 justify-center mt-3">
             {[0, 1, 2].map((i) => (
@@ -170,13 +149,11 @@ export function ReportProgress({
       {/* Step carousel */}
       {!done && (
         <div className="w-full max-w-[420px] h-[220px] relative overflow-hidden mb-7">
-          {/* Fade masks */}
           <div className="absolute top-0 left-0 right-0 h-[60px] z-10 pointer-events-none"
             style={{ background: "linear-gradient(to bottom, var(--color-bg), transparent)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-[60px] z-10 pointer-events-none"
             style={{ background: "linear-gradient(to top, var(--color-bg), transparent)" }} />
 
-          {/* Track */}
           <div className="absolute left-0 right-0 transition-transform duration-600"
             style={{ transform: `translateY(${trackY}px)`, transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}>
             {STEPS.map((step, i) => {
@@ -192,11 +169,10 @@ export function ReportProgress({
               return (
                 <div key={i} className={`flex items-center gap-3.5 px-5 transition-all duration-500 ${cls}`}
                   style={{ height: STEP_H }}>
-                  {/* Icon */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-400 ${
-                    isDone ? "bg-success/10 border-[1.5px] border-success"
-                    : isActive ? "bg-accent/15 border-[1.5px] border-accent"
-                    : "bg-white/[0.03] border-[1.5px] border-white/[0.06]"
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-400 border-[1.5px] ${
+                    isDone ? "bg-success/10 border-success"
+                    : isActive ? "bg-accent/15 border-accent"
+                    : "bg-border/30 border-border"
                   }`}>
                     {isDone ? (
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -206,35 +182,29 @@ export function ReportProgress({
                       <span className="w-[7px] h-[7px] rounded-full bg-accent" style={{ animation: "dotPulse 1.2s ease-in-out infinite" }} />
                     ) : (
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <circle cx="6" cy="6" r="2.5" fill="#334155" />
+                        <circle cx="6" cy="6" r="2.5" fill="var(--color-text-tertiary)" />
                       </svg>
                     )}
                   </div>
 
-                  {/* Text */}
                   <div className="flex-1 min-w-0">
                     <div className={`text-sm font-medium transition-colors duration-400 ${
-                      isDone ? "text-text-tertiary" : isActive ? "text-text-primary" : "text-[#334155]"
+                      isDone ? "text-text-tertiary" : isActive ? "text-text-primary" : "text-text-hint"
                     }`}>{step.name}</div>
                     {isDone && step.stat && (
-                      <div className="text-[11px] text-[#06B6D4] font-medium mt-0.5 transition-all duration-400">
-                        {step.stat}
-                      </div>
+                      <div className="text-[11px] text-[#06B6D4] font-medium mt-0.5">{step.stat}</div>
                     )}
                   </div>
 
-                  {/* Time / spinner */}
                   <div className="min-w-[32px] text-right">
                     {isActive && (
                       <svg className="inline-block" width="14" height="14" viewBox="0 0 14 14" fill="none"
                         style={{ animation: "spin 1s linear infinite" }}>
-                        <circle cx="7" cy="7" r="5" stroke="rgba(37,99,235,0.2)" strokeWidth="1.5" fill="none" />
+                        <circle cx="7" cy="7" r="5" stroke="var(--color-border)" strokeWidth="1.5" fill="none" />
                         <path d="M7 2a5 5 0 015 5" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" fill="none" />
                       </svg>
                     )}
-                    {isDone && (
-                      <span className="text-[11px] text-[#334155]">✓</span>
-                    )}
+                    {isDone && <span className="text-[11px] text-text-tertiary">✓</span>}
                   </div>
                 </div>
               );
@@ -245,9 +215,9 @@ export function ReportProgress({
 
       {/* Tip */}
       {!done && (
-        <div className="max-w-[420px] w-full p-3 bg-white/[0.02] border border-white/[0.05] rounded-xl text-center">
+        <div className="max-w-[420px] w-full p-3 bg-surface border border-border rounded-xl text-center">
           <div className="text-[10px] text-text-tertiary font-medium tracking-wide mb-1">DID YOU KNOW?</div>
-          <div className="text-xs text-text-tertiary leading-relaxed transition-opacity duration-300">
+          <div className="text-xs text-text-secondary leading-relaxed transition-opacity duration-300">
             {TIPS[tipIdx % TIPS.length]}
           </div>
         </div>
