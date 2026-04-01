@@ -36,18 +36,13 @@ export function TabCompetitors({ data }: { data: any }) {
   const similarCompetitors = competitors.filter((c: any) => c.traffic < userTraffic * 1000);
   const giantCompetitors = competitors.filter((c: any) => c.traffic >= userTraffic * 1000);
 
-  // Share of voice: user traffic vs sum of competitor traffic from shared keywords
-  // Use overlap * avg estimated traffic per shared keyword as a rough competitor overlap traffic
-  const totalSharedKeywords = competitors.reduce((s: number, c: any) => s + (c.overlap || 0), 0);
-  const userKwTraffic = userTraffic;
-  const competitorAvgOverlapTraffic = totalSharedKeywords > 0 ? (competitors.reduce((s: number, c: any) => {
-    // Rough estimate: competitor's avg position for shared keywords determines their traffic share
-    const avgPos = c.avg_position || 50;
-    const ctrEstimate = avgPos <= 3 ? 0.3 : avgPos <= 10 ? 0.1 : avgPos <= 20 ? 0.03 : 0.01;
-    return s + ((c.overlap || 0) * ctrEstimate * 100);
-  }, 0)) : 0;
-  const totalPool = userKwTraffic + competitorAvgOverlapTraffic;
-  const sovPct = totalPool > 0 ? Math.min(((userKwTraffic / totalPool) * 100), 99).toFixed(1) : "0";
+  // Share of voice: user traffic / total search volume of all ranked keywords
+  // This measures what % of available search traffic you're capturing
+  const keywords = data.keywords?.items || [];
+  const totalSearchVolume = keywords.reduce((s: number, kw: any) => s + (kw.volume || 0), 0);
+  const sovPct = totalSearchVolume > 0
+    ? Math.min(((userTraffic / totalSearchVolume) * 100), 99).toFixed(1)
+    : "0";
 
   // For chart, show only similar-size competitors + user (skip giants that dwarf the chart)
   const chartDomains = similarCompetitors.length > 0
@@ -106,7 +101,7 @@ export function TabCompetitors({ data }: { data: any }) {
       {/* Share of voice */}
       <div>
         <div className="text-sm font-medium mb-1"><Tip k="sov">Your share of voice</Tip></div>
-        <div className="text-xs text-text-secondary mb-2">Estimated share of clicks from keywords you compete on</div>
+        <div className="text-xs text-text-secondary mb-2">Your estimated traffic as a percentage of total search volume for your keywords</div>
         <div className="h-5 rounded-lg overflow-hidden bg-surface">
           <div className="flex h-full">
             <div
