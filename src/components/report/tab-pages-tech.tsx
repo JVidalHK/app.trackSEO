@@ -22,7 +22,7 @@ export function TabPagesTech({ data }: { data: any }) {
           <table className="w-full text-xs">
             <thead><tr className="border-b border-border text-text-secondary">
               <th className="text-left font-medium px-3 py-2">Page</th>
-              <th className="text-left font-medium px-3 py-2"><Tip k="seo_score">SEO score</Tip></th>
+              <th className="text-center font-medium px-3 py-2"><Tip k="seo_score">SEO score</Tip></th>
               <th className="text-left font-medium px-3 py-2">Load time</th>
               <th className="text-left font-medium px-3 py-2 hidden sm:table-cell">Size</th>
               <th className="text-left font-medium px-3 py-2 hidden sm:table-cell">Words</th>
@@ -35,7 +35,7 @@ export function TabPagesTech({ data }: { data: any }) {
                 return (
                   <tr key={i} className="border-b border-border last:border-b-0">
                     <td className="px-3 py-2 text-info max-w-[200px] truncate">{p.url}</td>
-                    <td className="px-3 py-2"><span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-medium ${scoreCls}`}>{score}</span></td>
+                    <td className="px-3 py-2 text-center"><span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-medium ${scoreCls}`}>{Math.round(score)}</span></td>
                     <td className="px-3 py-2">{p.load_time_ms ? `${(p.load_time_ms / 1000).toFixed(1)}s` : "—"}</td>
                     <td className="px-3 py-2 hidden sm:table-cell">{p.size_bytes ? formatBytes(p.size_bytes) : "—"}</td>
                     <td className="px-3 py-2 hidden sm:table-cell">{(p.word_count || 0).toLocaleString()}</td>

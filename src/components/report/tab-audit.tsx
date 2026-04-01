@@ -1,6 +1,6 @@
 "use client";
 
-import { Tip, StatusIcon, ScoreColor } from "./shared";
+import { Tip, StatusIcon, ScoreColor, ExpandableCard } from "./shared";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -8,10 +8,22 @@ export function TabAudit({ data }: { data: any }) {
   const lh = data.lighthouse || {};
   const cwv = data.core_web_vitals || {};
   const checklist = data.audit_checklist || [];
+  const actions = data.action_plan || [];
   const passCount = checklist.filter((c: any) => c.status === "pass").length;
   const warnCount = checklist.filter((c: any) => c.status === "warn").length;
   const failCount = checklist.filter((c: any) => c.status === "fail").length;
   const mobilePerfGap = (lh.desktop?.performance || 0) - (lh.mobile?.performance || 0);
+
+  // Get technical recommendations from AI action plan
+  const techActions = actions.filter((a: any) => a.category === "technical");
+  // If no technical-specific actions, show any actions that mention performance/speed/mobile
+  const perfActions = techActions.length > 0 ? techActions : actions.filter((a: any) => {
+    const text = `${a.title} ${a.description}`.toLowerCase();
+    return text.includes("speed") || text.includes("performance") || text.includes("mobile") || text.includes("compress") || text.includes("cache") || text.includes("load");
+  });
+
+  // Generate quick tips from audit failures
+  const quickTips = generateQuickTips(checklist, lh, cwv);
 
   return (
     <div className="space-y-4">
@@ -57,8 +69,85 @@ export function TabAudit({ data }: { data: any }) {
           ))}
         </div>
       </div>
+
+      {/* AI Suggested improvements */}
+      {(perfActions.length > 0 || quickTips.length > 0) && (
+        <div>
+          <div className="text-sm font-medium mb-2 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1L10.5 6.5L16 7.5L12 11.5L13 16L8 13.5L3 16L4 11.5L0 7.5L5.5 6.5L8 1Z" fill="#F59E0B" />
+            </svg>
+            Suggested improvements
+          </div>
+
+          {/* Quick tips from audit failures */}
+          {quickTips.length > 0 && (
+            <div className="space-y-1.5 mb-2">
+              {quickTips.map((tip, i) => (
+                <div key={i} className="flex items-start gap-2 px-3 py-2 rounded-lg bg-surface border border-border text-xs">
+                  <span className="text-warning mt-0.5">●</span>
+                  <div>
+                    <span className="font-medium">{tip.title}</span>
+                    <span className="text-text-secondary"> — {tip.description}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* AI action plan items related to technical */}
+          {perfActions.length > 0 && (
+            <div className="space-y-1.5">
+              {perfActions.slice(0, 3).map((a: any, i: number) => (
+                <ExpandableCard key={i} priority={a.priority} title={a.title} description={a.description} timeEstimate={a.time_estimate} steps={a.steps} expectedImpact={a.expected_impact} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
+}
+
+function generateQuickTips(checklist: any[], lh: any, cwv: any) {
+  const tips: { title: string; description: string }[] = [];
+
+  // Check for slow LCP
+  if (cwv.lcp_ms > 2500) {
+    tips.push({
+      title: "Improve Largest Contentful Paint",
+      description: `Your LCP is ${(cwv.lcp_ms / 1000).toFixed(1)}s (should be under 2.5s). Optimize your largest visible element — usually a hero image or heading. Compress images, use WebP format, and add lazy loading.`,
+    });
+  }
+
+  // Check for poor mobile performance
+  if (lh.mobile?.performance && lh.mobile.performance < 50) {
+    tips.push({
+      title: "Mobile performance needs attention",
+      description: `Your mobile score is ${lh.mobile.performance}. Focus on reducing JavaScript bundle size, deferring non-critical scripts, and optimizing images for mobile screens.`,
+    });
+  }
+
+  // Check audit failures
+  for (const item of checklist) {
+    if (item.status === "fail" && item.item.includes("meta description")) {
+      tips.push({
+        title: "Add missing meta descriptions",
+        description: "Pages without meta descriptions get lower click-through rates from search results. Write unique 150-160 character descriptions for each page.",
+      });
+      break;
+    }
+  }
+
+  // Check for high CLS
+  if (cwv.cls > 0.1) {
+    tips.push({
+      title: "Reduce layout shift",
+      description: `Your CLS is ${cwv.cls} (should be under 0.1). Set explicit width/height on images and ads, and avoid inserting content above existing content.`,
+    });
+  }
+
+  return tips.slice(0, 3);
 }
 
 function LighthouseDevice({ label, data }: { label: string; data: any }) {
