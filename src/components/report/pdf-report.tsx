@@ -32,7 +32,7 @@ function LogoBar({ domain, pageNum, totalPages }: { domain?: string; pageNum: nu
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, paddingBottom: 14, borderBottom: "2px solid #2563EB" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 16, fontWeight: 600, color: "#1a1a1a" }}>
         <Logo />
-        Track<span style={{ color: "#2563EB" }}>SEO</span> {!domain && <span style={{ fontSize: 10, color: "#888", fontWeight: 400 }}>SEO Audit Report</span>}
+        {"Track"}<span style={{ color: "#2563EB" }}>{"SEO"}</span>{" "}{!domain && <span style={{ fontSize: 10, color: "#888", fontWeight: 400 }}>SEO Audit Report</span>}
       </div>
       <div style={{ fontSize: 10, color: "#888" }}>
         {domain || ""}{domain ? " · " : ""}{pageNum} / {totalPages}
