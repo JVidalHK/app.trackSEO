@@ -16,10 +16,6 @@ const NAV_ITEMS = [
   { href: "/dashboard/progress", label: "Progress tracker", icon: "clock" },
 ];
 
-const ACCOUNT_ITEMS = [
-  { href: "/dashboard/credits", label: "Buy credits", icon: "card" },
-];
-
 export function Sidebar({ user }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -109,11 +105,6 @@ export function Sidebar({ user }: SidebarProps) {
         <nav className="flex-1 px-2 space-y-0.5">
           {NAV_ITEMS.map((item) => (
             <NavItem key={item.href} {...item} active={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))} collapsed={collapsed} onClick={() => setMobileOpen(false)} />
-          ))}
-          <div className="h-px bg-border my-2 mx-2.5" />
-          {!collapsed && <div className="text-[11px] text-text-tertiary uppercase tracking-wider px-2.5 py-1">Account</div>}
-          {ACCOUNT_ITEMS.map((item) => (
-            <NavItem key={item.href} {...item} active={pathname === item.href} collapsed={collapsed} onClick={() => setMobileOpen(false)} />
           ))}
         </nav>
 

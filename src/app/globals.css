@@ -56,11 +56,11 @@ html.light {
   --color-border: #E2E8F0;
   --color-border-light: #CBD5E1;
   --color-text-primary: #0F172A;
-  --color-text-secondary: #64748B;
-  --color-text-tertiary: #94A3B8;
-  --color-text-hint: #CBD5E1;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748B;
+  --color-text-hint: #94A3B8;
   --color-accent-light: rgba(37, 99, 235, 0.08);
-  --color-info: #2563EB;
+  --color-info: #1D4ED8;
   --color-info-light: rgba(37, 99, 235, 0.08);
 }
 

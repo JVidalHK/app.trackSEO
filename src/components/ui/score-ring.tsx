@@ -14,7 +14,7 @@ export function ScoreRing({
   const offset = circumference - (score / 100) * circumference;
   const color = score >= 80 ? "#10B981" : score >= 50 ? "#F59E0B" : "#EF4444";
   const numSize = size < 48 ? 11 : size < 64 ? 13 : size < 80 ? 16 : 18;
-  const labelSize = size < 48 ? 5 : size < 64 ? 6 : 7;
+  const labelSize = size < 48 ? 4.5 : size < 64 ? 5 : 5.5;
 
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
@@ -44,7 +44,7 @@ export function ScoreRing({
           {score}
         </span>
         {label && (
-          <span className="text-text-tertiary leading-none" style={{ fontSize: labelSize, textTransform: "uppercase", letterSpacing: 0.4 }}>
+          <span className="text-text-tertiary leading-none" style={{ fontSize: labelSize, textTransform: "uppercase", letterSpacing: 0.2 }}>
             {label}
           </span>
         )}

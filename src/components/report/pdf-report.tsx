@@ -18,19 +18,21 @@ function fmt(n: number | undefined) { return (n || 0).toLocaleString(); }
 
 function Logo() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke={G} strokeWidth="2" />
-      <path d="M8 12l3 3 5-5" stroke={G} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="20" height="20" viewBox="0 0 32 32">
+      <defs><linearGradient id="lgPdf" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
+      <rect width="32" height="32" rx="7" fill="url(#lgPdf)"/>
+      <path d="M8 23L13.5 16.5L17 19.5L24 11" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M20 11L24 11L24 15" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
 function LogoBar({ domain, pageNum, totalPages }: { domain?: string; pageNum: number; totalPages: number }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, paddingBottom: 14, borderBottom: `2px solid ${G}` }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, paddingBottom: 14, borderBottom: "2px solid #2563EB" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 16, fontWeight: 600, color: "#1a1a1a" }}>
         <Logo />
-        TrackSEO {!domain && <span style={{ fontSize: 10, color: "#888", fontWeight: 400 }}>SEO Audit Report</span>}
+        Track<span style={{ color: "#2563EB" }}>SEO</span> {!domain && <span style={{ fontSize: 10, color: "#888", fontWeight: 400 }}>SEO Audit Report</span>}
       </div>
       <div style={{ fontSize: 10, color: "#888" }}>
         {domain || ""}{domain ? " · " : ""}{pageNum} / {totalPages}
