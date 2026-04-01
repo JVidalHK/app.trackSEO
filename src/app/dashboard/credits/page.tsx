@@ -12,7 +12,7 @@ const PACKAGES = [
 export default async function CreditsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ success?: string; canceled?: string }>;
+  searchParams: Promise<{ success?: string; canceled?: string; error?: string }>;
 }) {
   const params = await searchParams;
   const supabase = await createClient();
@@ -49,6 +49,11 @@ export default async function CreditsPage({
       {params.canceled && (
         <div className="text-xs text-warning bg-warning/10 px-3 py-2 rounded-lg mb-4">
           Payment was canceled. No credits were charged.
+        </div>
+      )}
+      {params.error && (
+        <div className="text-xs text-danger bg-danger/10 px-3 py-2 rounded-lg mb-4">
+          Checkout error: {decodeURIComponent(params.error)}. Please try again or contact support.
         </div>
       )}
 
