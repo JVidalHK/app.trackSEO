@@ -113,9 +113,9 @@ export function InvoiceView({ purchase }: { purchase: any }) {
             <div>
               <h3 style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, margin: "0 0 6px" }}>From</h3>
               <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.6, margin: 0 }}>
-                <span style={{ fontWeight: 600, color: "#0F172A" }}>PostReach AI Limited</span><br />
+                <span style={{ fontWeight: 600, color: "#0F172A" }}>TrackSEO</span><br />A product by PostReach AI Limited<br />
                 Hong Kong<br />
-                hello@trackseo.pro
+                support@postreach.ai
               </p>
             </div>
             <div>
@@ -206,8 +206,8 @@ export function InvoiceView({ purchase }: { purchase: any }) {
         <div style={{ padding: "20px 36px", background: "#F8FAFC", borderTop: "1px solid #F1F5F9" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div style={{ fontSize: 11, color: "#94A3B8", lineHeight: 1.6 }}>
-              PostReach AI Limited · Hong Kong<br />
-              hello@trackseo.pro · trackseo.pro
+              TrackSEO by PostReach AI Limited · Hong Kong<br />
+              support@postreach.ai · trackseo.pro
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 500 }}>
               <svg width="16" height="16" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="ig2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs><rect width="36" height="36" rx="8" fill="url(#ig2)"/><path d="M8 26L14 19L18 22L28 12" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M23 12L28 12L28 17" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -245,13 +245,21 @@ function CardIcon({ brand }: { brand: string }) {
     visa: "linear-gradient(135deg,#1A1F71,#F7B600)",
     mastercard: "linear-gradient(135deg,#EB001B,#F79E1B)",
     amex: "linear-gradient(135deg,#006FCF,#00A3E0)",
+    discover: "linear-gradient(135deg,#FF6000,#FFA500)",
+  };
+  const labels: Record<string, string> = {
+    visa: "VISA",
+    mastercard: "MC",
+    amex: "AMEX",
+    discover: "DISC",
   };
   const bg = colors[brand] || "linear-gradient(135deg,#64748B,#94A3B8)";
-  const label = brand?.toUpperCase()?.slice(0, 4) || "CARD";
+  const label = labels[brand] || brand?.toUpperCase()?.slice(0, 4) || "CARD";
+  const fontSize = label.length > 3 ? 7 : 9;
   return (
     <div style={{ width: 42, height: 28, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: bg }}>
-      <svg width="28" height="10" viewBox="0 0 28 10" fill="none">
-        <text x="0" y="9" fontFamily="-apple-system,sans-serif" fontSize="9" fontWeight="700" fill="#fff" letterSpacing="0.5">{label}</text>
+      <svg width="36" height="12" viewBox="0 0 36 12" fill="none">
+        <text x="18" y="10" textAnchor="middle" fontFamily="-apple-system,sans-serif" fontSize={fontSize} fontWeight="700" fill="#fff" letterSpacing="0.5">{label}</text>
       </svg>
     </div>
   );
