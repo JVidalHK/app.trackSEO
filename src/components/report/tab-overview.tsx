@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ScoreRing } from "@/components/ui/score-ring";
 import { Line, Bar, CHART_COLORS, DARK_CHART_OPTIONS } from "./chart-wrapper";
-import { Tip, ExpandableCard, StatusIcon, SectionTitle, FactorBar } from "./shared";
+import { Tip, PositionPill, ExpandableCard, StatusIcon, SectionTitle, FactorBar } from "./shared";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -115,7 +115,7 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
                 {keywords.map((kw: any, i: number) => (
                   <tr key={i} className="border-b border-border last:border-b-0">
                     <td className="px-3 py-2 font-medium">{kw.keyword}</td>
-                    <td className="px-3 py-2"><span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${kw.position <= 3 ? "bg-[#ECFDF5] text-[#065F46]" : kw.position <= 10 ? "bg-[rgba(37,99,235,0.1)] text-[#60A5FA]" : "bg-[#FEF3C7] text-[#92400E]"}`}>{kw.position}</span></td>
+                    <td className="px-3 py-2"><PositionPill position={kw.position || 0} /></td>
                     <td className="px-3 py-2">{(kw.volume || 0).toLocaleString()}</td>
                     <td className="px-3 py-2">{(kw.traffic || 0).toLocaleString()}</td>
                   </tr>

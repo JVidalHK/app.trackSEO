@@ -9,16 +9,20 @@ export function Tip({ k, children }: { k: string; children: React.ReactNode }) {
 }
 
 export function PositionPill({ position }: { position: number }) {
-  const cls =
-    position <= 3
-      ? "bg-[#ECFDF5] text-[#065F46]"
-      : position <= 10
-      ? "bg-[rgba(37,99,235,0.1)] text-[#60A5FA]"
+  // Top 5: green, 6-20: blue, 21-60: amber, 61-99: red
+  const style =
+    position <= 5
+      ? { bg: "#10B981", text: "#fff" }
       : position <= 20
-      ? "bg-[#FEF3C7] text-[#92400E]"
-      : "bg-surface text-text-secondary";
+      ? { bg: "#2563EB", text: "#fff" }
+      : position <= 60
+      ? { bg: "#F59E0B", text: "#fff" }
+      : { bg: "#EF4444", text: "#fff" };
   return (
-    <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium inline-block ${cls}`}>
+    <span
+      className="text-[11px] font-semibold inline-flex items-center justify-center rounded-full"
+      style={{ background: style.bg, color: style.text, minWidth: 28, height: 22, padding: "0 6px" }}
+    >
       {position}
     </span>
   );
