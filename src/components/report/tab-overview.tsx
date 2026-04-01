@@ -16,7 +16,12 @@ function formatMonth(m: string) {
 }
 
 export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (tab: number) => void }) {
-  const allTrend = [...(data.traffic_trend || [])].reverse(); // oldest first (chronological)
+  // Engine sorts chronologically (oldest first). For older reports that may still
+  // be newest-first, detect and reverse if needed.
+  const rawTrend = data.traffic_trend || [];
+  const allTrend = rawTrend.length >= 2 && rawTrend[0]?.month > rawTrend[1]?.month
+    ? [...rawTrend].reverse()
+    : rawTrend;
   const maxMonths = allTrend.length;
   const [trendRange, setTrendRange] = useState(Math.min(6, maxMonths));
   const scores = data.scores || {};
@@ -75,7 +80,7 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
                   backgroundColor: CHART_COLORS.blue, borderRadius: 3, barThickness: 12,
                 }],
               }}
-              options={{ ...DARK_CHART_OPTIONS, indexAxis: "y" as const, scales: { ...DARK_CHART_OPTIONS.scales, x: { ...DARK_CHART_OPTIONS.scales.x, ticks: { ...DARK_CHART_OPTIONS.scales.x.ticks, callback: (v: any) => `${(v / 1000).toFixed(0)}k` } } } } as any}
+              options={{ ...DARK_CHART_OPTIONS, indexAxis: "y" as const, scales: { ...DARK_CHART_OPTIONS.scales, x: { ...DARK_CHART_OPTIONS.scales.x, beginAtZero: true, ticks: { ...DARK_CHART_OPTIONS.scales.x.ticks, callback: (v: any) => { const n = Number(v); if (n >= 1000) return `${(n / 1000).toFixed(1)}k`; if (Number.isInteger(n)) return String(n); return ""; } } } } } as any}
             />
           </div>
         </div>
