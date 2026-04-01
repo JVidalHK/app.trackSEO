@@ -115,7 +115,6 @@ export function TabCompetitors({ data }: { data: any }) {
                   ...DARK_CHART_OPTIONS.scales,
                   x: {
                     ...DARK_CHART_OPTIONS.scales.x,
-                    type: maxTraffic > 100000 ? "logarithmic" as const : "linear" as const,
                     ticks: {
                       ...DARK_CHART_OPTIONS.scales.x.ticks,
                       callback: (v: any) => fmtNum(Number(v)),
@@ -125,9 +124,6 @@ export function TabCompetitors({ data }: { data: any }) {
               } as any}
             />
           </div>
-          {maxTraffic > 100000 && (
-            <div className="text-[10px] text-text-tertiary mt-1">Scale: logarithmic (competitors have significantly more traffic)</div>
-          )}
         </div>
       )}
     </div>
