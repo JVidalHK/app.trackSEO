@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds */
+  --color-bg: #060B18;
+  --color-surface: rgba(255, 255, 255, 0.02);
+  --color-surface-hover: rgba(37, 99, 235, 0.05);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-light: rgba(255, 255, 255, 0.10);
+
+  /* Text */
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #94A3B8;
+  --color-text-tertiary: #64748B;
+  --color-text-hint: #475569;
+
+  /* Brand — blue-cyan */
+  --color-accent: #2563EB;
+  --color-accent-cyan: #06B6D4;
+  --color-accent-light: rgba(37, 99, 235, 0.10);
+  --color-accent-dark: #1E40AF;
+
+  /* Info */
+  --color-info: #60A5FA;
+  --color-info-light: rgba(37, 99, 235, 0.10);
+  --color-info-dark: #1E40AF;
+
+  /* Semantic — success (green, for scores/status only) */
+  --color-success: #10B981;
+  --color-success-light: #ECFDF5;
+  --color-success-dark: #065F46;
+
+  /* Semantic — warning */
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-warning-dark: #92400E;
+
+  /* Semantic — danger */
+  --color-danger: #EF4444;
+  --color-danger-light: #FEE2E2;
+  --color-danger-dark: #991B1B;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Brand gradient utilities */
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
+}
+
+/* Score color utilities — semantic, NOT brand */
+.score-green { color: #10B981; }
+.score-amber { color: #F59E0B; }
+.score-red { color: #EF4444; }
+.score-bg-green { background-color: #ECFDF5; color: #065F46; }
+.score-bg-amber { background-color: #FEF3C7; color: #92400E; }
+.score-bg-red { background-color: #FEE2E2; color: #991B1B; }
+
+/* Print styles for PDF export */
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  body { background: white !important; color: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  [data-sidebar] { display: none !important; }
+  .screen-only { display: none !important; }
+  .print-only { display: block !important; }
+  main { margin-left: 0 !important; padding: 0 !important; }
+}
