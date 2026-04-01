@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS = [
-  { href: "/dashboard", label: "+ New Report", icon: "grid" },
+  { href: "/dashboard", label: "New Report", icon: "plus-circle" },
   { href: "/dashboard/reports", label: "My reports", icon: "list" },
   { href: "/dashboard/progress", label: "Progress tracker", icon: "clock" },
 ];
@@ -79,9 +79,10 @@ export function Sidebar({ user }: SidebarProps) {
       <aside
         data-sidebar
         className={`
-          fixed top-0 left-0 z-40 h-dvh max-h-dvh flex flex-col bg-bg/95 backdrop-blur-xl border-r border-border transition-all duration-200 overflow-hidden
+          fixed top-0 z-40 h-dvh max-h-dvh flex flex-col bg-bg/95 backdrop-blur-xl border-border transition-all duration-200 overflow-hidden
+          md:left-0 md:border-r
           ${collapsed ? "w-14" : "w-56"}
-          ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          ${mobileOpen ? "right-0 border-l translate-x-0" : "right-0 translate-x-full md:translate-x-0 md:right-auto"}
         `}
       >
         {/* Logo + collapse toggle */}
@@ -262,6 +263,7 @@ function NavIcon({ name }: { name: string }) {
     case "list": return <svg {...p}><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
     case "clock": return <svg {...p}><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
     case "card": return <svg {...p}><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M2 6h12" stroke="currentColor" strokeWidth="1.2"/></svg>;
+    case "plus-circle": return <svg {...p}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.2"/><path d="M8 5.5v5M5.5 8h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>;
     case "chart": return <svg {...p}><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M11 5h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     case "users": return <svg {...p}><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.2"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/><circle cx="11.5" cy="5.5" r="1.8" stroke="currentColor" strokeWidth="1"/><path d="M11 10c1.5 0 3.5 1 3.5 3" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
     default: return <div className="w-4 h-4" />;

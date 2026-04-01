@@ -46,29 +46,29 @@ export function DomainInput({ credits }: { credits: number }) {
   }
 
   return (
-    <div>
-      <div className="flex gap-2">
+    <div className="max-w-lg">
+      <div className="rounded-xl bg-surface border border-border p-5">
         <input
           type="text"
-          placeholder="Enter a domain to analyse (e.g. acmecoffee.com)"
+          placeholder="Enter your website URL..."
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
-          className="flex-1 h-10 px-3 rounded-lg bg-surface border border-border text-sm focus:border-accent focus:outline-none"
+          className="w-full h-12 px-4 rounded-lg bg-bg border border-border-light text-sm focus:border-accent focus:outline-none placeholder:text-text-tertiary"
         />
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="h-10 px-4 rounded-lg bg-brand-gradient text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 whitespace-nowrap"
+          className="w-full h-11 mt-3 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 active:scale-[0.98]"
         >
           {loading
-            ? "Starting..."
+            ? "Starting analysis..."
             : credits < 1
             ? "Buy credits to start"
-            : "Generate report"}
+            : "Analyse my site"}
         </button>
+        {error && <p className="text-xs text-danger mt-2">{error}</p>}
       </div>
-      {error && <p className="text-xs text-danger mt-1.5">{error}</p>}
     </div>
   );
 }
