@@ -21,62 +21,92 @@ export function TabCompetitors({ data }: { data: any }) {
     domain,
     traffic: overview.organic_traffic || 0,
     keywords: overview.total_keywords || 0,
-    authority: 0,
     overlap: 0,
-    overlap_pct: 0,
     isUser: true,
   };
 
-  // Sort competitors by traffic descending
+  // Sort competitors by shared keywords (most relevant first)
   const allDomains = [
     userEntry,
     ...competitors.map((c: any) => ({ ...c, isUser: false })),
-  ].sort((a, b) => b.traffic - a.traffic);
+  ];
 
-  // For the chart, use a log-friendly view or cap at reasonable range
-  const chartDomains = allDomains.slice(0, 6);
-  const maxTraffic = Math.max(...chartDomains.map((d) => d.traffic));
+  // Separate into similar-size and giants for display
+  const userTraffic = overview.organic_traffic || 1;
+  const similarCompetitors = competitors.filter((c: any) => c.traffic < userTraffic * 1000);
+  const giantCompetitors = competitors.filter((c: any) => c.traffic >= userTraffic * 1000);
 
-  // Share of voice among these competitors
-  const totalOverlapTraffic = allDomains.reduce((s, d) => s + (d.isUser ? d.traffic : (d.overlap || 0)), 0);
-  const userTraffic = overview.organic_traffic || 0;
-  const sovPct = totalOverlapTraffic > 0 ? ((userTraffic / totalOverlapTraffic) * 100).toFixed(1) : "0";
+  // Share of voice: user traffic vs sum of competitor traffic from shared keywords
+  // Use overlap * avg estimated traffic per shared keyword as a rough competitor overlap traffic
+  const totalSharedKeywords = competitors.reduce((s: number, c: any) => s + (c.overlap || 0), 0);
+  const userKwTraffic = userTraffic;
+  const competitorAvgOverlapTraffic = totalSharedKeywords > 0 ? (competitors.reduce((s: number, c: any) => {
+    // Rough estimate: competitor's avg position for shared keywords determines their traffic share
+    const avgPos = c.avg_position || 50;
+    const ctrEstimate = avgPos <= 3 ? 0.3 : avgPos <= 10 ? 0.1 : avgPos <= 20 ? 0.03 : 0.01;
+    return s + ((c.overlap || 0) * ctrEstimate * 100);
+  }, 0)) : 0;
+  const totalPool = userKwTraffic + competitorAvgOverlapTraffic;
+  const sovPct = totalPool > 0 ? Math.min(((userKwTraffic / totalPool) * 100), 99).toFixed(1) : "0";
+
+  // For chart, show only similar-size competitors + user (skip giants that dwarf the chart)
+  const chartDomains = similarCompetitors.length > 0
+    ? [userEntry, ...similarCompetitors].sort((a, b) => b.traffic - a.traffic).slice(0, 6)
+    : allDomains.sort((a, b) => b.traffic - a.traffic).slice(0, 6);
 
   return (
     <div className="space-y-4">
       {/* Competitor table */}
       <div>
         <div className="text-sm font-medium mb-2">How you compare</div>
+
+        {/* Similar-size competitors */}
         <div className="bg-surface rounded-xl border border-border overflow-x-auto">
           <table className="w-full text-xs">
             <thead><tr className="border-b border-border text-text-secondary">
               <th className="text-left font-medium px-3 py-2">Website</th>
               <th className="text-right font-medium px-3 py-2"><Tip k="organic_traffic">Est. Traffic</Tip></th>
               <th className="text-right font-medium px-3 py-2"><Tip k="keywords">Keywords</Tip></th>
-              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell"><Tip k="overlap">Shared Keywords</Tip></th>
-              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell">Avg Position</th>
+              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell"><Tip k="overlap">Shared KW</Tip></th>
+              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell">Avg Pos</th>
             </tr></thead>
             <tbody>
-              {allDomains.map((c: any, i: number) => (
-                <tr key={i} className={`border-b border-border last:border-b-0 ${c.isUser ? "font-medium" : ""}`}>
-                  <td className={`px-3 py-2 ${c.isUser ? "text-[#06B6D4]" : ""}`}>
-                    {c.domain}{c.isUser && " (you)"}
+              {/* User row */}
+              <tr className="border-b border-border font-medium">
+                <td className="px-3 py-2 text-[#06B6D4]">{domain} (you)</td>
+                <td className="px-3 py-2 text-right">{fmtNum(userEntry.traffic)}</td>
+                <td className="px-3 py-2 text-right">{fmtNum(userEntry.keywords)}</td>
+                <td className="px-3 py-2 text-right hidden sm:table-cell">—</td>
+                <td className="px-3 py-2 text-right hidden sm:table-cell">—</td>
+              </tr>
+              {/* Competitors */}
+              {competitors.map((c: any, i: number) => (
+                <tr key={i} className="border-b border-border last:border-b-0">
+                  <td className="px-3 py-2">
+                    {c.domain}
+                    {c.traffic > userTraffic * 1000 && <span className="text-[10px] text-text-tertiary ml-1">(mega site)</span>}
                   </td>
                   <td className="px-3 py-2 text-right">{fmtNum(c.traffic || 0)}</td>
                   <td className="px-3 py-2 text-right">{fmtNum(c.keywords || 0)}</td>
-                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.isUser ? "—" : (c.overlap || c.intersections || 0)}</td>
-                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.isUser ? "—" : (c.avg_position || "—")}</td>
+                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.overlap || "—"}</td>
+                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.avg_position || "—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {giantCompetitors.length > 0 && similarCompetitors.length > 0 && (
+          <div className="text-[10px] text-text-tertiary mt-1.5">
+            {giantCompetitors.map((c: any) => c.domain).join(", ")} are large platforms that rank for some of your keywords. Focus on competing with sites closer to your size.
+          </div>
+        )}
       </div>
 
       {/* Share of voice */}
       <div>
         <div className="text-sm font-medium mb-1"><Tip k="sov">Your share of voice</Tip></div>
-        <div className="text-xs text-text-secondary mb-2">How much of the shared keyword traffic you capture vs competitors</div>
+        <div className="text-xs text-text-secondary mb-2">Estimated share of clicks from keywords you compete on</div>
         <div className="h-5 rounded-lg overflow-hidden bg-surface">
           <div className="flex h-full">
             <div
@@ -90,10 +120,15 @@ export function TabCompetitors({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Traffic comparison chart */}
+      {/* Traffic comparison chart — similar-size only */}
       {chartDomains.length > 1 && (
         <div>
-          <div className="text-sm font-medium mb-2">Traffic comparison</div>
+          <div className="text-sm font-medium mb-2">
+            Traffic comparison
+            {similarCompetitors.length > 0 && giantCompetitors.length > 0 && (
+              <span className="text-[10px] text-text-tertiary font-normal ml-2">(similar-size competitors)</span>
+            )}
+          </div>
           <div className="h-40">
             <Bar
               data={{
@@ -115,10 +150,7 @@ export function TabCompetitors({ data }: { data: any }) {
                   ...DARK_CHART_OPTIONS.scales,
                   x: {
                     ...DARK_CHART_OPTIONS.scales.x,
-                    ticks: {
-                      ...DARK_CHART_OPTIONS.scales.x.ticks,
-                      callback: (v: any) => fmtNum(Number(v)),
-                    },
+                    ticks: { ...DARK_CHART_OPTIONS.scales.x.ticks, callback: (v: any) => fmtNum(Number(v)) },
                   },
                 },
               } as any}

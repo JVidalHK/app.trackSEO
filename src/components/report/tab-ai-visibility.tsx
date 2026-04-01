@@ -32,7 +32,7 @@ export function TabAIVisibility({ data }: { data: any }) {
       </div>
 
       {/* AI vs Google table */}
-      {aiVsGoogle.length > 0 && (
+      {aiVsGoogle.length > 0 && aiVsGoogle.some((item: any) => item.google_volume > 0 || item.ai_volume > 0) ? (
         <div>
           <div className="text-sm font-medium mb-2">
             <Tip k="ai_volume">AI vs traditional search volume</Tip>
@@ -63,6 +63,10 @@ export function TabAIVisibility({ data }: { data: any }) {
               </tbody>
             </table>
           </div>
+        </div>
+      ) : (
+        <div className="bg-surface rounded-xl border border-border p-4 text-center">
+          <div className="text-xs text-text-secondary">AI search volume data is not yet available for your keywords. This data is more common for high-volume, popular search terms. As your site grows and targets broader keywords, AI visibility data will become available.</div>
         </div>
       )}
 
