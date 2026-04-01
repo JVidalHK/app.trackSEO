@@ -30,7 +30,7 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
         ?
       </span>
       {open && (
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 bg-surface border border-border-light rounded-lg px-2.5 py-1.5 text-xs text-text-secondary w-52 text-left z-[100] leading-relaxed font-normal shadow-lg">
+        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1.5 text-xs text-text-primary w-56 text-left z-[999] leading-relaxed font-normal rounded-lg border border-border-light bg-bg/95 backdrop-blur-xl shadow-xl shadow-black/20">
           {text}
         </span>
       )}

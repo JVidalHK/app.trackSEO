@@ -61,10 +61,10 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile hamburger */}
+      {/* Mobile hamburger — right side */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-3 left-3 z-50 md:hidden w-9 h-9 rounded-lg bg-surface border border-border flex items-center justify-center"
+        className="fixed top-3 right-3 z-50 md:hidden w-9 h-9 rounded-lg bg-bg/90 backdrop-blur-lg border border-border flex items-center justify-center"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -73,13 +73,13 @@ export function Sidebar({ user }: SidebarProps) {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileOpen(false)} />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden" onClick={() => setMobileOpen(false)} />
       )}
 
       <aside
         data-sidebar
         className={`
-          fixed top-0 left-0 z-40 h-screen flex flex-col bg-surface border-r border-border transition-all duration-200 overflow-y-auto
+          fixed top-0 left-0 z-40 h-dvh max-h-dvh flex flex-col bg-bg/95 backdrop-blur-xl border-r border-border transition-all duration-200 overflow-hidden
           ${collapsed ? "w-14" : "w-56"}
           ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
@@ -107,8 +107,8 @@ export function Sidebar({ user }: SidebarProps) {
           </button>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 px-2 space-y-0.5">
+        {/* Nav — scrollable */}
+        <nav className="flex-1 px-2 space-y-0.5 overflow-y-auto min-h-0">
           {NAV_ITEMS.map((item) => (
             <NavItem key={item.href} {...item} active={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))} collapsed={collapsed} onClick={() => setMobileOpen(false)} />
           ))}
@@ -150,7 +150,7 @@ export function Sidebar({ user }: SidebarProps) {
         <div ref={menuRef} className="relative">
           {/* User menu popup */}
           {menuOpen && !collapsed && (
-            <div className="absolute bottom-full left-2 right-2 mb-1 rounded-xl p-1.5 border border-border-light bg-surface/[0.97] backdrop-blur-xl shadow-2xl z-50 animate-in"
+            <div className="absolute bottom-full left-2 right-2 mb-1 rounded-xl p-1.5 border border-border-light bg-bg/95 backdrop-blur-xl shadow-2xl z-50 max-h-[60vh] overflow-y-auto"
               style={{ animation: "menuIn 0.2s ease-out" }}>
               {/* Header */}
               <div className="px-3 py-2.5">

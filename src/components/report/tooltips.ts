@@ -1,7 +1,7 @@
 export const TOOLTIPS: Record<string, string> = {
   sov: "Share of Voice — how much of the available search traffic in your niche your website captures.",
   da: "Domain Authority — a 0-100 score predicting how likely your site is to rank. Based on backlink quality. 40+ is solid for small businesses.",
-  organic_traffic: "Estimated monthly visitors from search engines like Google, based on your rankings and search volumes.",
+  organic_traffic: "Estimated monthly visitors based on your keyword rankings and their search volumes. This is a model-based estimate, not actual analytics data. Real traffic (from Google Search Console) may differ significantly.",
   keywords: "Total search terms your site ranks for in Google's top 100 results.",
   mobile_speed: "Google PageSpeed score for mobile. Google ranks sites based on mobile performance. 90+ great, 50-89 needs work, below 50 poor.",
   position: "Your position in Google results. Position 1 = first result. Top 3 gets ~60% of clicks.",
