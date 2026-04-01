@@ -65,7 +65,7 @@ export function DomainInput({ credits }: { credits: number }) {
             ? "Starting analysis..."
             : credits < 1
             ? "Buy credits to start"
-            : "Analyse my site"}
+            : "Generate Report"}
         </button>
         {error && <p className="text-xs text-danger mt-2">{error}</p>}
       </div>

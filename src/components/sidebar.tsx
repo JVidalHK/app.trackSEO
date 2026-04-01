@@ -61,14 +61,20 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile hamburger — right side */}
+      {/* Mobile hamburger — right side, toggles open/close */}
       <button
-        onClick={() => setMobileOpen(true)}
+        onClick={() => setMobileOpen(!mobileOpen)}
         className="fixed top-3 right-3 z-50 md:hidden w-9 h-9 rounded-lg bg-bg/90 backdrop-blur-lg border border-border flex items-center justify-center"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
+        {mobileOpen ? (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+        )}
       </button>
 
       {/* Mobile overlay */}
