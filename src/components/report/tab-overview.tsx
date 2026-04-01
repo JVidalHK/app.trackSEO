@@ -7,11 +7,21 @@ import { Tip, ExpandableCard, StatusIcon, SectionTitle, FactorBar } from "./shar
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatMonth(m: string) {
+  // "2026-03" → "Mar '26"
+  const [year, month] = m.split("-");
+  return `${MONTH_NAMES[parseInt(month) - 1] || m} '${year?.slice(2)}`;
+}
+
 export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (tab: number) => void }) {
-  const [trendRange, setTrendRange] = useState(6);
+  const allTrend = [...(data.traffic_trend || [])].reverse(); // oldest first (chronological)
+  const maxMonths = allTrend.length;
+  const [trendRange, setTrendRange] = useState(Math.min(6, maxMonths));
   const scores = data.scores || {};
   const overview = data.overview || {};
-  const trend = (data.traffic_trend || []).slice(-trendRange);
+  const trend = allTrend.slice(-trendRange);
   const countries = data.traffic_by_country || [];
   const actions = data.action_plan || [];
   const keywords = data.keywords?.items?.slice(0, 5) || [];
@@ -36,13 +46,13 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
             <select value={trendRange} onChange={(e) => setTrendRange(Number(e.target.value))} className="text-xs bg-bg border border-border rounded px-1 h-6">
               <option value={3}>3 Months</option>
               <option value={6}>6 Months</option>
-              <option value={12}>12 Months</option>
+              {maxMonths > 6 && <option value={12}>12 Months</option>}
             </select>
           </div>
           <div className="h-32">
             <Line
               data={{
-                labels: trend.map((t: any) => t.month),
+                labels: trend.map((t: any) => formatMonth(t.month)),
                 datasets: [{
                   data: trend.map((t: any) => t.traffic),
                   borderColor: CHART_COLORS.green,
