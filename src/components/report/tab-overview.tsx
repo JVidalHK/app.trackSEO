@@ -34,9 +34,9 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-text-secondary">Traffic trend</span>
             <select value={trendRange} onChange={(e) => setTrendRange(Number(e.target.value))} className="text-xs bg-bg border border-border rounded px-1 h-6">
-              <option value={3}>3 mo</option>
-              <option value={6}>6 mo</option>
-              <option value={12}>1 yr</option>
+              <option value={3}>3 Months</option>
+              <option value={6}>6 Months</option>
+              <option value={12}>12 Months</option>
             </select>
           </div>
           <div className="h-32">
@@ -50,7 +50,7 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
                   fill: true, tension: 0.4, pointRadius: 2, borderWidth: 1.5,
                 }],
               }}
-              options={{ ...DARK_CHART_OPTIONS, scales: { ...DARK_CHART_OPTIONS.scales, y: { ...DARK_CHART_OPTIONS.scales.y, ticks: { ...DARK_CHART_OPTIONS.scales.y.ticks, callback: (v: any) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v) } } } } as any}
+              options={{ ...DARK_CHART_OPTIONS, scales: { ...DARK_CHART_OPTIONS.scales, y: { ...DARK_CHART_OPTIONS.scales.y, beginAtZero: true, ticks: { ...DARK_CHART_OPTIONS.scales.y.ticks, callback: (v: any) => { const n = Number(v); if (n >= 1000) return `${(n / 1000).toFixed(1)}k`; if (Number.isInteger(n)) return String(n); return ""; } } } } } as any}
             />
           </div>
         </div>
