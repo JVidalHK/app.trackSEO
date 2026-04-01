@@ -1,36 +1,78 @@
 import { createServiceClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { createHmac, timingSafeEqual } from "crypto";
 
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+// Manual Stripe signature verification (no SDK needed)
+function verifySignature(payload: string, signature: string, secret: string): boolean {
+  const parts = signature.split(",").reduce((acc, part) => {
+    const [key, val] = part.split("=");
+    acc[key] = val;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const timestamp = parts["t"];
+  const sig = parts["v1"];
+  if (!timestamp || !sig) return false;
+
+  // Reject if older than 5 minutes
+  const age = Math.floor(Date.now() / 1000) - parseInt(timestamp);
+  if (age > 300) return false;
+
+  const expected = createHmac("sha256", secret)
+    .update(`${timestamp}.${payload}`)
+    .digest("hex");
+
+  try {
+    return timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
+// Fetch receipt URL from Stripe API directly
+async function getReceiptUrl(paymentIntentId: string, stripeKey: string): Promise<{ receiptUrl: string | null; invoicePdfUrl: string | null }> {
+  try {
+    const res = await fetch(
+      `https://api.stripe.com/v1/payment_intents/${paymentIntentId}?expand[]=latest_charge`,
+      { headers: { Authorization: `Bearer ${stripeKey}` } }
+    );
+    const pi = await res.json();
+    const charge = pi.latest_charge;
+    return {
+      receiptUrl: charge?.receipt_url || null,
+      invoicePdfUrl: charge?.receipt_url ? `${charge.receipt_url}#pdf` : null,
+    };
+  } catch {
+    return { receiptUrl: null, invoicePdfUrl: null };
+  }
+}
 
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
 
-  if (!signature) {
+  if (!signature || !webhookSecret) {
+    console.error("Stripe webhook: missing signature or secret");
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch (err) {
-    console.error("Stripe webhook signature verification failed:", err);
+  if (!verifySignature(body, signature, webhookSecret)) {
+    console.error("Stripe webhook: signature verification failed");
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
+
+  const event = JSON.parse(body);
+  console.log("Stripe webhook received:", event.type, event.id);
 
   const supabase = createServiceClient();
 
   switch (event.type) {
     case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
+      const session = event.data.object;
       const userId = session.metadata?.user_id;
       const credits = parseInt(session.metadata?.credits || "0");
       const pkg = session.metadata?.package || "unknown";
@@ -41,7 +83,7 @@ export async function POST(request: Request) {
         break;
       }
 
-      // Idempotency check — don't process the same event twice
+      // Idempotency check
       const { data: existing } = await supabase
         .from("credit_purchases")
         .select("id, status")
@@ -53,24 +95,22 @@ export async function POST(request: Request) {
         break;
       }
 
-      // Get receipt URL from the payment intent
+      // Get receipt URL
       let receiptUrl: string | null = null;
-      let customerId: string | null = null;
-      if (session.payment_intent) {
-        try {
-          const pi = await stripe.paymentIntents.retrieve(session.payment_intent as string, {
-            expand: ["latest_charge"],
-          });
-          const charge = pi.latest_charge as Stripe.Charge | null;
-          receiptUrl = charge?.receipt_url || null;
-          customerId = (session.customer as string) || null;
-        } catch {
-          // Non-critical
-        }
+      let invoicePdfUrl: string | null = null;
+      if (session.payment_intent && stripeKey) {
+        const urls = await getReceiptUrl(session.payment_intent, stripeKey);
+        receiptUrl = urls.receiptUrl;
+        invoicePdfUrl = urls.invoicePdfUrl;
       }
 
+      const customerId = session.customer || null;
+
       // Add credits
-      await supabase.rpc("add_credits", { p_user_id: userId, p_amount: credits });
+      const { error: rpcError } = await supabase.rpc("add_credits", { p_user_id: userId, p_amount: credits });
+      if (rpcError) {
+        console.error("Failed to add credits:", rpcError);
+      }
 
       // Update or create purchase record
       const purchaseData = {
@@ -81,24 +121,27 @@ export async function POST(request: Request) {
         currency: session.currency || "usd",
         status: "completed",
         stripe_session_id: session.id,
-        stripe_payment_intent: session.payment_intent as string || null,
+        stripe_payment_intent: session.payment_intent || null,
         stripe_customer_id: customerId,
         stripe_event_id: event.id,
         receipt_url: receiptUrl,
+        invoice_pdf_url: invoicePdfUrl,
       };
 
       if (purchaseId) {
-        await supabase.from("credit_purchases").update(purchaseData).eq("id", purchaseId);
+        const { error } = await supabase.from("credit_purchases").update(purchaseData).eq("id", purchaseId);
+        if (error) console.error("Failed to update purchase:", error);
       } else {
-        await supabase.from("credit_purchases").insert(purchaseData);
+        const { error } = await supabase.from("credit_purchases").insert(purchaseData);
+        if (error) console.error("Failed to insert purchase:", error);
       }
 
-      console.log("Stripe: credits added", { userId, credits, eventId: event.id });
+      console.log("Stripe: credits added", { userId, credits, receiptUrl: !!receiptUrl });
       break;
     }
 
     case "checkout.session.expired": {
-      const session = event.data.object as Stripe.Checkout.Session;
+      const session = event.data.object;
       const purchaseId = session.metadata?.purchase_id;
       if (purchaseId) {
         await supabase.from("credit_purchases").update({ status: "expired" }).eq("id", purchaseId);
@@ -107,11 +150,10 @@ export async function POST(request: Request) {
     }
 
     case "charge.refunded": {
-      const charge = event.data.object as Stripe.Charge;
-      const paymentIntent = charge.payment_intent as string;
+      const charge = event.data.object;
+      const paymentIntent = charge.payment_intent;
 
       if (paymentIntent) {
-        // Find the purchase and reverse credits
         const { data: purchase } = await supabase
           .from("credit_purchases")
           .select("id, user_id, credits_added, status")
@@ -121,19 +163,14 @@ export async function POST(request: Request) {
         if (purchase && purchase.status !== "refunded") {
           await supabase.from("credit_purchases").update({ status: "refunded" }).eq("id", purchase.id);
 
-          // Deduct the credits (best effort — balance may go negative, which is fine)
           const { data: profile } = await supabase
             .from("profiles")
             .select("credits_remaining")
             .eq("id", purchase.user_id)
             .single();
 
-          const currentCredits = profile?.credits_remaining || 0;
-          const newCredits = Math.max(0, currentCredits - purchase.credits_added);
-          await supabase
-            .from("profiles")
-            .update({ credits_remaining: newCredits })
-            .eq("id", purchase.user_id);
+          const newCredits = Math.max(0, (profile?.credits_remaining || 0) - purchase.credits_added);
+          await supabase.from("profiles").update({ credits_remaining: newCredits }).eq("id", purchase.user_id);
 
           console.log("Stripe: refund processed", { userId: purchase.user_id, credits: purchase.credits_added });
         }
@@ -142,12 +179,11 @@ export async function POST(request: Request) {
     }
 
     case "charge.dispute.created": {
-      const dispute = event.data.object as Stripe.Dispute;
+      const dispute = event.data.object;
       console.error("STRIPE DISPUTE ALERT:", {
         amount: dispute.amount,
         reason: dispute.reason,
         chargeId: dispute.charge,
-        created: new Date(dispute.created * 1000).toISOString(),
       });
       break;
     }
