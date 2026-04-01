@@ -50,7 +50,10 @@ export default async function DashboardPage() {
 
       <div className="mt-5">
         <h2 className="text-sm font-medium mb-2">Start a new report</h2>
-        <DomainInput credits={profile?.credits_remaining ?? 0} />
+        <DomainInput
+          credits={profile?.credits_remaining ?? 0}
+          existingDomains={(reports || []).map((r) => ({ domain: r.domain, date: r.created_at }))}
+        />
       </div>
 
       {/* Achievements */}
