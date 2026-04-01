@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "./theme-provider";
 import { createClient } from "@/lib/supabase/client";
+import { isAdmin } from "@/lib/admin";
 
 interface SidebarProps {
   user: { full_name: string; email: string; credits_remaining: number; total_reports_run: number } | null;
@@ -14,6 +15,13 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: "grid" },
   { href: "/dashboard/reports", label: "My reports", icon: "list" },
   { href: "/dashboard/progress", label: "Progress tracker", icon: "clock" },
+];
+
+const ADMIN_ITEMS = [
+  { href: "/dashboard/admin", label: "Admin Dashboard", icon: "chart" },
+  { href: "/dashboard/admin/users", label: "Users", icon: "users" },
+  { href: "/dashboard/admin/reports", label: "Reports", icon: "list" },
+  { href: "/dashboard/admin/invoices", label: "Invoices", icon: "card" },
 ];
 
 export function Sidebar({ user }: SidebarProps) {
@@ -104,6 +112,17 @@ export function Sidebar({ user }: SidebarProps) {
           {NAV_ITEMS.map((item) => (
             <NavItem key={item.href} {...item} active={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))} collapsed={collapsed} onClick={() => setMobileOpen(false)} />
           ))}
+
+          {/* Admin section */}
+          {isAdmin(user?.email) && (
+            <>
+              <div className="h-px bg-border my-2 mx-2.5" />
+              {!collapsed && <div className="text-[10px] text-[#06B6D4] uppercase tracking-wider px-2.5 py-1 font-medium">Admin</div>}
+              {ADMIN_ITEMS.map((item) => (
+                <NavItem key={item.href} {...item} active={pathname === item.href || (item.href !== "/dashboard/admin" && pathname.startsWith(item.href))} collapsed={collapsed} onClick={() => setMobileOpen(false)} />
+              ))}
+            </>
+          )}
         </nav>
 
         {/* Credits box */}
@@ -243,6 +262,8 @@ function NavIcon({ name }: { name: string }) {
     case "list": return <svg {...p}><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
     case "clock": return <svg {...p}><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
     case "card": return <svg {...p}><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M2 6h12" stroke="currentColor" strokeWidth="1.2"/></svg>;
+    case "chart": return <svg {...p}><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M11 5h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+    case "users": return <svg {...p}><circle cx="6" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.2"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/><circle cx="11.5" cy="5.5" r="1.8" stroke="currentColor" strokeWidth="1"/><path d="M11 10c1.5 0 3.5 1 3.5 3" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
     default: return <div className="w-4 h-4" />;
   }
 }
