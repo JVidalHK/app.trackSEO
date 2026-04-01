@@ -108,11 +108,12 @@ export default async function CreditsPage({
               <thead>
                 <tr className="border-b border-border text-xs text-text-secondary">
                   <th className="text-left font-medium px-4 py-2.5">Date</th>
-                  <th className="text-left font-medium px-4 py-2.5">Package</th>
-                  <th className="text-left font-medium px-4 py-2.5">Credits</th>
+                  <th className="text-left font-medium px-4 py-2.5 hidden sm:table-cell">Package</th>
+                  <th className="text-left font-medium px-4 py-2.5 hidden sm:table-cell">Credits</th>
                   <th className="text-left font-medium px-4 py-2.5">Amount</th>
-                  <th className="text-left font-medium px-4 py-2.5">Status</th>
-                  <th className="text-right font-medium px-4 py-2.5">Invoice</th>
+                  <th className="text-center font-medium px-4 py-2.5">Status</th>
+                  <th className="text-center font-medium px-4 py-2.5">View</th>
+                  <th className="text-center font-medium px-4 py-2.5">Invoice</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,63 +122,56 @@ export default async function CreditsPage({
                     <td className="px-4 py-2.5 text-text-secondary">
                       {new Date(p.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-4 py-2.5">{formatPackage(p.package)}</td>
-                    <td className="px-4 py-2.5">{p.credits_added}</td>
+                    <td className="px-4 py-2.5 hidden sm:table-cell">{formatPackage(p.package)}</td>
+                    <td className="px-4 py-2.5 hidden sm:table-cell">{p.credits_added}</td>
                     <td className="px-4 py-2.5">
                       {p.amount_cents > 0 ? `$${(p.amount_cents / 100).toFixed(2)}` : "—"}
                       {p.currency && p.currency !== "usd" ? ` ${p.currency.toUpperCase()}` : ""}
                     </td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-4 py-2.5 text-center">
                       <StatusBadge status={p.status} />
                     </td>
-                    <td className="px-4 py-2.5 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {p.receipt_url ? (
-                          <Link
-                            href={p.receipt_url}
-                            target="_blank"
-                            className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
-                            title="View receipt"
-                          >
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                              <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-                              <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-                              <path d="M5 8h6M5 10.5h4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                            </svg>
-                            View
-                          </Link>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 text-xs text-text-tertiary cursor-default" title="Invoice unavailable">
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" opacity="0.4">
-                              <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-                              <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-                            </svg>
-                            View
-                          </span>
-                        )}
-                        {p.invoice_pdf_url || p.receipt_url ? (
-                          <Link
-                            href={p.invoice_pdf_url || p.receipt_url}
-                            target="_blank"
-                            className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
-                            title="Download invoice"
-                          >
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                              <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                              <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                            </svg>
-                            PDF
-                          </Link>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 text-xs text-text-tertiary cursor-default" title="Invoice unavailable">
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" opacity="0.4">
-                              <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                              <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                            </svg>
-                            PDF
-                          </span>
-                        )}
-                      </div>
+                    <td className="px-4 py-2.5 text-center">
+                      {p.receipt_url ? (
+                        <Link href={p.receipt_url} target="_blank" title="Preview invoice">
+                          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="inline-block text-[#EF4444] hover:text-[#DC2626] transition-colors cursor-pointer">
+                            <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" fill="currentColor" fillOpacity="0.08"/>
+                            <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                            <text x="5" y="12" fontSize="4.5" fontWeight="700" fill="currentColor" fontFamily="system-ui">PDF</text>
+                          </svg>
+                        </Link>
+                      ) : (
+                        <span title="Invoice unavailable">
+                          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="inline-block text-text-tertiary opacity-30">
+                            <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                            <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2.5 text-center">
+                      {p.invoice_pdf_url || p.receipt_url ? (
+                        <Link
+                          href={p.invoice_pdf_url || p.receipt_url}
+                          target="_blank"
+                          className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
+                          title="Download invoice"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                          </svg>
+                          PDF
+                        </Link>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-xs text-text-tertiary opacity-30 cursor-default" title="Invoice unavailable">
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                          </svg>
+                          PDF
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
