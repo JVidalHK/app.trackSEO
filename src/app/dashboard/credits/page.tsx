@@ -158,7 +158,8 @@ export default async function CreditsPage({
                     <td className="px-4 py-2.5 text-center">
                       {p.status === "completed" ? (
                         <Link
-                          href={`/dashboard/invoice/${p.id}`}
+                          href={`/dashboard/invoice/${p.id}?download=true`}
+                          target="_blank"
                           className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] hover:scale-105 active:scale-95 transition-all duration-150"
                           title="Download invoice PDF"
                         >

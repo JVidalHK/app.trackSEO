@@ -1,8 +1,19 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function InvoiceView({ purchase }: { purchase: any }) {
+  const searchParams = useSearchParams();
+
+  // Auto-trigger print dialog when opened with ?download=true
+  useEffect(() => {
+    if (searchParams.get("download") === "true") {
+      setTimeout(() => window.print(), 500);
+    }
+  }, [searchParams]);
   const inv = purchase.invoice_data || {};
   const paidAt = inv.paid_at ? new Date(inv.paid_at) : new Date(purchase.created_at);
   const currency = (inv.currency || purchase.currency || "usd").toUpperCase();
