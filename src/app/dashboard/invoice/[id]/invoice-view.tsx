@@ -1,19 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function InvoiceView({ purchase }: { purchase: any }) {
   const searchParams = useSearchParams();
+  const invoiceRef = useRef<HTMLDivElement>(null);
 
-  // Auto-trigger print dialog when opened with ?download=true
+  const downloadPdf = useCallback(async () => {
+    if (!invoiceRef.current) return;
+    const html2canvas = (await import("html2canvas")).default;
+    const { jsPDF } = await import("jspdf");
+
+    const canvas = await html2canvas(invoiceRef.current, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
+
+    const imgWidth = 210; // A4 width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pdf = new jsPDF("p", "mm", "a4");
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, imgWidth, imgHeight);
+
+    const invNum = (purchase.invoice_data?.invoice_number || "invoice").replace(/\s/g, "_");
+    pdf.save(`TrackSEO_${invNum}.pdf`);
+  }, [purchase]);
+
+  // Auto-download when opened with ?download=true
   useEffect(() => {
     if (searchParams.get("download") === "true") {
-      setTimeout(() => window.print(), 500);
+      setTimeout(() => downloadPdf(), 800);
     }
-  }, [searchParams]);
+  }, [searchParams, downloadPdf]);
+
   const inv = purchase.invoice_data || {};
   const paidAt = inv.paid_at ? new Date(inv.paid_at) : new Date(purchase.created_at);
   const currency = (inv.currency || purchase.currency || "usd").toUpperCase();
@@ -51,7 +73,7 @@ export function InvoiceView({ purchase }: { purchase: any }) {
     <div>
       {/* Action bar */}
       <div className="screen-only flex items-center gap-2 mb-4">
-        <button onClick={() => window.print()}
+        <button onClick={downloadPdf}
           className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-brand-gradient text-white hover:opacity-90 active:scale-[0.97] transition-all">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
           Download PDF
@@ -63,7 +85,7 @@ export function InvoiceView({ purchase }: { purchase: any }) {
       </div>
 
       {/* Invoice */}
-      <div style={{ fontFamily: "-apple-system,system-ui,sans-serif", maxWidth: 620, margin: "0 auto", background: "#fff", borderRadius: 12, overflow: "hidden", color: "#0F172A" }}>
+      <div ref={invoiceRef} style={{ fontFamily: "-apple-system,system-ui,sans-serif", maxWidth: 620, margin: "0 auto", background: "#fff", borderRadius: 12, overflow: "hidden", color: "#0F172A" }}>
 
         {/* Header */}
         <div style={{ padding: "32px 36px 24px", borderBottom: "2px solid #2563EB" }}>
