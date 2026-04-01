@@ -142,7 +142,7 @@ export function FactorBar({ label, tipKey, score }: { label: string; tipKey: str
   const color = score >= 70 ? "#10B981" : score >= 40 ? "#F59E0B" : "#EF4444";
   return (
     <div className="flex items-center gap-2 py-1.5 border-b border-border last:border-b-0 text-xs">
-      <span className="min-w-[100px]">
+      <span className="w-[130px] flex-shrink-0">
         <Tip k={tipKey}>{label}</Tip>
       </span>
       <div className="flex-1 h-1.5 bg-surface rounded-full overflow-hidden">
