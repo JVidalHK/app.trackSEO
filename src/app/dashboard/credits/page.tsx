@@ -107,10 +107,10 @@ export default async function CreditsPage({
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-xs text-text-secondary">
-                  <th className="text-left font-medium px-4 py-2.5">Date</th>
-                  <th className="text-left font-medium px-4 py-2.5 hidden sm:table-cell">Package</th>
-                  <th className="text-left font-medium px-4 py-2.5 hidden sm:table-cell">Credits</th>
-                  <th className="text-left font-medium px-4 py-2.5">Amount</th>
+                  <th className="text-center font-medium px-4 py-2.5">Date</th>
+                  <th className="text-center font-medium px-4 py-2.5 hidden sm:table-cell">Package</th>
+                  <th className="text-center font-medium px-4 py-2.5 hidden sm:table-cell">Credits</th>
+                  <th className="text-center font-medium px-4 py-2.5">Amount</th>
                   <th className="text-center font-medium px-4 py-2.5">Status</th>
                   <th className="text-center font-medium px-4 py-2.5">View</th>
                   <th className="text-center font-medium px-4 py-2.5">Invoice</th>
@@ -119,12 +119,12 @@ export default async function CreditsPage({
               <tbody>
                 {purchases.map((p) => (
                   <tr key={p.id} className="border-b border-border last:border-b-0">
-                    <td className="px-4 py-2.5 text-text-secondary">
+                    <td className="px-4 py-2.5 text-center text-text-secondary">
                       {new Date(p.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell">{formatPackage(p.package)}</td>
-                    <td className="px-4 py-2.5 hidden sm:table-cell">{p.credits_added}</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-4 py-2.5 text-center hidden sm:table-cell">{formatPackage(p.package)}</td>
+                    <td className="px-4 py-2.5 text-center hidden sm:table-cell">{p.credits_added}</td>
+                    <td className="px-4 py-2.5 text-center">
                       {p.amount_cents > 0 ? `$${(p.amount_cents / 100).toFixed(2)}` : "—"}
                       {p.currency && p.currency !== "usd" ? ` ${p.currency.toUpperCase()}` : ""}
                     </td>
@@ -133,18 +133,19 @@ export default async function CreditsPage({
                     </td>
                     <td className="px-4 py-2.5 text-center">
                       {p.receipt_url ? (
-                        <Link href={p.receipt_url} target="_blank" title="Preview invoice">
-                          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="inline-block text-[#EF4444] hover:text-[#DC2626] transition-colors cursor-pointer">
-                            <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" fill="currentColor" fillOpacity="0.08"/>
-                            <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
-                            <text x="5" y="12" fontSize="4.5" fontWeight="700" fill="currentColor" fontFamily="system-ui">PDF</text>
+                        <Link href={p.receipt_url} target="_blank" title="Preview invoice" className="inline-block hover:scale-110 active:scale-95 transition-transform duration-150">
+                          <svg width="24" height="24" viewBox="0 0 32 32" className="inline-block">
+                            <path d="M6 2h14l8 8v18a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" fill="#E8E5E0"/>
+                            <path d="M20 2l8 8h-6a2 2 0 01-2-2V2z" fill="#CBC8C3"/>
+                            <rect x="6" y="16" width="16" height="9" rx="1.5" fill="#E24B4A"/>
+                            <text x="14" y="23" textAnchor="middle" fontSize="7" fontWeight="700" fill="#fff" fontFamily="system-ui">PDF</text>
                           </svg>
                         </Link>
                       ) : (
-                        <span title="Invoice unavailable">
-                          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="inline-block text-text-tertiary opacity-30">
-                            <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
-                            <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                        <span title="Invoice unavailable" className="inline-block opacity-25">
+                          <svg width="24" height="24" viewBox="0 0 32 32" className="inline-block">
+                            <path d="M6 2h14l8 8v18a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" fill="currentColor" fillOpacity="0.15"/>
+                            <path d="M20 2l8 8h-6a2 2 0 01-2-2V2z" fill="currentColor" fillOpacity="0.1"/>
                           </svg>
                         </span>
                       )}
@@ -154,18 +155,18 @@ export default async function CreditsPage({
                         <Link
                           href={p.invoice_pdf_url || p.receipt_url}
                           target="_blank"
-                          className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
-                          title="Download invoice"
+                          className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] hover:scale-105 active:scale-95 transition-all duration-150"
+                          title="Download invoice PDF"
                         >
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                             <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
                           </svg>
                           PDF
                         </Link>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-xs text-text-tertiary opacity-30 cursor-default" title="Invoice unavailable">
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                        <span className="inline-flex items-center gap-1 text-xs text-text-tertiary opacity-25 cursor-default" title="Invoice unavailable">
+                          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                             <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
                           </svg>
