@@ -41,7 +41,6 @@ export default async function CreditsPage({
         You have <span className="text-[#06B6D4] font-medium">{profile?.credits_remaining ?? 0}</span> credits remaining
       </p>
 
-      {/* Success/cancel messages */}
       {params.success && (
         <div className="text-xs text-success bg-success/10 px-3 py-2 rounded-lg mb-4">
           Payment successful! Your credits have been added.
@@ -57,8 +56,8 @@ export default async function CreditsPage({
         {PACKAGES.map((pkg) => (
           <div
             key={pkg.id}
-            className={`bg-surface rounded-xl p-5 border ${
-              pkg.popular ? "border-[#2563EB]" : "border-border"
+            className={`bg-surface rounded-xl p-5 border transition-all duration-200 hover:shadow-lg hover:shadow-accent/5 ${
+              pkg.popular ? "border-[#2563EB] hover:border-[#06B6D4]" : "border-border hover:border-border-light"
             } relative`}
           >
             {pkg.popular && (
@@ -83,10 +82,10 @@ export default async function CreditsPage({
               <input type="hidden" name="package" value={pkg.id} />
               <button
                 type="submit"
-                className={`w-full h-9 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 ${
+                className={`w-full h-9 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
                   pkg.popular
-                    ? "bg-brand-gradient text-white"
-                    : "bg-bg border border-border-light text-text-primary"
+                    ? "bg-brand-gradient text-white hover:brightness-110 hover:shadow-md hover:shadow-accent/20 active:scale-[0.97]"
+                    : "bg-bg border border-border-light text-text-primary hover:bg-surface-hover hover:border-accent/30 active:scale-[0.97]"
                 }`}
               >
                 Buy {pkg.credits} credit{pkg.credits > 1 ? "s" : ""}
@@ -113,7 +112,7 @@ export default async function CreditsPage({
                   <th className="text-left font-medium px-4 py-2.5">Credits</th>
                   <th className="text-left font-medium px-4 py-2.5">Amount</th>
                   <th className="text-left font-medium px-4 py-2.5">Status</th>
-                  <th className="text-left font-medium px-4 py-2.5">Receipt</th>
+                  <th className="text-right font-medium px-4 py-2.5">Invoice</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,18 +130,54 @@ export default async function CreditsPage({
                     <td className="px-4 py-2.5">
                       <StatusBadge status={p.status} />
                     </td>
-                    <td className="px-4 py-2.5">
-                      {p.receipt_url ? (
-                        <Link href={p.receipt_url} target="_blank" className="text-xs text-[#06B6D4] hover:underline">
-                          View
-                        </Link>
-                      ) : p.invoice_pdf_url ? (
-                        <Link href={p.invoice_pdf_url} target="_blank" className="text-xs text-[#06B6D4] hover:underline">
-                          Download
-                        </Link>
-                      ) : (
-                        <span className="text-xs text-text-tertiary">—</span>
-                      )}
+                    <td className="px-4 py-2.5 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {p.receipt_url ? (
+                          <Link
+                            href={p.receipt_url}
+                            target="_blank"
+                            className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
+                            title="View receipt"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                              <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                              <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                              <path d="M5 8h6M5 10.5h4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            View
+                          </Link>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-xs text-text-tertiary cursor-default" title="Invoice unavailable">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" opacity="0.4">
+                              <path d="M2 2h8l4 4v8H2V2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                              <path d="M10 2v4h4" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                            </svg>
+                            View
+                          </span>
+                        )}
+                        {p.invoice_pdf_url || p.receipt_url ? (
+                          <Link
+                            href={p.invoice_pdf_url || p.receipt_url}
+                            target="_blank"
+                            className="inline-flex items-center gap-1 text-xs text-[#06B6D4] hover:text-[#2563EB] transition-colors"
+                            title="Download invoice"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                              <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            PDF
+                          </Link>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-xs text-text-tertiary cursor-default" title="Invoice unavailable">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" opacity="0.4">
+                              <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            PDF
+                          </span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
