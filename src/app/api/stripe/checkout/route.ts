@@ -81,14 +81,6 @@ export async function POST(request: Request) {
       cancel_url: `${appUrl}/dashboard/credits?canceled=true`,
     };
 
-    // Only enable automatic tax if Stripe Tax is active (skip if not configured)
-    try {
-      sessionParams.automatic_tax = { enabled: true };
-      sessionParams.tax_id_collection = { enabled: true };
-    } catch {
-      // Tax not configured — proceed without
-    }
-
     const session = await stripe.checkout.sessions.create(sessionParams);
 
     if (!session.url) {
