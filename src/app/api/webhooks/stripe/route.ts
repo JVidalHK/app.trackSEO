@@ -162,7 +162,10 @@ export async function POST(request: Request) {
       // Add product info to invoice data
       invoiceData.product_name = formatPackageName(pkg);
       invoiceData.credits = credits;
-      invoiceData.invoice_number = `INV-${Date.now().toString(36).toUpperCase()}`;
+      // Unique invoice number: INV-YYYY-XXXXX (year + 5-char unique from timestamp)
+      const year = new Date().getFullYear();
+      const seq = Date.now().toString().slice(-5);
+      invoiceData.invoice_number = `INV-${year}-${seq}`;
 
       const customerId = session.customer || null;
 

@@ -2,18 +2,16 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-interface InvoiceViewProps {
-  purchase: any;
-}
-
-export function InvoiceView({ purchase }: InvoiceViewProps) {
+export function InvoiceView({ purchase }: { purchase: any }) {
   const inv = purchase.invoice_data || {};
   const paidAt = inv.paid_at ? new Date(inv.paid_at) : new Date(purchase.created_at);
   const currency = (inv.currency || purchase.currency || "usd").toUpperCase();
   const total = purchase.amount_cents || inv.total || inv.amount || 0;
   const subtotal = inv.subtotal || total;
   const taxAmount = inv.tax_amount || 0;
-  const invoiceNumber = inv.invoice_number || `INV-${purchase.id?.slice(0, 8)?.toUpperCase()}`;
+  const invoiceNumber = inv.invoice_number || `INV-${new Date(purchase.created_at).getFullYear()}-${purchase.id?.slice(0, 5)?.toUpperCase()}`;
+  const receiptNumber = inv.charge_id || inv.payment_intent_id || purchase.stripe_payment_intent || "—";
+  const customerId = purchase.stripe_customer_id || "—";
 
   const billing = {
     name: inv.billing_name || "",
@@ -22,171 +20,206 @@ export function InvoiceView({ purchase }: InvoiceViewProps) {
   };
 
   const card = {
-    brand: inv.card_brand ? inv.card_brand.charAt(0).toUpperCase() + inv.card_brand.slice(1) : null,
+    brand: inv.card_brand || null,
     last4: inv.card_last4 || null,
+    exp_month: inv.card_exp_month,
+    exp_year: inv.card_exp_year,
   };
+
+  const brandLabel = card.brand ? card.brand.charAt(0).toUpperCase() + card.brand.slice(1) : null;
+  const productName = inv.product_name || formatPkg(purchase.package);
+  const creditCount = purchase.credits_added || inv.credits || 0;
+
+  // Tax label
+  const taxBreakdown = inv.tax_breakdown || [];
+  const taxLabel = taxBreakdown.length > 0
+    ? `${taxBreakdown[0].tax_rate_details?.display_name || "Tax"} (${taxBreakdown[0].tax_rate_details?.percentage_decimal || ""}% — ${taxBreakdown[0].tax_rate_details?.country || ""})`
+    : taxAmount > 0 ? "Tax" : "Tax (0%)";
 
   return (
     <div>
-      {/* Action bar — hidden in print */}
+      {/* Action bar */}
       <div className="screen-only flex items-center gap-2 mb-4">
-        <button
-          onClick={() => window.print()}
-          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-brand-gradient text-white hover:opacity-90 active:scale-[0.97] transition-all"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-          </svg>
+        <button onClick={() => window.print()}
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-brand-gradient text-white hover:opacity-90 active:scale-[0.97] transition-all">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
           Download PDF
         </button>
-        <button
-          onClick={() => window.history.back()}
-          className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors"
-        >
+        <button onClick={() => window.history.back()}
+          className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">
           Back to purchases
         </button>
       </div>
 
-      {/* Invoice — light theme for printing */}
-      <div className="bg-white text-[#1a1a1a] rounded-xl p-8 sm:p-10 max-w-2xl mx-auto print:rounded-none print:shadow-none print:p-10" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      {/* Invoice */}
+      <div style={{ fontFamily: "-apple-system,system-ui,sans-serif", maxWidth: 620, margin: "0 auto", background: "#fff", borderRadius: 12, overflow: "hidden", color: "#0F172A" }}>
 
         {/* Header */}
-        <div className="flex items-start justify-between mb-8 pb-6" style={{ borderBottom: "2px solid #2563EB" }}>
-          <div className="flex items-center gap-2">
-            <svg width="28" height="28" viewBox="0 0 32 32">
-              <defs><linearGradient id="lgInv" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
-              <rect width="32" height="32" rx="7" fill="url(#lgInv)"/>
-              <path d="M8 23L13.5 16.5L17 19.5L24 11" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M20 11L24 11L24 15" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+        <div style={{ padding: "32px 36px 24px", borderBottom: "2px solid #2563EB" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="ig" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs><rect width="36" height="36" rx="8" fill="url(#ig)"/><path d="M8 26L14 19L18 22L28 12" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M23 12L28 12L28 17" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <div>
+                <div style={{ fontSize: 20, fontWeight: 600, color: "#0F172A", letterSpacing: -0.3 }}>{"Track"}<span style={{ color: "#2563EB" }}>{"SEO"}</span></div>
+                <div style={{ fontSize: 11, color: "#94A3B8", marginTop: 2 }}>Track your SEO like a Pro</div>
+              </div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <h1 style={{ fontSize: 24, fontWeight: 600, color: "#0F172A", margin: 0 }}>Invoice</h1>
+              <div style={{ fontSize: 13, color: "#64748B", marginTop: 2 }}>{invoiceNumber}</div>
+              <div style={{ display: "inline-block", padding: "3px 10px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#E6F9F0", color: "#059669", marginTop: 6 }}>Paid</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: "28px 36px" }}>
+
+          {/* From / Bill to */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 28 }}>
             <div>
-              <div style={{ fontSize: 18, fontWeight: 600 }}>{"Track"}<span style={{ color: "#2563EB" }}>{"SEO"}</span></div>
-              <div style={{ fontSize: 10, color: "#888" }}>Invoice</div>
+              <h3 style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, margin: "0 0 6px" }}>From</h3>
+              <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.6, margin: 0 }}>
+                <span style={{ fontWeight: 600, color: "#0F172A" }}>PostReach AI Limited</span><br />
+                Hong Kong<br />
+                hello@trackseo.pro
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, margin: "0 0 6px" }}>Bill to</h3>
+              <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.6, margin: 0 }}>
+                {billing.name && <><span style={{ fontWeight: 600, color: "#0F172A" }}>{billing.name}</span><br /></>}
+                {billing.address.line1 && <>{billing.address.line1}<br /></>}
+                {billing.address.line2 && <>{billing.address.line2}<br /></>}
+                {[billing.address.city, billing.address.state, billing.address.postal_code].filter(Boolean).join(", ")}
+                {billing.address.country && <><br />{billing.address.country}</>}
+                {billing.email && <><br />{billing.email}</>}
+                {!billing.name && !billing.email && <span style={{ color: "#94A3B8" }}>Customer details not provided at checkout</span>}
+              </p>
             </div>
           </div>
-          <div style={{ textAlign: "right", fontSize: 11, color: "#666" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a" }}>{invoiceNumber}</div>
-            <div>Date: {paidAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</div>
-            <div>Status: <span style={{ color: "#10B981", fontWeight: 500 }}>Paid</span></div>
-          </div>
-        </div>
 
-        {/* From / To */}
-        <div className="grid grid-cols-2 gap-8 mb-8" style={{ fontSize: 11 }}>
-          <div>
-            <div style={{ fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }}>From</div>
-            <div style={{ fontWeight: 600 }}>PostReach AI Limited</div>
-            <div style={{ color: "#666", lineHeight: 1.6 }}>
-              Hong Kong<br />
-              hello@trackseo.pro<br />
-              trackseo.pro
-            </div>
+          {/* Details grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 28 }}>
+            <DetailBox label="Invoice date" value={paidAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} />
+            <DetailBox label="Payment date" value={paidAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} />
+            <DetailBox label="Receipt number" value={receiptNumber.length > 20 ? receiptNumber.slice(0, 20) + "…" : receiptNumber} />
+            <DetailBox label="Customer ID" value={customerId.length > 20 ? customerId.slice(0, 20) + "…" : customerId} />
           </div>
-          <div>
-            <div style={{ fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }}>Bill to</div>
-            {billing.name && <div style={{ fontWeight: 600 }}>{billing.name}</div>}
-            <div style={{ color: "#666", lineHeight: 1.6 }}>
-              {billing.email && <>{billing.email}<br /></>}
-              {billing.address.line1 && <>{billing.address.line1}<br /></>}
-              {billing.address.line2 && <>{billing.address.line2}<br /></>}
-              {[billing.address.city, billing.address.state, billing.address.postal_code].filter(Boolean).join(", ")}
-              {billing.address.country && <><br />{billing.address.country}</>}
-              {!billing.name && !billing.email && <span style={{ color: "#aaa" }}>Customer details not provided</span>}
-            </div>
-          </div>
-        </div>
 
-        {/* Line items */}
-        <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", marginBottom: 24 }}>
-          <thead>
-            <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
-              <th style={{ textAlign: "left", padding: "8px 0", fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase" }}>Description</th>
-              <th style={{ textAlign: "center", padding: "8px 0", fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase" }}>Qty</th>
-              <th style={{ textAlign: "right", padding: "8px 0", fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase" }}>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: "1px solid #f3f4f6" }}>
-              <td style={{ padding: "12px 0" }}>
-                <div style={{ fontWeight: 500 }}>{inv.product_name || formatPkg(purchase.package)}</div>
-                <div style={{ fontSize: 10, color: "#888" }}>{purchase.credits_added} SEO report credit{purchase.credits_added > 1 ? "s" : ""}</div>
-              </td>
-              <td style={{ padding: "12px 0", textAlign: "center" }}>1</td>
-              <td style={{ padding: "12px 0", textAlign: "right", fontWeight: 500 }}>{formatAmount(subtotal, currency)}</td>
-            </tr>
-          </tbody>
-        </table>
+          {/* Line items */}
+          <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 24 }}>
+            <thead>
+              <tr style={{ borderBottom: "1px solid #E2E8F0" }}>
+                <th style={{ width: "55%", fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, padding: "10px 0", textAlign: "left" }}>Description</th>
+                <th style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, padding: "10px 0", textAlign: "left" }}>Qty</th>
+                <th style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, padding: "10px 0", textAlign: "left" }}>Unit price</th>
+                <th style={{ fontSize: 11, fontWeight: 500, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 0.5, padding: "10px 0", textAlign: "right" }}>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: "1px solid #F1F5F9" }}>
+                <td style={{ padding: "14px 0", fontSize: 13, color: "#334155" }}>
+                  <div style={{ fontWeight: 500, color: "#0F172A" }}>{productName}</div>
+                  <div style={{ fontSize: 11, color: "#94A3B8", marginTop: 2 }}>{creditCount} SEO audit report credit{creditCount > 1 ? "s" : ""} · Credits never expire</div>
+                </td>
+                <td style={{ padding: "14px 0", fontSize: 13, color: "#334155" }}>1</td>
+                <td style={{ padding: "14px 0", fontSize: 13, color: "#334155" }}>{fmtAmt(subtotal, currency)}</td>
+                <td style={{ padding: "14px 0", fontSize: 13, fontWeight: 500, color: "#0F172A", textAlign: "right" }}>{fmtAmt(subtotal, currency)}</td>
+              </tr>
+            </tbody>
+          </table>
 
-        {/* Totals */}
-        <div className="flex justify-end mb-8">
-          <div style={{ width: 240 }}>
-            <div className="flex justify-between py-1.5" style={{ fontSize: 12, color: "#666" }}>
-              <span>Subtotal</span>
-              <span>{formatAmount(subtotal, currency)}</span>
-            </div>
-            {taxAmount > 0 && (
-              <div className="flex justify-between py-1.5" style={{ fontSize: 12, color: "#666" }}>
-                <span>Tax</span>
-                <span>{formatAmount(taxAmount, currency)}</span>
+          {/* Totals */}
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 28 }}>
+            <div style={{ width: 260 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 13, color: "#64748B" }}>
+                <span>Subtotal</span>
+                <span>{fmtAmt(subtotal, currency)}</span>
               </div>
-            )}
-            {taxAmount === 0 && (
-              <div className="flex justify-between py-1.5" style={{ fontSize: 12, color: "#aaa" }}>
-                <span>Tax</span>
-                <span>$0.00</span>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 13, color: "#64748B" }}>
+                <span>{taxLabel}</span>
+                <span>{fmtAmt(taxAmount, currency)}</span>
               </div>
-            )}
-            <div className="flex justify-between py-2" style={{ fontSize: 14, fontWeight: 600, borderTop: "2px solid #1a1a1a", marginTop: 4 }}>
-              <span>Total</span>
-              <span>{formatAmount(total, currency)}</span>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0 6px", fontSize: 15, fontWeight: 600, color: "#0F172A", borderTop: "1.5px solid #E2E8F0", marginTop: 6 }}>
+                <span>Total paid</span>
+                <span>{fmtAmt(total, currency)}</span>
+              </div>
             </div>
+          </div>
+
+          {/* Payment method */}
+          {brandLabel && card.last4 && (
+            <div style={{ padding: "16px 20px", background: "#F8FAFC", borderRadius: 10, display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+              <CardIcon brand={card.brand} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "#0F172A" }}>{brandLabel} ending in {card.last4}</div>
+                <div style={{ fontSize: 11, color: "#94A3B8", marginTop: 1 }}>
+                  Charged on {paidAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} at {paidAt.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" })}
+                </div>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#059669" }}>Successful</div>
+            </div>
+          )}
+
+          {/* Credits note */}
+          <div style={{ padding: "14px 18px", background: "#F0F7FF", borderRadius: "0 8px 8px 0", borderLeft: "3px solid #2563EB", fontSize: 12, color: "#334155", lineHeight: 1.6, marginBottom: 0 }}>
+            <div style={{ fontWeight: 600, color: "#0F172A", marginBottom: 2 }}>{creditCount} credit{creditCount > 1 ? "s" : ""} added to your account</div>
+            Use your credits at <span style={{ color: "#2563EB", fontWeight: 500 }}>app.trackseo.pro</span> to generate SEO audit reports. Credits never expire.
           </div>
         </div>
-
-        {/* Payment method */}
-        {card.brand && card.last4 && (
-          <div style={{ background: "#f8fafc", borderRadius: 8, padding: "12px 16px", marginBottom: 24, fontSize: 11 }}>
-            <div style={{ fontWeight: 600, color: "#888", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }}>Payment method</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <CardBrandIcon brand={inv.card_brand} />
-              <span style={{ fontWeight: 500 }}>{card.brand} ending in {card.last4}</span>
-              {inv.card_exp_month && inv.card_exp_year && (
-                <span style={{ color: "#888" }}>· Exp {String(inv.card_exp_month).padStart(2, "0")}/{String(inv.card_exp_year).slice(-2)}</span>
-              )}
-            </div>
-          </div>
-        )}
 
         {/* Footer */}
-        <div style={{ borderTop: "1px solid #e5e7eb", paddingTop: 16, fontSize: 10, color: "#aaa", textAlign: "center", lineHeight: 1.6 }}>
-          PostReach AI Limited · Hong Kong · trackseo.pro<br />
-          Thank you for your purchase. This invoice serves as your receipt.
+        <div style={{ padding: "20px 36px", background: "#F8FAFC", borderTop: "1px solid #F1F5F9" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ fontSize: 11, color: "#94A3B8", lineHeight: 1.6 }}>
+              PostReach AI Limited · Hong Kong<br />
+              hello@trackseo.pro · trackseo.pro
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 500 }}>
+              <svg width="16" height="16" viewBox="0 0 36 36" fill="none"><defs><linearGradient id="ig2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs><rect width="36" height="36" rx="8" fill="url(#ig2)"/><path d="M8 26L14 19L18 22L28 12" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M23 12L28 12L28 17" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span style={{ color: "#94A3B8", fontWeight: 500 }}>{"Track"}</span><span style={{ color: "#2563EB", fontWeight: 500 }}>{"SEO"}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function formatAmount(cents: number, currency: string): string {
-  const amount = cents / 100;
-  if (currency === "USD" || currency === "usd") return `$${amount.toFixed(2)}`;
-  return `${amount.toFixed(2)} ${currency}`;
+function DetailBox({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ padding: "10px 14px", background: "#F8FAFC", borderRadius: 8 }}>
+      <div style={{ fontSize: 11, color: "#94A3B8", marginBottom: 2 }}>{label}</div>
+      <div style={{ fontSize: 13, fontWeight: 500, color: "#0F172A" }}>{value}</div>
+    </div>
+  );
+}
+
+function fmtAmt(cents: number, currency: string): string {
+  const a = cents / 100;
+  if (currency === "USD") return `$${a.toFixed(2)}`;
+  return `${a.toFixed(2)} ${currency}`;
 }
 
 function formatPkg(pkg: string): string {
-  const map: Record<string, string> = { single_1: "Single Report", pack_5: "5 Report Pack", pack_10: "10 Report Pack", pack_20: "20 Report Pack" };
-  return map[pkg] || pkg;
+  const m: Record<string, string> = { single_1: "Single Report", pack_5: "5 Report Pack", pack_10: "10 Report Pack", pack_20: "20 Report Pack" };
+  return m[pkg] || pkg;
 }
 
-function CardBrandIcon({ brand }: { brand: string }) {
-  const color = brand === "visa" ? "#1A1F71" : brand === "mastercard" ? "#EB001B" : brand === "amex" ? "#006FCF" : "#666";
+function CardIcon({ brand }: { brand: string }) {
+  const colors: Record<string, string> = {
+    visa: "linear-gradient(135deg,#1A1F71,#F7B600)",
+    mastercard: "linear-gradient(135deg,#EB001B,#F79E1B)",
+    amex: "linear-gradient(135deg,#006FCF,#00A3E0)",
+  };
+  const bg = colors[brand] || "linear-gradient(135deg,#64748B,#94A3B8)";
+  const label = brand?.toUpperCase()?.slice(0, 4) || "CARD";
   return (
-    <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0 }}>
-      <rect width="24" height="16" rx="2" fill="#f1f5f9" stroke="#e2e8f0" strokeWidth="0.5" />
-      <text x="12" y="11" textAnchor="middle" fontSize="6" fontWeight="700" fill={color} fontFamily="system-ui">
-        {brand?.toUpperCase()?.slice(0, 4)}
-      </text>
-    </svg>
+    <div style={{ width: 42, height: 28, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: bg }}>
+      <svg width="28" height="10" viewBox="0 0 28 10" fill="none">
+        <text x="0" y="9" fontFamily="-apple-system,sans-serif" fontSize="9" fontWeight="700" fill="#fff" letterSpacing="0.5">{label}</text>
+      </svg>
+    </div>
   );
 }
