@@ -18,12 +18,16 @@ export async function POST(request: Request) {
 
   const serviceClient = createServiceClient();
 
-  // Debug: check credits first
+  // Check if user is banned
   const { data: profile, error: profileError } = await serviceClient
     .from("profiles")
-    .select("credits_remaining")
+    .select("credits_remaining, is_banned")
     .eq("id", user.id)
     .single();
+
+  if (profile?.is_banned) {
+    return NextResponse.json({ error: "Your account has been suspended. Contact support@postreach.ai for assistance." }, { status: 403 });
+  }
 
   console.log("DEBUG generate:", { userId: user.id, profile, profileError });
 

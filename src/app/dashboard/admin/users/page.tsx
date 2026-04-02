@@ -47,6 +47,24 @@ export default function AdminUsersPage() {
     fetchUsers();
   }
 
+  async function toggleBan(userId: string, currentlyBanned: boolean) {
+    await fetch("/api/admin/users/ban", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, banned: !currentlyBanned }),
+    });
+    fetchUsers();
+  }
+
+  async function deleteUser(userId: string) {
+    const res = await fetch("/api/admin/users/delete", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    if (res.ok) fetchUsers();
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
@@ -59,25 +77,29 @@ export default function AdminUsersPage() {
       </div>
 
       <div className="bg-surface rounded-xl border border-border overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs" style={{ tableLayout: "fixed" }}>
           <thead>
             <tr className="border-b border-border text-text-secondary">
-              <SortHeader label="Name" col="full_name" sort={sort} order={order} onSort={toggleSort} />
-              <SortHeader label="Email" col="email" sort={sort} order={order} onSort={toggleSort} />
-              <SortHeader label="Signup" col="created_at" sort={sort} order={order} onSort={toggleSort} />
-              <SortHeader label="Credits" col="credits_remaining" sort={sort} order={order} onSort={toggleSort} />
-              <SortHeader label="Reports" col="total_reports_run" sort={sort} order={order} onSort={toggleSort} />
-              <th className="text-center font-medium px-3 py-2">Revenue</th>
-              <th className="text-center font-medium px-3 py-2">Last Active</th>
+              <SortHeader label="Name" col="full_name" sort={sort} order={order} onSort={toggleSort} width="18%" />
+              <SortHeader label="Email" col="email" sort={sort} order={order} onSort={toggleSort} width="22%" />
+              <SortHeader label="Signup" col="created_at" sort={sort} order={order} onSort={toggleSort} width="11%" />
+              <SortHeader label="Credits" col="credits_remaining" sort={sort} order={order} onSort={toggleSort} width="10%" />
+              <SortHeader label="Reports" col="total_reports_run" sort={sort} order={order} onSort={toggleSort} width="10%" />
+              <th className="text-center font-medium px-3 py-2" style={{ width: "10%" }}>Revenue</th>
+              <th className="text-center font-medium px-3 py-2" style={{ width: "11%" }}>Last Active</th>
+              <th className="text-center font-medium px-3 py-2" style={{ width: "8%" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {loading && <tr><td colSpan={7} className="px-4 py-8 text-center text-text-secondary">Loading...</td></tr>}
-            {!loading && users.length === 0 && <tr><td colSpan={7} className="px-4 py-8 text-center text-text-secondary">No users found</td></tr>}
+            {loading && <tr><td colSpan={8} className="px-4 py-8 text-center text-text-secondary">Loading...</td></tr>}
+            {!loading && users.length === 0 && <tr><td colSpan={8} className="px-4 py-8 text-center text-text-secondary">No users found</td></tr>}
             {users.map((u) => (
               <tr key={u.id} className="border-b border-border last:border-b-0 hover:bg-surface-hover/50">
-                <td className="px-3 py-2 font-medium">{u.full_name || "—"}</td>
-                <td className="px-3 py-2 text-text-secondary">{u.email}</td>
+                <td className="px-3 py-2 font-medium text-center truncate">
+                  {u.full_name || "—"}
+                  {u.is_banned && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded bg-danger/10 text-danger font-medium">Banned</span>}
+                </td>
+                <td className="px-3 py-2 text-text-secondary text-center truncate">{u.email}</td>
                 <td className="px-3 py-2 text-text-secondary text-center">{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="px-3 py-2 text-center">
                   <InlineEdit value={u.credits_remaining} onSave={(v) => updateCredits(u.id, v)} />
@@ -85,6 +107,12 @@ export default function AdminUsersPage() {
                 <td className="px-3 py-2 text-center">{u.total_reports_run}</td>
                 <td className="px-3 py-2 text-center">{u.revenue > 0 ? `$${(u.revenue / 100).toFixed(2)}` : "—"}</td>
                 <td className="px-3 py-2 text-center text-text-secondary">{u.last_active ? new Date(u.last_active).toLocaleDateString() : "—"}</td>
+                <td className="px-3 py-2 text-center">
+                  <div className="flex items-center justify-center gap-1">
+                    <BanButton banned={u.is_banned} onToggle={() => toggleBan(u.id, u.is_banned)} />
+                    <DeleteUserButton onDelete={() => deleteUser(u.id)} />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -104,9 +132,9 @@ export default function AdminUsersPage() {
   );
 }
 
-function SortHeader({ label, col, sort, order, onSort }: { label: string; col: string; sort: string; order: string; onSort: (col: string) => void }) {
+function SortHeader({ label, col, sort, order, onSort, width }: { label: string; col: string; sort: string; order: string; onSort: (col: string) => void; width: string }) {
   return (
-    <th className="text-center font-medium px-3 py-2 cursor-pointer hover:text-text-primary transition-colors" onClick={() => onSort(col)}>
+    <th className="text-center font-medium px-3 py-2 cursor-pointer hover:text-text-primary transition-colors" onClick={() => onSort(col)} style={{ width }}>
       {label} {sort === col && (order === "asc" ? "↑" : "↓")}
     </th>
   );
@@ -131,5 +159,48 @@ function InlineEdit({ value, onSave }: { value: number; onSave: (v: number) => v
       onBlur={() => { onSave(parseInt(val) || 0); setEditing(false); }}
       onKeyDown={(e) => { if (e.key === "Enter") { onSave(parseInt(val) || 0); setEditing(false); } if (e.key === "Escape") setEditing(false); }}
     />
+  );
+}
+
+function BanButton({ banned, onToggle }: { banned: boolean; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      className={`p-1 rounded transition-colors ${banned ? "text-danger bg-danger/10 hover:bg-danger/20" : "text-text-tertiary hover:text-danger hover:bg-danger/10"}`}
+      title={banned ? "Unban user" : "Ban user"}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+      </svg>
+    </button>
+  );
+}
+
+function DeleteUserButton({ onDelete }: { onDelete: () => void }) {
+  const [confirming, setConfirming] = useState(false);
+
+  if (confirming) {
+    return (
+      <div className="flex items-center gap-1">
+        <button onClick={() => { onDelete(); setConfirming(false); }} className="text-[10px] px-1.5 py-0.5 rounded bg-danger/10 text-danger hover:bg-danger/20 transition-colors">Yes</button>
+        <button onClick={() => setConfirming(false)} className="text-[10px] px-1.5 py-0.5 rounded bg-surface-hover text-text-secondary hover:text-text transition-colors">No</button>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setConfirming(true)}
+      className="p-1 rounded text-text-tertiary hover:text-danger hover:bg-danger/10 transition-colors"
+      title="Delete user permanently"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="3 6 5 6 21 6" />
+        <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+        <line x1="10" y1="11" x2="10" y2="17" />
+        <line x1="14" y1="11" x2="14" y2="17" />
+      </svg>
+    </button>
   );
 }
