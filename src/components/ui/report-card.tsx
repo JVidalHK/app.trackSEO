@@ -11,6 +11,7 @@ interface ReportCardProps {
   da: number;
   improvement?: string;
   isLatest?: boolean;
+  isSample?: boolean;
 }
 
 export function ReportCard({
@@ -23,6 +24,7 @@ export function ReportCard({
   da,
   improvement,
   isLatest,
+  isSample,
 }: ReportCardProps) {
   return (
     <Link href={`/dashboard/reports/${id}`}>
@@ -31,8 +33,9 @@ export function ReportCard({
           <ScoreRing score={score} size={40} strokeWidth={3} />
         </div>
         <div className="font-medium text-sm">{domain}</div>
-        <div className="text-xs text-text-secondary mt-0.5">
+        <div className="text-xs text-text-secondary mt-0.5 flex items-center gap-1.5 flex-wrap">
           {date}{isLatest && " · Latest"}
+          {isSample && <span className="text-[10px] px-1.5 py-0.5 rounded bg-warning/10 text-warning font-medium">Sample</span>}
         </div>
         <div className="grid grid-cols-3 gap-2 mt-3">
           <div>

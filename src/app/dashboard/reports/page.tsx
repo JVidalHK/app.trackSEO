@@ -55,11 +55,6 @@ export default async function ReportsPage() {
                           className="font-medium hover:text-accent"
                         >
                           {report.domain}
-                          {report.is_sample && (
-                            <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">
-                              Sample
-                            </span>
-                          )}
                         </Link>
                       </td>
                       <td className="px-4 py-3 text-text-secondary">
@@ -70,7 +65,10 @@ export default async function ReportsPage() {
                         })}
                       </td>
                       <td className="px-4 py-3">
-                        <StatusPill status={report.status} />
+                        <span className="inline-flex items-center gap-1.5">
+                          <StatusPill status={report.status} />
+                          {report.is_sample && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-warning/10 text-warning font-medium">Sample</span>}
+                        </span>
                       </td>
                       <td className="px-4 py-3">
                         {report.status === "completed" ? (
@@ -132,6 +130,7 @@ export default async function ReportsPage() {
                     })}
                     {" · "}
                     <StatusPill status={report.status} />
+                    {report.is_sample && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-warning/10 text-warning font-medium">Sample</span>}
                   </div>
 
                   {report.status === "completed" && (

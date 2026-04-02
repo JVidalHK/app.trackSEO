@@ -81,6 +81,26 @@ export const sampleReportData = {
     { url: "/privacy", seo_score: 95, load_time_ms: 580, size_bytes: 48000, word_count: 620, issues: 0 },
     { url: "/terms", seo_score: 95, load_time_ms: 560, size_bytes: 52000, word_count: 780, issues: 0 },
   ],
+  lighthouse: {
+    mobile: {
+      performance: 96,
+      accessibility: 98,
+      seo: 100,
+      best_practices: 100,
+    },
+    desktop: {
+      performance: 100,
+      accessibility: 98,
+      seo: 100,
+      best_practices: 100,
+    },
+  },
+  core_web_vitals: {
+    lcp_ms: 1180,
+    fid_ms: 12,
+    cls: 0.02,
+    ttfb_ms: 320,
+  },
   tech_stack: {
     cms: ["Next.js 15"],
     platform: ["Vercel"],

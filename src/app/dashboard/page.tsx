@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 
   let { data: reports } = await supabase
     .from("reports")
-    .select("id, domain, created_at, scores, overview, status")
+    .select("id, domain, created_at, scores, overview, status, is_sample")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(6);
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
     if (seeded) {
       const { data: refreshed } = await supabase
         .from("reports")
-        .select("id, domain, created_at, scores, overview, status")
+        .select("id, domain, created_at, scores, overview, status, is_sample")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(6);
@@ -107,6 +107,7 @@ export default async function DashboardPage() {
                 keywords={report.overview?.total_keywords ?? 0}
                 da={report.overview?.domain_authority ?? 0}
                 isLatest={i === 0}
+                isSample={report.is_sample}
               />
             ))}
           </div>
