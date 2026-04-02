@@ -17,29 +17,46 @@ export async function GET(request: Request) {
       try {
         const svc = createServiceClient();
 
-        // Check if user already has any reports (not a new user)
-        const { count } = await svc
-          .from("reports")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", data.user.id);
+        // Wait for profile to be created by the database trigger
+        // (Google OAuth can be faster than the trigger)
+        let profileExists = false;
+        for (let i = 0; i < 5; i++) {
+          const { count } = await svc
+            .from("profiles")
+            .select("id", { count: "exact", head: true })
+            .eq("id", data.user.id);
 
-        if (count === 0) {
-          await svc.from("reports").insert({
-            user_id: data.user.id,
-            domain: SAMPLE_REPORT_DOMAIN,
-            status: "completed",
-            progress: 100,
-            stage: "completed",
-            report_data: sampleReportData,
-            scores: sampleScores,
-            overview: sampleOverview,
-            market: sampleMarket,
-            is_sample: true,
-            completed_at: new Date().toISOString(),
-          });
+          if (count && count > 0) {
+            profileExists = true;
+            break;
+          }
+          await new Promise((r) => setTimeout(r, 500));
+        }
+
+        if (profileExists) {
+          // Check if user already has any reports (not a new user)
+          const { count: reportCount } = await svc
+            .from("reports")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", data.user.id);
+
+          if (reportCount === 0) {
+            await svc.from("reports").insert({
+              user_id: data.user.id,
+              domain: SAMPLE_REPORT_DOMAIN,
+              status: "completed",
+              progress: 100,
+              stage: "completed",
+              report_data: sampleReportData,
+              scores: sampleScores,
+              overview: sampleOverview,
+              market: sampleMarket,
+              is_sample: true,
+              completed_at: new Date().toISOString(),
+            });
+          }
         }
       } catch (err) {
-        // Don't block signup if sample seeding fails
         console.error("Sample report seed error:", err);
       }
     }
