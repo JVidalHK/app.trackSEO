@@ -62,6 +62,7 @@ export async function POST(request: Request) {
     params.append("metadata[credits]", String(config.credits));
     params.append("metadata[package]", config.package);
     params.append("metadata[purchase_id]", purchase?.id || "");
+    params.append("allow_promotion_codes", "true");
     params.append("payment_method_types[0]", "card");
     params.append("success_url", `${appUrl}/dashboard/credits?success=true&session_id={CHECKOUT_SESSION_ID}`);
     params.append("cancel_url", `${appUrl}/dashboard/credits?canceled=true`);
