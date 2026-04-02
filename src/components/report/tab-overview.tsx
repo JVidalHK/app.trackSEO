@@ -39,7 +39,7 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <MetricCard label={<Tip k="organic_traffic">Est. organic traffic</Tip>} value={fmt(overview.organic_traffic)} change={overview.traffic_change_pct ? `${overview.traffic_change_pct > 0 ? "+" : ""}${overview.traffic_change_pct}%` : undefined} positive={overview.traffic_change_pct > 0} />
         <MetricCard label={<Tip k="keywords">Keywords</Tip>} value={fmt(overview.total_keywords)} change={overview.keywords_change ? `+${overview.keywords_change}` : undefined} positive />
-        <MetricCard label={<Tip k="da">DA</Tip>} value={String(overview.domain_authority || ((data.domain?.length || 5) % 5) + 1)} suffix="/100" />
+        <MetricCard label={<Tip k="da">DA / PA</Tip>} value={`${overview.domain_authority || 0} / ${overview.page_authority || 0}`} />
         <MetricCard label={<Tip k="mobile_speed">Speed (mobile)</Tip>} value={String(overview.mobile_speed || 0)} change={overview.mobile_speed >= 90 ? "Great" : overview.mobile_speed >= 50 ? "Needs work" : "Poor"} positive={overview.mobile_speed >= 90} warn={overview.mobile_speed >= 50 && overview.mobile_speed < 90} />
       </div>
 
