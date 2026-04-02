@@ -122,3 +122,70 @@ export const sampleReportData = {
 export const sampleScores = sampleReportData.scores;
 export const sampleOverview = sampleReportData.overview;
 export const sampleMarket = { primary_country_name: "United States" };
+
+export async function seedSampleReport(userId: string) {
+  try {
+    // Dynamic import to avoid pulling supabase server into client bundles
+    const { createServiceClient } = await import("@/lib/supabase/server");
+    const svc = createServiceClient();
+
+    // Wait for profile to exist (created by database trigger)
+    let profileExists = false;
+    for (let i = 0; i < 8; i++) {
+      const { count } = await svc
+        .from("profiles")
+        .select("id", { count: "exact", head: true })
+        .eq("id", userId);
+
+      if (count && count > 0) {
+        profileExists = true;
+        break;
+      }
+      console.log(`Waiting for profile... attempt ${i + 1}`);
+      await new Promise((r) => setTimeout(r, 600));
+    }
+
+    if (!profileExists) {
+      console.error("Sample seed: profile never appeared for", userId);
+      return false;
+    }
+
+    // Check if user already has reports
+    const { count: reportCount } = await svc
+      .from("reports")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userId);
+
+    console.log("Sample seed check:", { userId, reportCount, profileExists });
+
+    if (reportCount && reportCount > 0) {
+      console.log("Sample seed: user already has reports, skipping");
+      return false;
+    }
+
+    const { error } = await svc.from("reports").insert({
+      user_id: userId,
+      domain: SAMPLE_REPORT_DOMAIN,
+      status: "completed",
+      progress: 100,
+      stage: "completed",
+      report_data: sampleReportData,
+      scores: sampleScores,
+      overview: sampleOverview,
+      market: sampleMarket,
+      is_sample: true,
+      completed_at: new Date().toISOString(),
+    });
+
+    if (error) {
+      console.error("Sample seed insert error:", error);
+      return false;
+    }
+
+    console.log("Sample report seeded for user:", userId);
+    return true;
+  } catch (err) {
+    console.error("Sample seed error:", err);
+    return false;
+  }
+}

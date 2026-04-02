@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Badge, ALL_BADGE_TYPES } from "@/components/ui/badge";
 import { ReportCard } from "@/components/ui/report-card";
 import { DomainInput } from "./domain-input";
+import { seedSampleReport } from "@/lib/sample-report";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -15,12 +16,26 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single();
 
-  const { data: reports } = await supabase
+  let { data: reports } = await supabase
     .from("reports")
     .select("id, domain, created_at, scores, overview, status")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(6);
+
+  // Fallback: seed sample report if user has no reports
+  if (!reports || reports.length === 0) {
+    const seeded = await seedSampleReport(user.id);
+    if (seeded) {
+      const { data: refreshed } = await supabase
+        .from("reports")
+        .select("id, domain, created_at, scores, overview, status")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(6);
+      reports = refreshed;
+    }
+  }
 
   const { data: achievements } = await supabase
     .from("achievements")
