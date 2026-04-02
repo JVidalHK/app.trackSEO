@@ -24,11 +24,12 @@ const TABS = [
   { key: "backlinks", label: "Backlinks" },
 ];
 
-export function ReportViewer({ data, domain, date, market }: {
+export function ReportViewer({ data, domain, date, market, shared }: {
   data: any;
   domain: string;
   date: string;
   market?: any;
+  shared?: boolean;
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -90,25 +91,27 @@ export function ReportViewer({ data, domain, date, market }: {
             )}
           </div>
         </div>
-        <div className="flex gap-1.5">
-          <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={() => window.print()}>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6V2h8v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M4 12H2V8h12v4h-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              <rect x="4" y="10" width="8" height="4" stroke="currentColor" strokeWidth="1.2"/>
-            </svg>
-            Export PDF
-          </button>
-          <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={handleShare}>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <circle cx="12" cy="4" r="2" stroke="currentColor" strokeWidth="1.2"/>
-              <circle cx="4" cy="8" r="2" stroke="currentColor" strokeWidth="1.2"/>
-              <circle cx="12" cy="12" r="2" stroke="currentColor" strokeWidth="1.2"/>
-              <path d="M6 7l4-2M6 9l4 2" stroke="currentColor" strokeWidth="1.2"/>
-            </svg>
-            Share
-          </button>
-        </div>
+        {!shared && (
+          <div className="flex gap-1.5">
+            <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={() => window.print()}>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6V2h8v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 12H2V8h12v4h-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <rect x="4" y="10" width="8" height="4" stroke="currentColor" strokeWidth="1.2"/>
+              </svg>
+              Export PDF
+            </button>
+            <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={handleShare}>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <circle cx="12" cy="4" r="2" stroke="currentColor" strokeWidth="1.2"/>
+                <circle cx="4" cy="8" r="2" stroke="currentColor" strokeWidth="1.2"/>
+                <circle cx="12" cy="12" r="2" stroke="currentColor" strokeWidth="1.2"/>
+                <path d="M6 7l4-2M6 9l4 2" stroke="currentColor" strokeWidth="1.2"/>
+              </svg>
+              Share
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Tabs */}
