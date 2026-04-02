@@ -1,5 +1,5 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
-import { isAdmin } from "@/lib/admin";
+import { isAdmin, isAdminEmail } from "@/lib/admin";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -45,6 +45,7 @@ export async function GET(request: Request) {
       ...u,
       revenue: revenueMap[u.id] || 0,
       last_active: lastActiveMap[u.id] || null,
+      is_admin: isAdminEmail(u.email),
     })),
     total: count || 0,
     page,

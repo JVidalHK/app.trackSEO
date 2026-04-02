@@ -108,10 +108,14 @@ export default function AdminUsersPage() {
                 <td className="px-3 py-2 text-center">{u.revenue > 0 ? `$${(u.revenue / 100).toFixed(2)}` : "—"}</td>
                 <td className="px-3 py-2 text-center text-text-secondary">{u.last_active ? new Date(u.last_active).toLocaleDateString() : "—"}</td>
                 <td className="px-3 py-2 text-center">
-                  <div className="flex items-center justify-center gap-1">
-                    <BanButton banned={u.is_banned} onToggle={() => toggleBan(u.id, u.is_banned)} />
-                    <DeleteUserButton onDelete={() => deleteUser(u.id)} />
-                  </div>
+                  {u.is_admin ? (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">Admin</span>
+                  ) : (
+                    <div className="flex items-center justify-center gap-1">
+                      <BanButton banned={u.is_banned} onToggle={() => toggleBan(u.id, u.is_banned)} />
+                      <DeleteUserButton onDelete={() => deleteUser(u.id)} />
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
