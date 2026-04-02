@@ -116,11 +116,6 @@ export default async function ReportsPage() {
                 <Link href={`/dashboard/reports/${report.id}`} className="block">
                   <div className="font-medium text-sm">
                     {report.domain}
-                    {report.is_sample && (
-                      <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">
-                        Sample
-                      </span>
-                    )}
                   </div>
                   <div className="text-xs text-text-secondary mt-0.5">
                     {new Date(report.created_at).toLocaleDateString("en-US", {

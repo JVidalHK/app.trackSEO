@@ -147,7 +147,7 @@ export function Sidebar({ user }: SidebarProps) {
               </div>
               <div className="flex justify-between mt-1">
                 <span className="text-[10px] text-text-tertiary">{user?.total_reports_run || 0} reports run</span>
-                <Link href="/dashboard/credits" className="text-[10px] text-[#06B6D4]">Buy more</Link>
+                <Link href="/dashboard/credits" className="text-[10px] text-[#06B6D4] px-2 py-1.5 -mr-2 -mb-1 rounded-md hover:bg-accent/10 transition-colors" onClick={() => setMobileOpen(false)}>Buy more</Link>
               </div>
             </>
           )}

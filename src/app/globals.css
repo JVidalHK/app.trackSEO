@@ -77,6 +77,21 @@ html.light {
 .score-bg-amber { background-color: #FEF3C7; color: #92400E; }
 .score-bg-red { background-color: #FEE2E2; color: #991B1B; }
 
+/* iOS smooth horizontal scroll for tables */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent iOS input zoom — inputs must be >= 16px */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  input.text-xs, select.text-xs, textarea.text-xs {
+    font-size: 16px !important;
+  }
+}
+
 /* Print styles for PDF export */
 @media print {
   @page { size: A4 portrait; margin: 0; }

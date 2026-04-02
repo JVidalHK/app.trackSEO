@@ -54,24 +54,24 @@ export default function AdminReportsPage() {
       </div>
 
       <div className="bg-surface rounded-xl border border-border overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs min-w-[700px]">
           <thead><tr className="border-b border-border text-text-secondary">
-            <th className="text-left font-medium px-3 py-2">Domain</th>
-            <th className="text-left font-medium px-3 py-2">User</th>
-            <th className="text-center font-medium px-3 py-2">Date</th>
-            <th className="text-center font-medium px-3 py-2">Status</th>
-            <th className="text-center font-medium px-3 py-2">Score</th>
-            <th className="text-center font-medium px-3 py-2">COGS</th>
-            <th className="text-center font-medium px-3 py-2">Action</th>
+            <th className="text-left font-medium px-3 py-2 whitespace-nowrap">Domain</th>
+            <th className="text-left font-medium px-3 py-2 whitespace-nowrap hidden sm:table-cell">User</th>
+            <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Date</th>
+            <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Status</th>
+            <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Score</th>
+            <th className="text-center font-medium px-3 py-2 whitespace-nowrap">COGS</th>
+            <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Action</th>
           </tr></thead>
           <tbody>
             {loading && <tr><td colSpan={7} className="px-4 py-8 text-center text-text-secondary">Loading...</td></tr>}
             {!loading && reports.length === 0 && <tr><td colSpan={7} className="px-4 py-8 text-center text-text-secondary">No reports found</td></tr>}
             {reports.map((r) => (
               <tr key={r.id} className="border-b border-border last:border-b-0 hover:bg-surface-hover/50">
-                <td className="px-3 py-2 font-medium">{r.domain}</td>
-                <td className="px-3 py-2 text-text-secondary">{r.user_email || "—"}</td>
-                <td className="px-3 py-2 text-center text-text-secondary">{new Date(r.created_at).toLocaleDateString()}</td>
+                <td className="px-3 py-2 font-medium whitespace-nowrap">{r.domain}</td>
+                <td className="px-3 py-2 text-text-secondary whitespace-nowrap hidden sm:table-cell">{r.user_email || "—"}</td>
+                <td className="px-3 py-2 text-center text-text-secondary whitespace-nowrap">{new Date(r.created_at).toLocaleDateString()}</td>
                 <td className="px-3 py-2 text-center">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${r.status === "completed" ? "bg-success/10 text-success" : r.status === "failed" ? "bg-danger/10 text-danger" : "bg-warning/10 text-warning"}`}>{r.status}</span>
                 </td>

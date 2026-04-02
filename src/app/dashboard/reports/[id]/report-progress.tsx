@@ -4,15 +4,15 @@ import { useEffect, useState, useRef } from "react";
 
 const STEPS = [
   { name: "Detecting your market", stage: "detecting market" },
-  { name: "Analysing domain authority", stage: "crawling" },
-  { name: "Scanning keywords", stage: "crawling", stat: "keywords found" },
-  { name: "Identifying competitors", stage: "crawling", stat: "competitors found" },
-  { name: "Finding content gaps", stage: "crawling", stat: "opportunities" },
-  { name: "Crawling your pages", stage: "crawling", stat: "pages checked" },
-  { name: "Running speed tests", stage: "crawling" },
-  { name: "Checking AI visibility", stage: "analyzing", stat: "AI analysis" },
-  { name: "Detecting tech stack", stage: "analyzing" },
-  { name: "Generating recommendations", stage: "scoring", stat: "quick wins found" },
+  { name: "Scanning keywords", stage: "scanning keywords" },
+  { name: "Identifying competitors", stage: "scanning keywords" },
+  { name: "Crawling your pages", stage: "scanning keywords" },
+  { name: "Running speed tests", stage: "running speed tests" },
+  { name: "Checking AI visibility", stage: "checking ai visibility" },
+  { name: "Detecting tech stack", stage: "checking ai visibility" },
+  { name: "Generating recommendations", stage: "generating recommendations" },
+  { name: "Scoring your site", stage: "scoring" },
+  { name: "Saving report", stage: "saving report" },
 ];
 
 const TIPS = [
@@ -26,17 +26,33 @@ const TIPS = [
   "HTTPS sites rank higher than HTTP for 95% of keywords.",
 ];
 
-function mapProgressToStep(progress: number): number {
-  if (progress <= 5) return 0;
-  if (progress <= 15) return 1;
-  if (progress <= 20) return 2;
-  if (progress <= 25) return 3;
-  if (progress <= 30) return 4;
-  if (progress <= 40) return 5;
-  if (progress <= 50) return 6;
-  if (progress <= 65) return 7;
-  if (progress <= 75) return 8;
-  return 9;
+function mapStageToStep(stage: string, progress: number): number {
+  // Map engine stages to step indices
+  switch (stage) {
+    case "detecting market": return 0;
+    case "scanning keywords": {
+      // Sub-steps within the parallel work phase (12-40%)
+      if (progress <= 20) return 1;
+      if (progress <= 30) return 2;
+      return 3;
+    }
+    case "running speed tests": return 4;
+    case "checking ai visibility": return progress <= 55 ? 5 : 6;
+    case "generating recommendations": return 7;
+    case "scoring": return 8;
+    case "saving report": return 9;
+    case "completed": return 9;
+    default: {
+      // Fallback to progress-based mapping
+      if (progress <= 10) return 0;
+      if (progress <= 30) return 2;
+      if (progress <= 45) return 4;
+      if (progress <= 55) return 5;
+      if (progress <= 65) return 7;
+      if (progress <= 90) return 8;
+      return 9;
+    }
+  }
 }
 
 export function ReportProgress({
@@ -48,7 +64,8 @@ export function ReportProgress({
   initialStage: string;
 }) {
   const [progress, setProgress] = useState(initialProgress);
-  const [activeStep, setActiveStep] = useState(mapProgressToStep(initialProgress));
+  const [stage, setStage] = useState("detecting market");
+  const [activeStep, setActiveStep] = useState(mapStageToStep("detecting market", initialProgress));
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [done, setDone] = useState(false);
   const [tipIdx, setTipIdx] = useState(0);
@@ -60,8 +77,10 @@ export function ReportProgress({
         const res = await fetch(`/api/reports/${reportId}/status`);
         const data = await res.json();
         const newProgress = data.progress ?? 0;
+        const newStage = data.stage ?? stage;
         setProgress(newProgress);
-        const newStep = mapProgressToStep(newProgress);
+        setStage(newStage);
+        const newStep = mapStageToStep(newStage, newProgress);
         if (newStep > activeStep) {
           setCompletedSteps((prev) => {
             const next = new Set(prev);
@@ -85,7 +104,7 @@ export function ReportProgress({
       } catch { /* keep polling */ }
     }, 3000);
     return () => clearInterval(interval);
-  }, [reportId, activeStep]);
+  }, [reportId, activeStep, stage]);
 
   useEffect(() => {
     const interval = setInterval(() => setTipIdx((i) => i + 1), 4500);
@@ -142,7 +161,7 @@ export function ReportProgress({
       {/* Info text */}
       {!done && (
         <div className="text-xs text-text-tertiary mt-2 mb-8">
-          Reports usually take 60–90 seconds depending on the site
+          Reports usually take 60–90 seconds, though some sites need a few minutes. Go grab a coffee or switch tabs — we&apos;ll keep working in the background.
         </div>
       )}
 
@@ -191,9 +210,6 @@ export function ReportProgress({
                     <div className={`text-sm font-medium transition-colors duration-400 ${
                       isDone ? "text-text-tertiary" : isActive ? "text-text-primary" : "text-text-hint"
                     }`}>{step.name}</div>
-                    {isDone && step.stat && (
-                      <div className="text-[11px] text-[#06B6D4] font-medium mt-0.5">{step.stat}</div>
-                    )}
                   </div>
 
                   <div className="min-w-[32px] text-right">

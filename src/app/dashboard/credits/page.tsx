@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { DownloadInvoiceBtn } from "./download-btn";
+import { BuyButton } from "./buy-button";
 
 const PACKAGES = [
   { id: "single_1", name: "Single", credits: 1, price: 299, perReport: "$2.99", savings: null },
@@ -84,19 +85,7 @@ export default async function CreditsPage({
             <div className="text-xs text-text-tertiary mt-0.5">
               {pkg.credits} report{pkg.credits > 1 ? "s" : ""}
             </div>
-            <form action="/api/stripe/checkout" method="POST" className="mt-4">
-              <input type="hidden" name="package" value={pkg.id} />
-              <button
-                type="submit"
-                className={`w-full h-9 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
-                  pkg.popular
-                    ? "bg-brand-gradient text-white hover:brightness-110 hover:shadow-md hover:shadow-accent/20 active:scale-[0.97]"
-                    : "bg-bg border border-border-light text-text-primary hover:bg-surface-hover hover:border-accent/30 active:scale-[0.97]"
-                }`}
-              >
-                Buy {pkg.credits} credit{pkg.credits > 1 ? "s" : ""}
-              </button>
-            </form>
+            <BuyButton packageId={pkg.id} credits={pkg.credits} popular={pkg.popular} />
           </div>
         ))}
       </div>
