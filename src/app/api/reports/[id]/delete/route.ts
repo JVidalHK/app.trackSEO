@@ -26,8 +26,8 @@ export async function DELETE(
   }
 
   if (report.is_sample) {
-    // For sample reports, just soft-delete by removing from user view
-    await supabase.from("reports").delete().eq("id", id).eq("user_id", user.id);
+    // Soft-delete: hide from user's view without removing from DB
+    await supabase.from("reports").update({ status: "dismissed" }).eq("id", id).eq("user_id", user.id);
   } else {
     // Delete associated domain_tracking entries first
     await supabase.from("domain_tracking").delete().eq("report_id", id);

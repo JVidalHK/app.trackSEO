@@ -160,8 +160,8 @@ export function ReportProgress({
 
       {/* Info text */}
       {!done && (
-        <div className="text-xs text-text-tertiary mt-2 mb-8">
-          Reports usually take 60–90 seconds, though some sites need a few minutes. Go grab a coffee or switch tabs — we&apos;ll keep working in the background.
+        <div className="text-sm text-text-tertiary mt-3 mb-8 text-center max-w-[420px]">
+          Reports usually take 60–90 seconds, though some larger sites need a few minutes. Go grab a coffee or switch tabs, we&apos;ll keep working in the background.
         </div>
       )}
 
@@ -207,7 +207,7 @@ export function ReportProgress({
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <div className={`text-sm font-medium transition-colors duration-400 ${
+                    <div className={`text-[15px] font-medium transition-colors duration-400 ${
                       isDone ? "text-text-tertiary" : isActive ? "text-text-primary" : "text-text-hint"
                     }`}>{step.name}</div>
                   </div>
@@ -231,9 +231,9 @@ export function ReportProgress({
 
       {/* Tip */}
       {!done && (
-        <div className="max-w-[420px] w-full p-3 bg-surface border border-border rounded-xl text-center">
-          <div className="text-[10px] text-text-tertiary font-medium tracking-wide mb-1">DID YOU KNOW?</div>
-          <div className="text-xs text-text-secondary leading-relaxed transition-opacity duration-300">
+        <div className="max-w-[420px] w-full p-4 bg-surface border border-border rounded-xl text-center">
+          <div className="text-[11px] text-text-tertiary font-medium tracking-wide mb-1.5">DID YOU KNOW?</div>
+          <div className="text-sm text-text-secondary leading-relaxed transition-opacity duration-300">
             {TIPS[tipIdx % TIPS.length]}
           </div>
         </div>

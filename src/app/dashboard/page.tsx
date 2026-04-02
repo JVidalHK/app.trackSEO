@@ -20,6 +20,7 @@ export default async function DashboardPage() {
     .from("reports")
     .select("id, domain, created_at, scores, overview, status, is_sample")
     .eq("user_id", user.id)
+    .neq("status", "dismissed")
     .order("created_at", { ascending: false })
     .limit(6);
 
@@ -31,6 +32,7 @@ export default async function DashboardPage() {
         .from("reports")
         .select("id, domain, created_at, scores, overview, status, is_sample")
         .eq("user_id", user.id)
+        .neq("status", "dismissed")
         .order("created_at", { ascending: false })
         .limit(6);
       reports = refreshed;

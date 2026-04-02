@@ -13,6 +13,7 @@ export default async function ReportsPage() {
     .from("reports")
     .select("id, domain, created_at, status, scores, overview, is_sample")
     .eq("user_id", user.id)
+    .neq("status", "dismissed")
     .order("created_at", { ascending: false });
 
   return (
