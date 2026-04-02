@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { DeleteButton } from "./delete-button";
 
 export default async function ReportsPage() {
   const supabase = await createClient();
@@ -9,7 +10,7 @@ export default async function ReportsPage() {
 
   const { data: reports } = await supabase
     .from("reports")
-    .select("id, domain, created_at, status, scores, overview")
+    .select("id, domain, created_at, status, scores, overview, is_sample")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
@@ -26,62 +27,73 @@ export default async function ReportsPage() {
         </div>
       ) : (
         <div className="bg-surface rounded-xl border border-border overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-xs text-text-secondary">
-                <th className="text-left font-medium px-4 py-3">Domain</th>
-                <th className="text-left font-medium px-4 py-3">Date</th>
-                <th className="text-left font-medium px-4 py-3">Status</th>
-                <th className="text-left font-medium px-4 py-3">Score</th>
-                <th className="text-left font-medium px-4 py-3">Traffic</th>
-                <th className="text-left font-medium px-4 py-3">Keywords</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reports.map((report) => (
-                <tr
-                  key={report.id}
-                  className="border-b border-border last:border-b-0 hover:bg-surface-hover transition-colors"
-                >
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/dashboard/reports/${report.id}`}
-                      className="font-medium hover:text-accent"
-                    >
-                      {report.domain}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-3 text-text-secondary">
-                    {new Date(report.created_at).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </td>
-                  <td className="px-4 py-3">
-                    <StatusPill status={report.status} />
-                  </td>
-                  <td className="px-4 py-3">
-                    {report.status === "completed" ? (
-                      <ScorePill score={report.scores?.overall ?? 0} />
-                    ) : (
-                      <span className="text-text-tertiary">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    {report.status === "completed"
-                      ? (report.overview?.organic_traffic ?? 0).toLocaleString()
-                      : "—"}
-                  </td>
-                  <td className="px-4 py-3">
-                    {report.status === "completed"
-                      ? (report.overview?.total_keywords ?? 0).toLocaleString()
-                      : "—"}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm" style={{ tableLayout: "fixed" }}>
+              <thead>
+                <tr className="border-b border-border text-xs text-text-secondary">
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "25%" }}>Domain</th>
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "15%" }}>Date</th>
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "13%" }}>Status</th>
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "13%" }}>Score</th>
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "14%" }}>Traffic</th>
+                  <th className="text-left font-medium px-4 py-3" style={{ width: "14%" }}>Keywords</th>
+                  <th className="text-center font-medium px-4 py-3" style={{ width: "6%" }}></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {reports.map((report) => (
+                  <tr
+                    key={report.id}
+                    className="border-b border-border last:border-b-0 hover:bg-surface-hover transition-colors"
+                  >
+                    <td className="px-4 py-3 truncate">
+                      <Link
+                        href={`/dashboard/reports/${report.id}`}
+                        className="font-medium hover:text-accent"
+                      >
+                        {report.domain}
+                        {report.is_sample && (
+                          <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">
+                            Sample
+                          </span>
+                        )}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-text-secondary">
+                      {new Date(report.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td className="px-4 py-3">
+                      <StatusPill status={report.status} />
+                    </td>
+                    <td className="px-4 py-3">
+                      {report.status === "completed" ? (
+                        <ScorePill score={report.scores?.overall ?? 0} />
+                      ) : (
+                        <span className="text-text-tertiary">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      {report.status === "completed"
+                        ? (report.overview?.organic_traffic ?? 0).toLocaleString()
+                        : "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {report.status === "completed"
+                        ? (report.overview?.total_keywords ?? 0).toLocaleString()
+                        : "—"}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <DeleteButton reportId={report.id} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
