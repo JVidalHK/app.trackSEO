@@ -164,6 +164,7 @@ export async function seedSampleReport(userId: string) {
     }
 
     const { error } = await svc.from("reports").insert({
+      id: crypto.randomUUID(),
       user_id: userId,
       domain: SAMPLE_REPORT_DOMAIN,
       status: "completed",

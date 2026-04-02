@@ -27,6 +27,7 @@ export async function GET() {
 
   // Try inserting sample report
   const { data: inserted, error: insertError } = await svc.from("reports").insert({
+    id: crypto.randomUUID(),
     user_id: user.id,
     domain: SAMPLE_REPORT_DOMAIN,
     status: "completed",

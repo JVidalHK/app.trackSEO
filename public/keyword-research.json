@@ -1,0 +1,3484 @@
+{
+  "generated": "2026-04-02T06:47:33.980Z",
+  "description": "Combined keyword research from DataForSEO ranked_keywords (7 competitors) + related_keywords (10 BOFU seeds). US market, English.",
+  "competitors_analyzed": [
+    "ahrefs.com",
+    "semrush.com",
+    "moz.com",
+    "ubersuggest.com",
+    "seoptimer.com",
+    "sitechecker.pro",
+    "seobility.net"
+  ],
+  "bofu_seeds": [
+    "ahrefs alternative",
+    "semrush alternative",
+    "best seo tools",
+    "seo audit tool",
+    "cheap seo tools",
+    "free seo checker",
+    "seo tool pricing",
+    "website audit tool",
+    "backlink checker",
+    "keyword research tool"
+  ],
+  "total_keywords": 576,
+  "keywords": [
+    {
+      "keyword": "erome",
+      "search_volume": 11100000,
+      "cpc": 9.020000457763672,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "thehomesport",
+      "search_volume": 11100000,
+      "cpc": 0.18000000715255737,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "baddiehub",
+      "search_volume": 5000000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "a i detector",
+      "search_volume": 4090000,
+      "cpc": 1.1100000143051147,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai detector",
+      "search_volume": 4090000,
+      "cpc": 1.1100000143051147,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai detectors",
+      "search_volume": 4090000,
+      "cpc": 1.1100000143051147,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chatingly",
+      "search_volume": 3350000,
+      "cpc": 0.03999999910593033,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai checker",
+      "search_volume": 2740000,
+      "cpc": 0.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ome.tv",
+      "search_volume": 2740000,
+      "cpc": 0.03999999910593033,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "redgifs",
+      "search_volume": 2740000,
+      "cpc": 0.8399999737739563,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "markkystreams",
+      "search_volume": 2240000,
+      "cpc": 4.170000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "u gg",
+      "search_volume": 2240000,
+      "cpc": 0.3700000047683716,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "u.gg",
+      "search_volume": 2240000,
+      "cpc": 0.3700000047683716,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "porn hub.com",
+      "search_volume": 1830000,
+      "cpc": 5.599999904632568,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pornhub com",
+      "search_volume": 1830000,
+      "cpc": 5.599999904632568,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pornhub.com",
+      "search_volume": 1830000,
+      "cpc": 5.599999904632568,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mode ai",
+      "search_volume": 1830000,
+      "cpc": 1.3199999332427979,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words unscrambler",
+      "search_volume": 1500000,
+      "cpc": 0.029999999329447746,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "backwards image search",
+      "search_volume": 1500000,
+      "cpc": 1.4300000667572021,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "my business",
+      "search_volume": 1500000,
+      "cpc": 35.29999923706055,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "thisvid",
+      "search_volume": 1500000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "xfree",
+      "search_volume": 1500000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "unscramble word",
+      "search_volume": 1220000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "unscramble words",
+      "search_volume": 1220000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "count the words",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "count word",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "count words",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "counting words",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google.image search",
+      "search_volume": 1220000,
+      "cpc": 2.2899999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "number of words counter",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "word count",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "word counter",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "word counters",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "wordcount",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words count",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words counter",
+      "search_volume": 1220000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai image generators",
+      "search_volume": 1000000,
+      "cpc": 1.6600000858306885,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "humanization ai",
+      "search_volume": 1000000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanize a i",
+      "search_volume": 1000000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanize ai",
+      "search_volume": 1000000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanizer ai",
+      "search_volume": 1000000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanizing ai",
+      "search_volume": 1000000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mangago",
+      "search_volume": 1000000,
+      "cpc": 3.490000009536743,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "coomer",
+      "search_volume": 1000000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "enter password to unlock 30/30 attempts remaining",
+      "search_volume": 1000000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fapello",
+      "search_volume": 1000000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "jerkmate",
+      "search_volume": 1000000,
+      "cpc": 5.260000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "slickdeals website",
+      "search_volume": 1000000,
+      "cpc": 4.340000152587891,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "thothub",
+      "search_volume": 1000000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "5 letter words from letters",
+      "search_volume": 823000,
+      "cpc": 6.679999828338623,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check in grammar",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "checker of grammar",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammar and syntax checker",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammar check",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammarcheck",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammarly checker",
+      "search_volume": 823000,
+      "cpc": 0.699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "bato",
+      "search_volume": 823000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "erothots",
+      "search_volume": 823000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "incestflix",
+      "search_volume": 823000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "monkeyapp",
+      "search_volume": 823000,
+      "cpc": 0.33000001311302185,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "precio del dolar en mexico",
+      "search_volume": 823000,
+      "cpc": 4.889999866485596,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "xpaja",
+      "search_volume": 823000,
+      "cpc": 9.350000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "a i humanizer",
+      "search_volume": 673000,
+      "cpc": 2.2300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai humanizers",
+      "search_volume": 673000,
+      "cpc": 2.2300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "toongod",
+      "search_volume": 673000,
+      "cpc": 1.6200000047683716,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cheat for words for friends",
+      "search_volume": 673000,
+      "cpc": 1.090000033378601,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cheating for words with friends",
+      "search_volume": 673000,
+      "cpc": 1.090000033378601,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cheating words for friends",
+      "search_volume": 673000,
+      "cpc": 1.090000033378601,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "citizen free press",
+      "search_volume": 673000,
+      "cpc": 6.369999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "dirtyship",
+      "search_volume": 673000,
+      "cpc": 12.460000038146973,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fintechzoom com",
+      "search_volume": 673000,
+      "cpc": 2.6399998664855957,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fintechzoom.com",
+      "search_volume": 673000,
+      "cpc": 2.6399998664855957,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "image picture search",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "image se",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "image search",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "image search with picture",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "porm",
+      "search_volume": 673000,
+      "cpc": 2.6600000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search images by image",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search picture with picture",
+      "search_volume": 673000,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "the tvapp",
+      "search_volume": 673000,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "toongods",
+      "search_volume": 673000,
+      "cpc": 1.6200000047683716,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words to friends cheat",
+      "search_volume": 673000,
+      "cpc": 1.090000033378601,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words with friends that cheat",
+      "search_volume": 673000,
+      "cpc": 1.090000033378601,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "xxbrits",
+      "search_volume": 673000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google searches",
+      "search_volume": 550000,
+      "cpc": 3.2699999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "googlebot search",
+      "search_volume": 550000,
+      "cpc": 3.2699999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "amazon in the us",
+      "search_volume": 550000,
+      "cpc": 0.029999999329447746,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mediatakeout site",
+      "search_volume": 550000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mediatakeout website",
+      "search_volume": 550000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "times 0of india",
+      "search_volume": 550000,
+      "cpc": 0.029999999329447746,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "links",
+      "search_volume": 550000,
+      "cpc": 1.149999976158142,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanize",
+      "search_volume": 450000,
+      "cpc": 1.6399999856948853,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanized",
+      "search_volume": 450000,
+      "cpc": 1.6399999856948853,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanizers",
+      "search_volume": 450000,
+      "cpc": 1.6399999856948853,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanizes",
+      "search_volume": 450000,
+      "cpc": 1.6399999856948853,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "humanizing",
+      "search_volume": 450000,
+      "cpc": 1.6399999856948853,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "now.gg",
+      "search_volume": 450000,
+      "cpc": 5.449999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "searches",
+      "search_volume": 450000,
+      "cpc": 4.809999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "similarities check",
+      "search_volume": 450000,
+      "cpc": 2.8899998664855957,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "unscramble letters",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ads google",
+      "search_volume": 450000,
+      "cpc": 9.760000228881836,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "ads on google",
+      "search_volume": 450000,
+      "cpc": 9.760000228881836,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "advertising google ads",
+      "search_volume": 450000,
+      "cpc": 9.760000228881836,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "bato ti",
+      "search_volume": 450000,
+      "cpc": 2.109999895095825,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "bato to",
+      "search_volume": 450000,
+      "cpc": 2.109999895095825,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "batoto",
+      "search_volume": 450000,
+      "cpc": 2.109999895095825,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chat avenue website",
+      "search_volume": 450000,
+      "cpc": 13.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "coomeet",
+      "search_volume": 450000,
+      "cpc": 1.4600000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "crush on ai",
+      "search_volume": 450000,
+      "cpc": 2.5899999141693115,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "crushon ai",
+      "search_volume": 450000,
+      "cpc": 2.5899999141693115,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "f95zone",
+      "search_volume": 450000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google ad word",
+      "search_volume": 450000,
+      "cpc": 9.760000228881836,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "google ads",
+      "search_volume": 450000,
+      "cpc": 9.760000228881836,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "how many cups are in a quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups i n quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups in a qt",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups in a quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups in quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups is a quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups to a qt",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many cups to a quart",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many quarts are in cups",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many quarts i n cup",
+      "search_volume": 450000,
+      "cpc": 0.019999999552965164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ign site",
+      "search_volume": 450000,
+      "cpc": 2.0199999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "jav guru",
+      "search_volume": 450000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mocospace moco",
+      "search_volume": 450000,
+      "cpc": 2.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mocospace mocospace",
+      "search_volume": 450000,
+      "cpc": 2.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pirlotvenhd",
+      "search_volume": 450000,
+      "cpc": 3.4700000286102295,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "porntn",
+      "search_volume": 450000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pornzog",
+      "search_volume": 450000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "similarity check",
+      "search_volume": 450000,
+      "cpc": 2.8899998664855957,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "socialmediagirls",
+      "search_volume": 450000,
+      "cpc": 18.530000686645508,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chatiw",
+      "search_volume": 368000,
+      "cpc": 5.960000038146973,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check the plagiarism",
+      "search_volume": 368000,
+      "cpc": 2.9100000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google anal",
+      "search_volume": 368000,
+      "cpc": 9.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammarly ai check",
+      "search_volume": 368000,
+      "cpc": 2.4200000762939453,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "lists crawl",
+      "search_volume": 368000,
+      "cpc": 2.549999952316284,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "plagiarism check",
+      "search_volume": 368000,
+      "cpc": 2.9100000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "plagiarism checker checker",
+      "search_volume": 368000,
+      "cpc": 2.9100000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "scramble the words",
+      "search_volume": 368000,
+      "cpc": 0.1599999964237213,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "webmaster tools google search console",
+      "search_volume": 368000,
+      "cpc": 15.899999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "console search google",
+      "search_volume": 368000,
+      "cpc": 15.899999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "g-analytics",
+      "search_volume": 368000,
+      "cpc": 9.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google ana",
+      "search_volume": 368000,
+      "cpc": 9.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google analytics website",
+      "search_volume": 368000,
+      "cpc": 9.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google analytics websites",
+      "search_volume": 368000,
+      "cpc": 9.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "msn.com",
+      "search_volume": 368000,
+      "cpc": 2.559999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "web site",
+      "search_volume": 368000,
+      "cpc": 18.260000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "websites",
+      "search_volume": 368000,
+      "cpc": 18.260000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how much is it worth",
+      "search_volume": 368000,
+      "cpc": 1.3199999332427979,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google trend",
+      "search_volume": 368000,
+      "cpc": 10.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google trends",
+      "search_volume": 368000,
+      "cpc": 10.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "basic search engine",
+      "search_volume": 301000,
+      "cpc": 5.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "https",
+      "search_volume": 301000,
+      "cpc": 14.819999694824219,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword research",
+      "search_volume": 301000,
+      "cpc": 13.399999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword research and",
+      "search_volume": 301000,
+      "cpc": 13.399999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "research keywords",
+      "search_volume": 301000,
+      "cpc": 13.399999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine basics",
+      "search_volume": 301000,
+      "cpc": 5.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search operators",
+      "search_volume": 301000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "word using the letters",
+      "search_volume": 301000,
+      "cpc": 0.30000001192092896,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "wordhippo",
+      "search_volume": 301000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "words from letters",
+      "search_volume": 301000,
+      "cpc": 0.30000001192092896,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "content marketing",
+      "search_volume": 301000,
+      "cpc": 13.649999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "conversion optimization",
+      "search_volume": 301000,
+      "cpc": 16.030000686645508,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fundamental marketing",
+      "search_volume": 301000,
+      "cpc": 11.880000114440918,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fundamentals of marketing",
+      "search_volume": 301000,
+      "cpc": 11.880000114440918,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google business profiles",
+      "search_volume": 301000,
+      "cpc": 28.190000534057617,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mil in oz",
+      "search_volume": 301000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "optimizing conversions",
+      "search_volume": 301000,
+      "cpc": 16.030000686645508,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "customer journey",
+      "search_volume": 301000,
+      "cpc": 13.470000267028809,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "customer journeys",
+      "search_volume": 301000,
+      "cpc": 13.470000267028809,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai generators",
+      "search_volume": 246000,
+      "cpc": 1.7300000190734863,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "bazoocam",
+      "search_volume": 246000,
+      "cpc": 2.2100000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "generator of name",
+      "search_volume": 246000,
+      "cpc": 2.450000047683716,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "n a m e generator",
+      "search_volume": 246000,
+      "cpc": 2.450000047683716,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "tropical tidbits",
+      "search_volume": 246000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "vyvymanga",
+      "search_volume": 246000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "yahoo search site",
+      "search_volume": 246000,
+      "cpc": 0.20999999344348907,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search in yahoo",
+      "search_volume": 246000,
+      "cpc": 0.20999999344348907,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search on yahoo",
+      "search_volume": 246000,
+      "cpc": 0.20999999344348907,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "yahoo search website",
+      "search_volume": 246000,
+      "cpc": 0.20999999344348907,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai photo generator",
+      "search_volume": 201000,
+      "cpc": 1.7300000190734863,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "ai photo generators",
+      "search_volume": 201000,
+      "cpc": 1.7300000190734863,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "blackline monitor",
+      "search_volume": 201000,
+      "cpc": 1.1200000047683716,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "free ai checker",
+      "search_volume": 201000,
+      "cpc": 2.109999895095825,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "google keyword planner",
+      "search_volume": 201000,
+      "cpc": 17.049999237060547,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "nickname generator random",
+      "search_volume": 201000,
+      "cpc": 6.300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "nickname random generator",
+      "search_volume": 201000,
+      "cpc": 6.300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paraphrase",
+      "search_volume": 201000,
+      "cpc": 0.3400000035762787,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paraphrases",
+      "search_volume": 201000,
+      "cpc": 0.3400000035762787,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paraphrasing",
+      "search_volume": 201000,
+      "cpc": 0.3400000035762787,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome extension",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome-ext",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome-extension",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome//extensions",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome/extensions",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "chrome://extensions",
+      "search_volume": 201000,
+      "cpc": 0.4699999988079071,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google gmb",
+      "search_volume": 201000,
+      "cpc": 26.75,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google google business",
+      "search_volume": 201000,
+      "cpc": 26.75,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "amazon seller central",
+      "search_volume": 201000,
+      "cpc": 0.7900000214576721,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "acronym",
+      "search_volume": 165000,
+      "cpc": 1.4800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai detectors free",
+      "search_volume": 165000,
+      "cpc": 1.9100000858306885,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "einthusan",
+      "search_volume": 165000,
+      "cpc": 8.6899995803833,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "googlebot login",
+      "search_volume": 165000,
+      "cpc": 4.610000133514404,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammar check grammarly",
+      "search_volume": 165000,
+      "cpc": 1.9800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammar checker grammarly",
+      "search_volume": 165000,
+      "cpc": 1.9800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammarly grammar checker",
+      "search_volume": 165000,
+      "cpc": 1.9800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how many days in this year",
+      "search_volume": 165000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paraphrase tool",
+      "search_volume": 165000,
+      "cpc": 0.44999998807907104,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sov",
+      "search_volume": 165000,
+      "cpc": 2.569999933242798,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "googlebot log",
+      "search_volume": 165000,
+      "cpc": 4.610000133514404,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "page",
+      "search_volume": 165000,
+      "cpc": 0.8199999928474426,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "retail.me bot",
+      "search_volume": 165000,
+      "cpc": 2.740000009536743,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sites",
+      "search_volume": 165000,
+      "cpc": 6.320000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "what does /# mean",
+      "search_volume": 165000,
+      "cpc": 0.17000000178813934,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "206 code",
+      "search_volume": 165000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "400",
+      "search_volume": 135000,
+      "cpc": 1.2100000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai picture generators",
+      "search_volume": 135000,
+      "cpc": 1.8899999856948853,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "digitalconnectmag com",
+      "search_volume": 135000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "digitalconnectmag.com",
+      "search_volume": 135000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimizer",
+      "search_volume": 135000,
+      "cpc": 18.709999084472656,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search-engine-optimized",
+      "search_volume": 135000,
+      "cpc": 18.709999084472656,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo",
+      "search_volume": 135000,
+      "cpc": 18.709999084472656,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimisation",
+      "search_volume": 135000,
+      "cpc": 18.709999084472656,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimized",
+      "search_volume": 135000,
+      "cpc": 18.709999084472656,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "url",
+      "search_volume": 135000,
+      "cpc": 6.139999866485596,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "203 code",
+      "search_volume": 135000,
+      "cpc": 2.5199999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "408 code",
+      "search_volume": 135000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "424 code",
+      "search_volume": 135000,
+      "cpc": 1.5299999713897705,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 408",
+      "search_volume": 135000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "account name maker",
+      "search_volume": 110000,
+      "cpc": 0.47999998927116394,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai chat for writing",
+      "search_volume": 110000,
+      "cpc": 4.340000152587891,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cached",
+      "search_volume": 110000,
+      "cpc": 0.7099999785423279,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cloaking",
+      "search_volume": 110000,
+      "cpc": 7.199999809265137,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "conclusion conclusion",
+      "search_volume": 110000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "conclusiones",
+      "search_volume": 110000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fitgirl repack",
+      "search_volume": 110000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "fitgirl repacks",
+      "search_volume": 110000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "generate username",
+      "search_volume": 110000,
+      "cpc": 0.47999998927116394,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "grammar",
+      "search_volume": 110000,
+      "cpc": 2.8499999046325684,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "invaluable",
+      "search_volume": 110000,
+      "cpc": 5.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "login name generator",
+      "search_volume": 110000,
+      "cpc": 0.47999998927116394,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "login names generator",
+      "search_volume": 110000,
+      "cpc": 0.47999998927116394,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "lookmovies2.to",
+      "search_volume": 110000,
+      "cpc": 3.319999933242798,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "engine optimization services",
+      "search_volume": 110000,
+      "cpc": 41.81999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mozz",
+      "search_volume": 110000,
+      "cpc": 0.3400000035762787,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "search optimization services",
+      "search_volume": 110000,
+      "cpc": 41.81999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimization services",
+      "search_volume": 110000,
+      "cpc": 41.81999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo service",
+      "search_volume": 110000,
+      "cpc": 41.81999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "definition kpis",
+      "search_volume": 110000,
+      "cpc": 2.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ip what is my ip address",
+      "search_volume": 110000,
+      "cpc": 0.7099999785423279,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "kpi definition",
+      "search_volume": 110000,
+      "cpc": 2.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "kpis define",
+      "search_volume": 110000,
+      "cpc": 2.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google gtm",
+      "search_volume": 90500,
+      "cpc": 10.5,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google keyword planner for keyword research",
+      "search_volume": 90500,
+      "cpc": 9.170000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword",
+      "search_volume": 90500,
+      "cpc": 8.729999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword keywords",
+      "search_volume": 90500,
+      "cpc": 8.729999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword no",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keywords",
+      "search_volume": 90500,
+      "cpc": 8.729999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keywords keyword",
+      "search_volume": 90500,
+      "cpc": 8.729999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "moz moz",
+      "search_volume": 90500,
+      "cpc": 2.7100000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "no keywords",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search and engine",
+      "search_volume": 90500,
+      "cpc": 2.430000066757202,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine",
+      "search_volume": 90500,
+      "cpc": 2.430000066757202,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine websites",
+      "search_volume": 90500,
+      "cpc": 2.430000066757202,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "mi actividad",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "207 code",
+      "search_volume": 90500,
+      "cpc": 1.1299999952316284,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "412 code",
+      "search_volume": 90500,
+      "cpc": 0.27000001072883606,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "425 code",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "509 code",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 520",
+      "search_volume": 90500,
+      "cpc": 1.9100000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "gtm google",
+      "search_volume": 90500,
+      "cpc": 10.5,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "no keyword",
+      "search_volume": 90500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "safest website",
+      "search_volume": 90500,
+      "cpc": 6.550000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google alert",
+      "search_volume": 90500,
+      "cpc": 3.8899998664855957,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google google shopping",
+      "search_volume": 90500,
+      "cpc": 1.440000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google shopping",
+      "search_volume": 90500,
+      "cpc": 1.440000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "semrush",
+      "search_volume": 90500,
+      "cpc": 5.65,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "blog blogs",
+      "search_volume": 74000,
+      "cpc": 8.050000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search console webmaster tools",
+      "search_volume": 74000,
+      "cpc": 15.779999732971191,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "shorten a url",
+      "search_volume": 74000,
+      "cpc": 2.759999990463257,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "shorten links url",
+      "search_volume": 74000,
+      "cpc": 2.759999990463257,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "title",
+      "search_volume": 74000,
+      "cpc": 1.2400000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "youtube advertising free",
+      "search_volume": 74000,
+      "cpc": 1.9900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "xmls",
+      "search_volume": 74000,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "402 code",
+      "search_volume": 74000,
+      "cpc": 2.319999933242798,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "417 code",
+      "search_volume": 74000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 410",
+      "search_volume": 74000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 416",
+      "search_volume": 74000,
+      "cpc": 12.850000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 417",
+      "search_volume": 74000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "code 423",
+      "search_volume": 74000,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "googlebot-video",
+      "search_volume": 74000,
+      "cpc": 4.940000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "params",
+      "search_volume": 74000,
+      "cpc": 3.809999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search console",
+      "search_volume": 74000,
+      "cpc": 15.779999732971191,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai overview",
+      "search_volume": 60500,
+      "cpc": 1.4500000476837158,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "overview ai",
+      "search_volume": 60500,
+      "cpc": 1.4500000476837158,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pro tools software",
+      "search_volume": 60500,
+      "cpc": 1.6200000047683716,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "speed testing site",
+      "search_volume": 60500,
+      "cpc": 1.850000023841858,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "adsense for google",
+      "search_volume": 60500,
+      "cpc": 7.21999979019165,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai overviews",
+      "search_volume": 60500,
+      "cpc": 1.4500000476837158,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google adsense",
+      "search_volume": 60500,
+      "cpc": 7.21999979019165,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "one pages",
+      "search_volume": 60500,
+      "cpc": 5.559999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "404",
+      "search_volume": 49500,
+      "cpc": 1.9100000858306885,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ahrefs",
+      "search_volume": 49500,
+      "cpc": 21.450000762939453,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "build link",
+      "search_volume": 49500,
+      "cpc": 26.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check link",
+      "search_volume": 49500,
+      "cpc": 0.4300000071525574,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "checkr background",
+      "search_volume": 49500,
+      "cpc": 8.829999923706055,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "facebook and advertisers",
+      "search_volume": 49500,
+      "cpc": 12.819999694824219,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "fb advertisers",
+      "search_volume": 49500,
+      "cpc": 12.819999694824219,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "s e o tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimisation tool",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimisation tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimization tool",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimization tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search optimization tool",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo marketing tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimisation tool",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimization tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo tool",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo tools",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "tools for seo",
+      "search_volume": 49500,
+      "cpc": 19.09000015258789,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "adsense",
+      "search_volume": 49500,
+      "cpc": 8.0600004196167,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "roi",
+      "search_volume": 49500,
+      "cpc": 7.940000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "dr simis",
+      "search_volume": 40500,
+      "cpc": 1.0199999809265137,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "local enterprise authority",
+      "search_volume": 40500,
+      "cpc": 0.5,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "m er",
+      "search_volume": 40500,
+      "cpc": 0.15000000596046448,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "overviews",
+      "search_volume": 40500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine marketing",
+      "search_volume": 40500,
+      "cpc": 9.510000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "shorten a hyperlink",
+      "search_volume": 40500,
+      "cpc": 2.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "duckduckgo search",
+      "search_volume": 40500,
+      "cpc": 0.9800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "duckduckgo searches",
+      "search_volume": 40500,
+      "cpc": 0.9800000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "is it down",
+      "search_volume": 40500,
+      "cpc": 7.519999980926514,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "interstitials",
+      "search_volume": 40500,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "regexp",
+      "search_volume": 40500,
+      "cpc": 8.279999732971191,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "403",
+      "search_volume": 33100,
+      "cpc": 1.4900000095367432,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "advanced search in google",
+      "search_volume": 33100,
+      "cpc": 1.7899999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "beginner's",
+      "search_volume": 33100,
+      "cpc": 4.980000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimization services near me",
+      "search_volume": 33100,
+      "cpc": 42.36000061035156,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimization agencies",
+      "search_volume": 33100,
+      "cpc": 45.849998474121094,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "what is seo / search engine optimization",
+      "search_volume": 33100,
+      "cpc": 5.269999980926514,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "gtm",
+      "search_volume": 33100,
+      "cpc": 18.549999237060547,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "rest api",
+      "search_volume": 33100,
+      "cpc": 5.300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "rest apis",
+      "search_volume": 33100,
+      "cpc": 5.300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "restful api",
+      "search_volume": 33100,
+      "cpc": 5.300000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seller central",
+      "search_volume": 33100,
+      "cpc": 1.649999976158142,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sellers central",
+      "search_volume": 33100,
+      "cpc": 1.649999976158142,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "what is kpis",
+      "search_volume": 33100,
+      "cpc": 2.190000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "503",
+      "search_volume": 27100,
+      "cpc": 0.75,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "favicon",
+      "search_volume": 27100,
+      "cpc": 6.119999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "favicons",
+      "search_volume": 27100,
+      "cpc": 6.119999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword search seo",
+      "search_volume": 27100,
+      "cpc": 12.989999771118164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "optimise seo",
+      "search_volume": 27100,
+      "cpc": 20.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "optimize seo",
+      "search_volume": 27100,
+      "cpc": 20.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "optimizing seo",
+      "search_volume": 27100,
+      "cpc": 20.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo search engine optimize",
+      "search_volume": 27100,
+      "cpc": 20.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo search keywords",
+      "search_volume": 27100,
+      "cpc": 12.989999771118164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sitecheck",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website site checker",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "what is googlebot",
+      "search_volume": 27100,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check a site",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "checker site",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "g sc",
+      "search_volume": 27100,
+      "cpc": 2.740000009536743,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "site check",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sites checker",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "web check",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "web checker",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "web checks",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website check",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website to check",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword analysis seo",
+      "search_volume": 27100,
+      "cpc": 12.989999771118164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo keyword analysis",
+      "search_volume": 27100,
+      "cpc": 12.989999771118164,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo search engine optimisation",
+      "search_volume": 27100,
+      "cpc": 20.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website checker",
+      "search_volume": 27100,
+      "cpc": 4.230000019073486,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google ai overviews",
+      "search_volume": 22200,
+      "cpc": 2.630000114440918,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check traffic on site",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check traffic on website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check traffic on websites",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check web traffic",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check web traffic of a website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check web traffic of website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check website traffic",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "lookup website traffic",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "site traffic checker",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "sites to check website traffic",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "traffic checker website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "traffic web checker",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "view traffic for website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "view traffic to website",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "website to check traffic",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "website traffic checker",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "website traffic lookup",
+      "search_volume": 22200,
+      "cpc": 7.340000152587891,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "dns server",
+      "search_volume": 22200,
+      "cpc": 5.070000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pop up",
+      "search_volume": 22200,
+      "cpc": 5.320000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "popping up",
+      "search_volume": 22200,
+      "cpc": 5.320000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ppc ppc",
+      "search_volume": 22200,
+      "cpc": 20.600000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seller central amazon",
+      "search_volume": 22200,
+      "cpc": 1.7000000476837158,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "svg file types",
+      "search_volume": 22200,
+      "cpc": 1.4700000286102295,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "unicode",
+      "search_volume": 22200,
+      "cpc": 3.440000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "what is an ip address",
+      "search_volume": 22200,
+      "cpc": 0.3499999940395355,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ubersuggest",
+      "search_volume": 22200,
+      "cpc": 4.67,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check backlink",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "inbound link check",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "inbound links check",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "inbound links checker",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "link back checker",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "local seo",
+      "search_volume": 18100,
+      "cpc": 24.56999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search backlinks",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo local seo",
+      "search_volume": 18100,
+      "cpc": 24.56999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "sitemap",
+      "search_volume": 18100,
+      "cpc": 5.329999923706055,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speed checker for website",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speed checker website",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "availability of domain name search",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "available domain name checker",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "bandwidth test for website",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check available website names",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check domain if available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check domain is available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check domain name is available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check domain names available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check if a domain is available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check if the domain is available",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check internet domain availability",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check site authority",
+      "search_volume": 18100,
+      "cpc": 5.550000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check web domain availability",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check website authority",
+      "search_volume": 18100,
+      "cpc": 5.550000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check website domain availability",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "check website domain name availability",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "domain availability checker",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "domain name availability checker",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "inbound link checker",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search domain availability",
+      "search_volume": 18100,
+      "cpc": 13.170000076293945,
+      "competition_level": "HIGH"
+    },
+    {
+      "keyword": "site speed test",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speed test a site",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speed test for website",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speed test page",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "speedtest page",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "test speed site",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "web speed test",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website authority checker",
+      "search_volume": 18100,
+      "cpc": 5.550000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website site speed test",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website speed test",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website speed test sites",
+      "search_volume": 18100,
+      "cpc": 8.619999885559082,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "backlinks checker",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check backlinks",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check domain authority",
+      "search_volume": 18100,
+      "cpc": 5.550000190734863,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check my backlinks",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "checker backlink",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "linkback checker",
+      "search_volume": 18100,
+      "cpc": 6.059999942779541,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "redirected",
+      "search_volume": 18100,
+      "cpc": 13.75,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "reseller",
+      "search_volume": 18100,
+      "cpc": 6.090000152587891,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "resellers",
+      "search_volume": 18100,
+      "cpc": 6.090000152587891,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "user testing",
+      "search_volume": 18100,
+      "cpc": 8.390000343322754,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "what is a kpi",
+      "search_volume": 18100,
+      "cpc": 2.2899999618530273,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check url",
+      "search_volume": 14800,
+      "cpc": 6.070000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "checker url",
+      "search_volume": 14800,
+      "cpc": 6.070000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "crawler",
+      "search_volume": 14800,
+      "cpc": 2.440000057220459,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google keyword planner for seo",
+      "search_volume": 14800,
+      "cpc": 12.510000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google keyword planner seo",
+      "search_volume": 14800,
+      "cpc": 12.510000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google seo keyword planner",
+      "search_volume": 14800,
+      "cpc": 12.510000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paginated",
+      "search_volume": 14800,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pagination pagination",
+      "search_volume": 14800,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "paginations",
+      "search_volume": 14800,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo google keyword planner",
+      "search_volume": 14800,
+      "cpc": 12.510000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo-search engine optimization",
+      "search_volume": 14800,
+      "cpc": 31.579999923706055,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "slogan creators",
+      "search_volume": 14800,
+      "cpc": 2.509999990463257,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "url check",
+      "search_volume": 14800,
+      "cpc": 6.070000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "url checker",
+      "search_volume": 14800,
+      "cpc": 6.070000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "400 errors",
+      "search_volume": 14800,
+      "cpc": 0.3100000023841858,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "bing webmaster",
+      "search_volume": 14800,
+      "cpc": 27.06999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "bing webmaster tool",
+      "search_volume": 14800,
+      "cpc": 27.06999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "bing webmaster tools",
+      "search_volume": 14800,
+      "cpc": 27.06999969482422,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "guerilla marketing",
+      "search_volume": 14800,
+      "cpc": 7.820000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "marketing guerilla",
+      "search_volume": 14800,
+      "cpc": 7.820000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "not provided",
+      "search_volume": 14800,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "pagination",
+      "search_volume": 14800,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "rebrandly",
+      "search_volume": 14800,
+      "cpc": 2.630000114440918,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "4 p's of marketing",
+      "search_volume": 12100,
+      "cpc": 1.8299999237060547,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how to search for a keyword on a web page",
+      "search_volume": 12100,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how to search for a keyword on a webpage",
+      "search_volume": 12100,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how to search keywords on a web page",
+      "search_volume": 12100,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "how to search keywords on web page",
+      "search_volume": 12100,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword planner",
+      "search_volume": 12100,
+      "cpc": 10.229999542236328,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "search engine optimisation website",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimization sites",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimization website",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "search engine optimized website",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo and websites",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimisation website",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimization site",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo optimized website",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo site",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo site web",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo web",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo web pages",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo websites",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "site internet seo",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "site ranker",
+      "search_volume": 12100,
+      "cpc": 6.920000076293945,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "site seo",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "site seo checker",
+      "search_volume": 12100,
+      "cpc": 9.850000381469727,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website search engine optimisation",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website seo optimisation",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website seo optimization",
+      "search_volume": 12100,
+      "cpc": 28.229999542236328,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "da pa checker",
+      "search_volume": 12100,
+      "cpc": 3.47,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "abbreviate generator",
+      "search_volume": 9900,
+      "cpc": 2.8600001335144043,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "abbreviation generator",
+      "search_volume": 9900,
+      "cpc": 2.8600001335144043,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "abbreviation maker",
+      "search_volume": 9900,
+      "cpc": 2.8600001335144043,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "acronym generator",
+      "search_volume": 9900,
+      "cpc": 2.8600001335144043,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "acronym maker",
+      "search_volume": 9900,
+      "cpc": 2.8600001335144043,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai answer generator",
+      "search_volume": 9900,
+      "cpc": 2.6500000953674316,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check seo optimization website",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check seo site",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check seo website",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check site seo",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check website for seo optimization",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check website rank",
+      "search_volume": 9900,
+      "cpc": 8.760000228881836,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "check website search engine optimization",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "check website seo",
+      "search_volume": 9900,
+      "cpc": 10.520000457763672,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "copy.ai",
+      "search_volume": 9900,
+      "cpc": 11.029999732971191,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "copyai",
+      "search_volume": 9900,
+      "cpc": 11.029999732971191,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "favicon ico",
+      "search_volume": 9900,
+      "cpc": 4.820000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "favicon ico format",
+      "search_volume": 9900,
+      "cpc": 4.820000171661377,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword research tool",
+      "search_volume": 8100,
+      "cpc": 13.41,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "keyword research tool free",
+      "search_volume": 6600,
+      "cpc": 9.11,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "free seo checker",
+      "search_volume": 5400,
+      "cpc": 7.81,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "free backlink checker",
+      "search_volume": 4400,
+      "cpc": 6,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo tools",
+      "search_volume": 3600,
+      "cpc": 22.66,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo audit tool",
+      "search_volume": 3600,
+      "cpc": 17.42,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ahrefs pricing",
+      "search_volume": 2400,
+      "cpc": 18.72,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google seo checker",
+      "search_volume": 2400,
+      "cpc": 10.69,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "semrush alternative",
+      "search_volume": 1900,
+      "cpc": 27.93,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "website audit tool",
+      "search_volume": 1900,
+      "cpc": 21.57,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google backlink checker",
+      "search_volume": 1900,
+      "cpc": 12.17,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo audit tool free",
+      "search_volume": 1600,
+      "cpc": 14.18,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "backlink checker moz",
+      "search_volume": 1600,
+      "cpc": 12.4,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best free keyword research tool",
+      "search_volume": 1600,
+      "cpc": 9.67,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo tools free",
+      "search_volume": 1300,
+      "cpc": 15.47,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best free seo tools",
+      "search_volume": 1300,
+      "cpc": 15.47,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best keyword research tool",
+      "search_volume": 1300,
+      "cpc": 19.08,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ahrefs alternative",
+      "search_volume": 1000,
+      "cpc": 19.78,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "semrush for free",
+      "search_volume": 1000,
+      "cpc": 8.9,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "seo software tools free",
+      "search_volume": 1000,
+      "cpc": 16.23,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "top seo tools",
+      "search_volume": 1000,
+      "cpc": 16.71,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "google keyword research tool free",
+      "search_volume": 1000,
+      "cpc": 10.91,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "cheap seo tools",
+      "search_volume": 880,
+      "cpc": 11.7,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "youtube keyword research tool",
+      "search_volume": 880,
+      "cpc": 6.39,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "semrush alternative free",
+      "search_volume": 720,
+      "cpc": 26.81,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "best seo tools for wordpress",
+      "search_volume": 720,
+      "cpc": 9.29,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo audit report",
+      "search_volume": 720,
+      "cpc": 19.51,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "free seo checker online",
+      "search_volume": 720,
+      "cpc": 8.83,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo checker",
+      "search_volume": 720,
+      "cpc": 13.91,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best paid seo tools",
+      "search_volume": 720,
+      "cpc": 60.23,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website audit tool free",
+      "search_volume": 720,
+      "cpc": 12.76,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "best seo tools for small business",
+      "search_volume": 590,
+      "cpc": 28.75,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo tools list",
+      "search_volume": 590,
+      "cpc": 5.4,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "backlink generator",
+      "search_volume": 590,
+      "cpc": 15.27,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "ahrefs alternative free",
+      "search_volume": 480,
+      "cpc": 17.84,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo audit tool",
+      "search_volume": 480,
+      "cpc": 17.17,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best backlink checker",
+      "search_volume": 480,
+      "cpc": 7.66,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best ahrefs alternative",
+      "search_volume": 390,
+      "cpc": 5.84,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best semrush alternative",
+      "search_volume": 390,
+      "cpc": 41.81,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo tools for beginners",
+      "search_volume": 390,
+      "cpc": 19.56,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "seo audit tool online",
+      "search_volume": 390,
+      "cpc": 13.12,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website audit checklist",
+      "search_volume": 390,
+      "cpc": 16.25,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best website audit tool",
+      "search_volume": 390,
+      "cpc": 9.12,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website analyzer free",
+      "search_volume": 260,
+      "cpc": 9.81,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "seo tool pricing",
+      "search_volume": 260,
+      "cpc": 16.8,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best seo tools for youtube",
+      "search_volume": 210,
+      "cpc": 18.62,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "website audit tool online",
+      "search_volume": 210,
+      "cpc": 5.29,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best cheap seo tools",
+      "search_volume": 170,
+      "cpc": 11.93,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "ai keyword research tool",
+      "search_volume": 170,
+      "cpc": 16.38,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "semrush cheaper alternative",
+      "search_volume": 140,
+      "cpc": 21.77,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "google seo checker free",
+      "search_volume": 140,
+      "cpc": 5.15,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "best free seo checker",
+      "search_volume": 140,
+      "cpc": 9.18,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "semrush alternative reddit",
+      "search_volume": 110,
+      "cpc": 36.47,
+      "competition_level": "MEDIUM"
+    },
+    {
+      "keyword": "best seo tools reddit",
+      "search_volume": 110,
+      "cpc": 0,
+      "competition_level": "LOW"
+    },
+    {
+      "keyword": "best free website audit tools",
+      "search_volume": 110,
+      "cpc": 33.85,
+      "competition_level": "MEDIUM"
+    }
+  ]
+}
