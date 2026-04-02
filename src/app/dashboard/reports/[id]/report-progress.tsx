@@ -58,15 +58,22 @@ function mapStageToStep(stage: string, progress: number): number {
 export function ReportProgress({
   reportId,
   initialProgress,
+  initialStage,
 }: {
   reportId: string;
   initialProgress: number;
   initialStage: string;
 }) {
+  const initStage = initialStage || "detecting market";
+  const initStep = mapStageToStep(initStage, initialProgress);
   const [progress, setProgress] = useState(initialProgress);
-  const [stage, setStage] = useState("detecting market");
-  const [activeStep, setActiveStep] = useState(mapStageToStep("detecting market", initialProgress));
-  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
+  const [stage, setStage] = useState(initStage);
+  const [activeStep, setActiveStep] = useState(initStep);
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(() => {
+    const s = new Set<number>();
+    for (let i = 0; i < initStep; i++) s.add(i);
+    return s;
+  });
   const [done, setDone] = useState(false);
   const [tipIdx, setTipIdx] = useState(0);
   const startTime = useRef(Date.now());
