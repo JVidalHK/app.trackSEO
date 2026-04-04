@@ -257,64 +257,58 @@ function ScoreTrajectoryChart({ tracking }: { tracking: any[] }) {
   const maxScore = Math.min(100, Math.max(...scores) + 15);
   const range = maxScore - minScore || 1;
 
-  // Fixed slots: always divide into equal columns so labels align under dots
+  // All rendering in one SVG for perfect alignment
   const width = 500;
-  const height = 100;
-  const padX = 50;
-  const chartW = width - padX * 2;
-  const chartH = height - 20;
+  const chartTop = 10;
+  const chartH = 80;
+  const labelStart = chartTop + chartH + 20;
+  const totalH = labelStart + 50;
 
+  // Position points: 1=center, 2=far left/right, 3-5=evenly spread edge-to-edge
+  const margin = 50;
+  const usable = width - margin * 2;
   const points = tracking.map((t, i) => {
-    const x = n === 1 ? width / 2 : padX + (i / (n - 1)) * chartW;
-    const y = 10 + chartH - (((t.seo_score ?? 0) - minScore) / range) * chartH;
+    let x: number;
+    if (n === 1) x = width / 2;
+    else x = margin + (i / (n - 1)) * usable;
+    const y = chartTop + chartH - (((t.seo_score ?? 0) - minScore) / range) * chartH;
     return { x, y, score: t.seo_score ?? 0 };
   });
 
   const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
 
-  // Compute column positions as percentages for label alignment
-  const colPositions = tracking.map((_, i) =>
-    n === 1 ? 50 : (padX + (i / (n - 1)) * chartW) / width * 100
-  );
-
   return (
-    <>
-      <div style={{ position: "relative", height: 100, marginBottom: 4 }}>
-        <svg width="100%" height="100" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-          {points.map((p, i) => (
-            <line key={`g-${i}`} x1={p.x} y1={0} x2={p.x} y2={height} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="4 4" />
-          ))}
-          <path d={linePath} stroke="#10B981" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          {points.map((p, i) => {
-            const prevScore = i > 0 ? points[i - 1].score : p.score;
-            const delta = p.score - prevScore;
-            const color = i === 0 ? "#F59E0B" : delta >= 0 ? "#10B981" : "#EF4444";
-            return <circle key={`p-${i}`} cx={p.x} cy={p.y} r="4.5" fill="var(--color-bg, #0B1120)" stroke={color} strokeWidth="2" />;
-          })}
-        </svg>
-      </div>
-      <div style={{ position: "relative", display: "flex" }}>
-        {tracking.map((t: any, i: number) => {
-          const score = t.seo_score ?? 0;
-          const prevScore = i > 0 ? (tracking[i - 1].seo_score ?? 0) : 0;
-          const delta = i > 0 ? score - prevScore : 0;
-          const color = i === 0 ? "text-warning" : delta >= 0 ? "text-success" : "text-danger";
-          return (
-            <div key={i} style={{ position: "absolute", left: `${colPositions[i]}%`, transform: "translateX(-50%)", textAlign: "center", whiteSpace: "nowrap" }}>
-              <div className={`text-lg font-medium ${color}`}>{score}</div>
-              <div className="text-[10px] text-text-tertiary">
-                {new Date(t.tracked_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-              </div>
-              <div className={`text-[10px] font-medium ${color}`}>
-                {i === 0 ? "First report" : `${delta >= 0 ? "+" : ""}${delta} pts`}
-              </div>
-            </div>
-          );
-        })}
-        {/* Spacer to maintain height */}
-        <div style={{ height: 52, width: "100%" }} />
-      </div>
-    </>
+    <svg width="100%" viewBox={`0 0 ${width} ${totalH}`} preserveAspectRatio="xMidYMid meet">
+      {/* Vertical grid lines */}
+      {points.map((p, i) => (
+        <line key={`g-${i}`} x1={p.x} y1={chartTop} x2={p.x} y2={chartTop + chartH} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="4 4" />
+      ))}
+      {/* Score line */}
+      {n > 1 && <path d={linePath} stroke="#10B981" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />}
+      {/* Data point circles */}
+      {points.map((p, i) => {
+        const prevScore = i > 0 ? points[i - 1].score : p.score;
+        const delta = p.score - prevScore;
+        const color = i === 0 ? "#F59E0B" : delta >= 0 ? "#10B981" : "#EF4444";
+        return <circle key={`p-${i}`} cx={p.x} cy={p.y} r="4" fill="var(--color-bg, #0B1120)" stroke={color} strokeWidth="2" />;
+      })}
+      {/* Labels below — score, date, delta */}
+      {tracking.map((t: any, i: number) => {
+        const score = t.seo_score ?? 0;
+        const prevScore = i > 0 ? (tracking[i - 1].seo_score ?? 0) : 0;
+        const delta = i > 0 ? score - prevScore : 0;
+        const color = i === 0 ? "#F59E0B" : delta >= 0 ? "#10B981" : "#EF4444";
+        const dateStr = new Date(t.tracked_at).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        const deltaStr = i === 0 ? "First report" : `${delta >= 0 ? "+" : ""}${delta} pts`;
+        return (
+          <g key={`l-${i}`}>
+            <text x={points[i].x} y={labelStart} textAnchor="middle" fill={color} fontSize="16" fontWeight="500" fontFamily="inherit">{score}</text>
+            <text x={points[i].x} y={labelStart + 14} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="10" fontFamily="inherit">{dateStr}</text>
+            <text x={points[i].x} y={labelStart + 26} textAnchor="middle" fill={color} fontSize="10" fontWeight="500" fontFamily="inherit">{deltaStr}</text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
 
