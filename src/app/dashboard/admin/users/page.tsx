@@ -80,13 +80,13 @@ export default function AdminUsersPage() {
         <table className="w-full text-xs min-w-[800px]">
           <thead>
             <tr className="border-b border-border text-text-secondary">
-              <SortHeader label="Name" col="full_name" sort={sort} order={order} onSort={toggleSort} />
-              <SortHeader label="Email" col="email" sort={sort} order={order} onSort={toggleSort} className="hidden sm:table-cell" />
+              <SortHeader label="Name" col="full_name" sort={sort} order={order} onSort={toggleSort} align="left" />
+              <SortHeader label="Email" col="email" sort={sort} order={order} onSort={toggleSort} align="left" />
               <SortHeader label="Signup" col="created_at" sort={sort} order={order} onSort={toggleSort} />
               <SortHeader label="Credits" col="credits_remaining" sort={sort} order={order} onSort={toggleSort} />
               <SortHeader label="Reports" col="total_reports_run" sort={sort} order={order} onSort={toggleSort} />
               <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Revenue</th>
-              <th className="text-center font-medium px-3 py-2 whitespace-nowrap hidden md:table-cell">Last Active</th>
+              <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Last Active</th>
               <th className="text-center font-medium px-3 py-2 whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -99,14 +99,14 @@ export default function AdminUsersPage() {
                   {u.full_name || "—"}
                   {u.is_banned && <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded bg-danger/10 text-danger font-medium">Banned</span>}
                 </td>
-                <td className="px-3 py-2 text-text-secondary hidden sm:table-cell">{u.email}</td>
+                <td className="px-3 py-2 text-text-secondary">{u.email}</td>
                 <td className="px-3 py-2 text-text-secondary text-center whitespace-nowrap">{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="px-3 py-2 text-center">
                   <InlineEdit value={u.credits_remaining} onSave={(v) => updateCredits(u.id, v)} />
                 </td>
                 <td className="px-3 py-2 text-center">{u.total_reports_run}</td>
                 <td className="px-3 py-2 text-center">{u.revenue > 0 ? `$${(u.revenue / 100).toFixed(2)}` : "—"}</td>
-                <td className="px-3 py-2 text-center text-text-secondary whitespace-nowrap hidden md:table-cell">{u.last_active ? new Date(u.last_active).toLocaleDateString() : "—"}</td>
+                <td className="px-3 py-2 text-center text-text-secondary whitespace-nowrap">{u.last_active ? new Date(u.last_active).toLocaleDateString() : "—"}</td>
                 <td className="px-3 py-2 text-center">
                   {u.is_admin ? (
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">Admin</span>
@@ -136,9 +136,9 @@ export default function AdminUsersPage() {
   );
 }
 
-function SortHeader({ label, col, sort, order, onSort, className = "" }: { label: string; col: string; sort: string; order: string; onSort: (col: string) => void; className?: string }) {
+function SortHeader({ label, col, sort, order, onSort, align = "center" }: { label: string; col: string; sort: string; order: string; onSort: (col: string) => void; align?: string }) {
   return (
-    <th className={`text-center font-medium px-3 py-2 whitespace-nowrap cursor-pointer hover:text-text-primary transition-colors ${className}`} onClick={() => onSort(col)}>
+    <th className={`${align === "left" ? "text-left" : "text-center"} font-medium px-3 py-2 whitespace-nowrap cursor-pointer hover:text-text-primary transition-colors`} onClick={() => onSort(col)}>
       {label} {sort === col && (order === "asc" ? "↑" : "↓")}
     </th>
   );
