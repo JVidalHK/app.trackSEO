@@ -14,7 +14,7 @@ interface SidebarProps {
 const NAV_ITEMS = [
   { href: "/dashboard", label: "New Report", icon: "plus-circle" },
   { href: "/dashboard/reports", label: "My reports", icon: "list" },
-  { href: "/dashboard/progress", label: "Progress tracker", icon: "clock" },
+  { href: "/dashboard/progress", label: "Progress tracker", icon: "trend" },
 ];
 
 const ADMIN_ITEMS = [
@@ -268,6 +268,7 @@ function NavIcon({ name }: { name: string }) {
     case "grid": return <svg {...p}><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.2"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.2"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.2"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.2"/></svg>;
     case "list": return <svg {...p}><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
     case "clock": return <svg {...p}><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2"/><path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>;
+    case "trend": return <svg {...p}><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M11 5h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
     case "card": return <svg {...p}><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M2 6h12" stroke="currentColor" strokeWidth="1.2"/></svg>;
     case "plus-circle": return <svg {...p}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.2"/><path d="M8 5.5v5M5.5 8h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>;
     case "chart": return <svg {...p}><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M11 5h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
