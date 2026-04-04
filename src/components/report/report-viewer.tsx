@@ -18,7 +18,7 @@ const TABS = [
   { key: "overview", label: "Overview" },
   { key: "keywords", label: "Keywords" },
   { key: "ai-visibility", label: "AI visibility" },
-  { key: "pages-tech", label: "Pages and tech" },
+  { key: "pages-tech", label: "Pages and linking" },
   { key: "audit", label: "Technical audit" },
   { key: "competitors", label: "Competitors" },
   { key: "backlinks", label: "Backlinks" },

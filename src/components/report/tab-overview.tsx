@@ -32,6 +32,8 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
   const keywords = data.keywords?.items?.slice(0, 5) || [];
   const aiScore = data.ai_visibility?.readiness_score ?? data.scores?.ai_readiness ?? 0;
   const checklist = data.audit_checklist || [];
+  const techPerfIssues = (data.tech_performance_issues || []).filter((i: any) => i.status === "issue");
+  const contentRoadmap = data.content_roadmap || [];
 
   return (
     <div className="space-y-4">
@@ -100,6 +102,52 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
             {actions.map((a: any, i: number) => (
               <ExpandableCard key={i} priority={a.priority} title={a.title} description={a.description} timeEstimate={a.time_estimate} steps={a.steps} expectedImpact={a.expected_impact} />
             ))}
+            {techPerfIssues.map((issue: any, i: number) => (
+              <TechIssueCard key={`tech-${i}`} issue={issue} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Content roadmap */}
+      {contentRoadmap.length > 0 && (
+        <div>
+          <SectionTitle>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="#60A5FA" strokeWidth="1.5" strokeLinecap="round" /></svg>
+            <Tip k="content_roadmap">Content roadmap</Tip>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-info/10 text-info font-normal">{contentRoadmap.length} opportunities</span>
+          </SectionTitle>
+          <div className="bg-surface rounded-xl border border-border overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead><tr className="border-b border-border text-text-secondary">
+                <th className="text-left font-medium px-3 py-2">Suggested content</th>
+                <th className="text-left font-medium px-3 py-2">Target keyword</th>
+                <th className="text-left font-medium px-3 py-2">Monthly vol</th>
+                <th className="text-center font-medium px-3 py-2"><Tip k="difficulty">KD</Tip></th>
+                <th className="text-left font-medium px-3 py-2">Est. traffic</th>
+              </tr></thead>
+              <tbody>
+                {contentRoadmap.map((item: any, i: number) => {
+                  const kd = item.keyword_difficulty || item.kd || 0;
+                  const kdCls = kd < 30 ? "bg-success/10 text-success" : kd < 60 ? "bg-warning/10 text-warning" : "bg-danger/10 text-danger";
+                  return (
+                    <tr key={i} className="border-b border-border last:border-b-0">
+                      <td className="px-3 py-2">
+                        <div className="font-medium">{item.title}</div>
+                        <div className="text-[10px] text-text-secondary mt-0.5">{item.word_count_recommendation ? `${item.word_count_recommendation}+ words` : ""} {item.content_type || ""}</div>
+                      </td>
+                      <td className="px-3 py-2 text-text-secondary">{item.target_keyword}</td>
+                      <td className="px-3 py-2">{item.volume ? item.volume.toLocaleString() : "—"}</td>
+                      <td className="px-3 py-2 text-center"><span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${kdCls}`}>{kd || "—"}</span></td>
+                      <td className="px-3 py-2 text-success font-medium">+{(item.estimated_traffic_monthly || 0).toLocaleString()}/mo</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-xs text-text-secondary mt-1.5 px-0.5">
+            Creating all {contentRoadmap.length} pieces could add an estimated <span className="text-success font-medium">+{contentRoadmap.reduce((s: number, r: any) => s + (r.estimated_traffic_monthly || 0), 0).toLocaleString()} visitors/month</span> to your site. Prioritise by lowest keyword difficulty first.
           </div>
         </div>
       )}
@@ -196,6 +244,39 @@ function MetricCard({ label, value, change, suffix, positive, warn }: { label: R
         {suffix && <span className="text-xs text-text-secondary ml-1">{suffix}</span>}
         {change && <span className={`text-xs ml-1 ${positive ? "text-success" : warn ? "text-warning" : "text-text-secondary"}`}>{change}</span>}
       </div>
+    </div>
+  );
+}
+
+function TechIssueCard({ issue }: { issue: any }) {
+  const [open, setOpen] = useState(false);
+  const borderColor = issue.impact === "high" ? "border-l-danger" : "border-l-warning";
+  const badgeCls = issue.impact === "high" ? "bg-danger/10 text-danger" : "bg-warning/10 text-warning";
+
+  return (
+    <div
+      onClick={() => setOpen(!open)}
+      className={`rounded-r-lg p-3 border border-border border-l-[3px] ${borderColor} cursor-pointer hover:border-border-light transition-colors`}
+    >
+      <div className="flex items-center gap-2 mb-1 flex-wrap">
+        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${badgeCls}`}>Tech stack</span>
+        <span className="text-xs font-medium flex-1 min-w-[180px]">{issue.title}</span>
+      </div>
+      <p className="text-xs text-text-secondary leading-relaxed">{issue.description}</p>
+      {issue.estimated_gain_ms > 0 && (
+        <span className="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success mt-1 inline-block">
+          Quick win — ~{(issue.estimated_gain_ms / 1000).toFixed(1)}s faster
+        </span>
+      )}
+      {open && issue.fix_instructions && (
+        <div className="mt-2 pt-2 border-t border-border text-xs text-text-secondary leading-relaxed">
+          <span className="font-medium text-text-primary">How to fix this:</span>
+          <p className="mt-1 whitespace-pre-line">{issue.fix_instructions}</p>
+          {issue.estimated_gain_ms > 0 && (
+            <p className="text-success font-medium mt-2">Expected: {(issue.estimated_gain_ms / 1000).toFixed(1)}s faster page load</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
