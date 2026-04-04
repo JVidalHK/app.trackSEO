@@ -116,23 +116,7 @@ export function ProgressView({
             Score trajectory
           </div>
           <div className="bg-surface rounded-xl p-4 border border-border">
-            <div className="flex justify-around text-center flex-wrap gap-4">
-              {tracking.map((t: any, i: number) => {
-                const score = t.seo_score ?? 0;
-                const prevScore = i > 0 ? (tracking[i - 1].seo_score ?? 0) : 0;
-                const delta = i > 0 ? score - prevScore : 0;
-                const color = i === 0 ? "text-warning" : delta >= 0 ? "text-success" : "text-danger";
-                return (
-                  <div key={i}>
-                    <div className={`text-xl font-medium ${color}`}>{score}</div>
-                    <div className="text-[10px] text-text-tertiary">{new Date(t.tracked_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</div>
-                    <div className={`text-[10px] font-medium ${color}`}>
-                      {i === 0 ? "First report" : `${delta >= 0 ? "+" : ""}${delta} pts`}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <ScoreTrajectoryChart tracking={tracking.slice(-5)} />
           </div>
         </div>
       )}
@@ -259,6 +243,76 @@ export function ProgressView({
         </div>
       )}
     </div>
+  );
+}
+
+// ── Score trajectory SVG chart ──
+
+function ScoreTrajectoryChart({ tracking }: { tracking: any[] }) {
+  if (tracking.length === 0) return null;
+
+  const scores = tracking.map((t) => t.seo_score ?? 0);
+  const minScore = Math.max(0, Math.min(...scores) - 15);
+  const maxScore = Math.min(100, Math.max(...scores) + 15);
+  const range = maxScore - minScore || 1;
+
+  const width = 500;
+  const height = 100;
+  const padX = 40;
+  const padY = 10;
+  const chartW = width - padX * 2;
+  const chartH = height - padY * 2;
+
+  const points = tracking.map((t, i) => {
+    const x = tracking.length === 1 ? width / 2 : padX + (i / (tracking.length - 1)) * chartW;
+    const y = padY + chartH - ((( t.seo_score ?? 0) - minScore) / range) * chartH;
+    return { x, y, score: t.seo_score ?? 0 };
+  });
+
+  // Build the line path
+  const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
+
+  return (
+    <>
+      <div style={{ position: "relative", height: 110, marginBottom: 8 }}>
+        <svg width="100%" height="110" viewBox={`0 0 ${width} ${height + 10}`} preserveAspectRatio="none">
+          {/* Vertical grid lines */}
+          {points.map((p, i) => (
+            <line key={`grid-${i}`} x1={p.x} y1={0} x2={p.x} y2={height} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="4 4" />
+          ))}
+          {/* Score line */}
+          <path d={linePath} stroke="#10B981" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          {/* Data points */}
+          {points.map((p, i) => {
+            const prevScore = i > 0 ? points[i - 1].score : p.score;
+            const delta = p.score - prevScore;
+            const color = i === 0 ? "#F59E0B" : delta >= 0 ? "#10B981" : "#EF4444";
+            return (
+              <circle key={`pt-${i}`} cx={p.x} cy={p.y} r="6" fill="var(--color-bg, #0B1120)" stroke={color} strokeWidth="2.5" />
+            );
+          })}
+        </svg>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-around", textAlign: "center" }}>
+        {tracking.map((t: any, i: number) => {
+          const score = t.seo_score ?? 0;
+          const prevScore = i > 0 ? (tracking[i - 1].seo_score ?? 0) : 0;
+          const delta = i > 0 ? score - prevScore : 0;
+          const color = i === 0 ? "text-warning" : delta >= 0 ? "text-success" : "text-danger";
+          return (
+            <div key={i}>
+              <div className={`text-lg font-medium ${color}`}>{score}</div>
+              <div className="text-[10px] text-text-tertiary">
+                {new Date(t.tracked_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+              </div>
+              <div className={`text-[10px] font-medium ${color}`}>
+                {i === 0 ? "First report" : `${delta >= 0 ? "+" : ""}${delta} pts`}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
