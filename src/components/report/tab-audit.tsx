@@ -23,7 +23,10 @@ export function TabAudit({ data }: { data: any }) {
   const platform = enrichedTech.platform;
   const perfIssues = data.tech_performance_issues || [];
   const speedEstimate = data.tech_speed_estimate;
-  const issueItems = perfIssues.filter((i: any) => i.status === "issue");
+  const impactOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
+  const issueItems = perfIssues
+    .filter((i: any) => i.status === "issue")
+    .sort((a: any, b: any) => (impactOrder[a.impact] ?? 3) - (impactOrder[b.impact] ?? 3));
   const goodItems = perfIssues.filter((i: any) => i.status === "good");
   const highCount = issueItems.filter((i: any) => i.impact === "high").length;
   const medCount = issueItems.filter((i: any) => i.impact === "medium").length;

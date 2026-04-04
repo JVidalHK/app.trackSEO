@@ -6,47 +6,48 @@ import { createPortal } from "react-dom";
 export function Tooltip({ text, children }: { text: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const [pos, setPos] = useState<{ top: number; left: number; below: boolean } | null>(null);
+  const tooltipRef = useRef<HTMLSpanElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties>({});
 
   const updatePos = useCallback(() => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const tooltipWidth = 224; // w-56 = 14rem = 224px
-    const tooltipHeight = 60; // approximate tooltip height
-    const margin = 8;
+    const tooltipWidth = 224;
+    const margin = 12;
 
-    // Calculate horizontal position, clamped to viewport
-    let left = rect.left + rect.width / 2;
-    const halfWidth = tooltipWidth / 2;
-    if (left - halfWidth < margin) left = halfWidth + margin;
-    if (left + halfWidth > window.innerWidth - margin) left = window.innerWidth - halfWidth - margin;
+    // Horizontal: center on trigger, clamp to viewport
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    if (left < margin) left = margin;
+    if (left + tooltipWidth > window.innerWidth - margin) left = window.innerWidth - tooltipWidth - margin;
 
-    // Show below if not enough space above
+    // Vertical: prefer above, fall back to below
+    // Measure actual tooltip height if rendered
+    const tooltipHeight = tooltipRef.current?.offsetHeight || 48;
     const spaceAbove = rect.top;
-    const below = spaceAbove < tooltipHeight + margin;
+    const showBelow = spaceAbove < tooltipHeight + margin;
 
-    setPos({
-      top: below
-        ? rect.bottom + window.scrollY + 6
-        : rect.top + window.scrollY - 6,
-      left,
-      below,
-    });
+    const top = showBelow
+      ? rect.bottom + 6
+      : rect.top - tooltipHeight - 6;
+
+    setStyle({ position: "fixed", top, left, width: tooltipWidth, zIndex: 9999 });
   }, []);
 
   useEffect(() => {
     if (!open) return;
-    updatePos();
-    function handleClick(e: MouseEvent) {
+    // Delay to allow tooltip to render so we can measure height
+    requestAnimationFrame(updatePos);
+
+    function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }
     }
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", handleClickOutside);
     window.addEventListener("scroll", updatePos, true);
     window.addEventListener("resize", updatePos);
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleClickOutside);
       window.removeEventListener("scroll", updatePos, true);
       window.removeEventListener("resize", updatePos);
     };
@@ -56,22 +57,19 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
     <span
       ref={ref}
       className="relative inline-flex items-center gap-1 cursor-help"
-      onMouseEnter={() => { setOpen(true); updatePos(); }}
+      onMouseEnter={() => { setOpen(true); }}
       onMouseLeave={() => setOpen(false)}
-      onClick={(e) => { e.stopPropagation(); setOpen(!open); updatePos(); }}
+      onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
     >
       {children}
       <span className="w-3.5 h-3.5 rounded-full border border-border-light flex items-center justify-center text-[9px] text-text-tertiary flex-shrink-0">
         ?
       </span>
-      {open && pos && typeof document !== "undefined" && createPortal(
+      {open && typeof document !== "undefined" && createPortal(
         <span
-          className="fixed px-2.5 py-1.5 text-xs text-text-primary w-56 text-left z-[9999] leading-relaxed font-normal rounded-lg border border-border-light bg-bg/95 backdrop-blur-xl shadow-xl shadow-black/20 pointer-events-none"
-          style={{
-            top: pos.top,
-            left: pos.left,
-            transform: pos.below ? "translateX(-50%)" : "translate(-50%, -100%)",
-          }}
+          ref={tooltipRef}
+          className="px-2.5 py-1.5 text-xs text-text-primary text-left leading-relaxed font-normal rounded-lg border border-border-light bg-bg/95 backdrop-blur-xl shadow-xl shadow-black/20 pointer-events-none"
+          style={style}
         >
           {text}
         </span>,
