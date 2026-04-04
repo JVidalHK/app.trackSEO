@@ -278,7 +278,7 @@ function ScoreTrajectoryChart({ tracking }: { tracking: any[] }) {
   const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
 
   return (
-    <svg width="100%" viewBox={`0 0 ${width} ${totalH}`} preserveAspectRatio="xMidYMid meet">
+    <svg width="100%" style={{ height: 160, maxHeight: 160 }} viewBox={`0 0 ${width} ${totalH}`} preserveAspectRatio="xMidYMid meet">
       {/* Vertical grid lines */}
       {points.map((p, i) => (
         <line key={`g-${i}`} x1={p.x} y1={chartTop} x2={p.x} y2={chartTop + chartH} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="4 4" />
