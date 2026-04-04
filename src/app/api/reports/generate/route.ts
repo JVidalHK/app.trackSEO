@@ -18,16 +18,20 @@ export async function POST(request: Request) {
 
   const serviceClient = createServiceClient();
 
-  // Check if user is banned
+  // Check credits and ban status
   const { data: profile, error: profileError } = await serviceClient
     .from("profiles")
-    .select("credits_remaining, is_banned")
+    .select("credits_remaining")
     .eq("id", user.id)
     .single();
 
-  if (profile?.is_banned) {
-    return NextResponse.json({ error: "Your account has been suspended. Contact support@postreach.ai for assistance." }, { status: 403 });
-  }
+  // Ban check — safe fallback if column doesn't exist yet
+  try {
+    const { data: banCheck } = await serviceClient.from("profiles").select("is_banned").eq("id", user.id).single();
+    if (banCheck?.is_banned) {
+      return NextResponse.json({ error: "Your account has been suspended. Contact support@postreach.ai for assistance." }, { status: 403 });
+    }
+  } catch { /* is_banned column may not exist yet */ }
 
   console.log("DEBUG generate:", { userId: user.id, profile, profileError });
 
