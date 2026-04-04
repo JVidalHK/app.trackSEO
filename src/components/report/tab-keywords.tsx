@@ -88,22 +88,22 @@ export function TabKeywords({ data }: { data: any }) {
         <table className="w-full text-xs">
           <thead><tr className="border-b border-border text-text-secondary">
             <th className="text-left font-medium px-3 py-2">Keyword</th>
-            <th className="text-left font-medium px-3 py-2">Pos</th>
-            <th className="text-left font-medium px-3 py-2">Volume</th>
-            <th className="text-left font-medium px-3 py-2">Traffic</th>
-            <th className="text-left font-medium px-3 py-2 hidden sm:table-cell"><Tip k="cpc">CPC</Tip></th>
-            <th className="text-left font-medium px-3 py-2 hidden sm:table-cell">Intent</th>
+            <th className="text-center font-medium px-3 py-2">Pos</th>
+            <th className="text-center font-medium px-3 py-2">Volume</th>
+            <th className="text-center font-medium px-3 py-2">Traffic</th>
+            <th className="text-center font-medium px-3 py-2 hidden sm:table-cell"><Tip k="cpc">CPC</Tip></th>
+            <th className="text-center font-medium px-3 py-2 hidden sm:table-cell">Intent</th>
             <th className="text-left font-medium px-3 py-2 hidden md:table-cell">Page</th>
           </tr></thead>
           <tbody>
             {pageItems.map((k: any, i: number) => (
               <tr key={i} className="border-b border-border last:border-b-0">
                 <td className="px-3 py-2 font-medium max-w-[200px] truncate">{k.keyword}</td>
-                <td className="px-3 py-2"><PositionPill position={k.position || 0} /></td>
-                <td className="px-3 py-2">{(k.volume || 0).toLocaleString()}</td>
-                <td className="px-3 py-2">{(k.traffic || 0).toLocaleString()}</td>
-                <td className="px-3 py-2 hidden sm:table-cell text-text-secondary">{k.cpc ? `$${k.cpc.toFixed(2)}` : "—"}</td>
-                <td className="px-3 py-2 hidden sm:table-cell text-text-secondary capitalize">{k.intent || "—"}</td>
+                <td className="px-3 py-2 text-center"><PositionPill position={k.position || 0} /></td>
+                <td className="px-3 py-2 text-center">{(k.volume || 0).toLocaleString()}</td>
+                <td className="px-3 py-2 text-center">{(k.traffic || 0).toLocaleString()}</td>
+                <td className="px-3 py-2 text-center hidden sm:table-cell text-text-secondary">{k.cpc ? `$${k.cpc.toFixed(2)}` : "—"}</td>
+                <td className="px-3 py-2 text-center hidden sm:table-cell text-text-secondary capitalize">{k.intent || "—"}</td>
                 <td className="px-3 py-2 hidden md:table-cell text-info truncate max-w-[120px]">{k.url || "—"}</td>
               </tr>
             ))}
@@ -132,11 +132,11 @@ export function TabKeywords({ data }: { data: any }) {
             <table className="w-full text-xs">
               <thead><tr className="border-b border-border text-text-secondary">
                 <th className="text-left font-medium px-3 py-2">Keyword gap</th>
-                <th className="text-left font-medium px-3 py-2">Volume</th>
+                <th className="text-center font-medium px-3 py-2">Volume</th>
                 <th className="text-center font-medium px-3 py-2"><Tip k="difficulty">KD</Tip></th>
-                <th className="text-left font-medium px-3 py-2"><Tip k="competitors">Competitors</Tip></th>
+                <th className="text-center font-medium px-3 py-2"><Tip k="competitors">Competitors</Tip></th>
                 <th className="text-center font-medium px-3 py-2"><Tip k="opp_score">Opp. score</Tip></th>
-                <th className="text-left font-medium px-3 py-2">Est. traffic</th>
+                <th className="text-center font-medium px-3 py-2">Est. traffic</th>
               </tr></thead>
               <tbody>
                 {opportunities.slice(0, 15).map((o: any, i: number) => {
@@ -145,11 +145,11 @@ export function TabKeywords({ data }: { data: any }) {
                   return (
                     <tr key={i} className="border-b border-border last:border-b-0">
                       <td className="px-3 py-2 font-medium">{o.keyword}</td>
-                      <td className="px-3 py-2">{(o.volume || 0).toLocaleString()}</td>
+                      <td className="px-3 py-2 text-center">{(o.volume || 0).toLocaleString()}</td>
                       <td className="px-3 py-2 text-center"><span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${kdCls}`}>{o.difficulty || "—"}</span></td>
-                      <td className="px-3 py-2">{o.competitors_ranking || "—"}</td>
+                      <td className="px-3 py-2 text-center">{o.competitors_ranking || "—"}</td>
                       <td className="px-3 py-2 text-center"><span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium ${scoreCls}`}>{o.opportunity_score || "—"}</span></td>
-                      <td className="px-3 py-2 text-success font-medium">~{(o.potential_traffic || 0).toLocaleString()}</td>
+                      <td className="px-3 py-2 text-center text-success font-medium">~{(o.potential_traffic || 0).toLocaleString()}</td>
                     </tr>
                   );
                 })}

@@ -60,19 +60,19 @@ export function TabCompetitors({ data }: { data: any }) {
           <table className="w-full text-xs">
             <thead><tr className="border-b border-border text-text-secondary">
               <th className="text-left font-medium px-3 py-2">Website</th>
-              <th className="text-right font-medium px-3 py-2"><Tip k="organic_traffic">Est. Traffic</Tip></th>
-              <th className="text-right font-medium px-3 py-2"><Tip k="keywords">Keywords</Tip></th>
-              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell"><Tip k="overlap">Shared KW</Tip></th>
-              <th className="text-right font-medium px-3 py-2 hidden sm:table-cell">Avg Pos</th>
+              <th className="text-center font-medium px-3 py-2"><Tip k="organic_traffic">Est. Traffic</Tip></th>
+              <th className="text-center font-medium px-3 py-2"><Tip k="keywords">Keywords</Tip></th>
+              <th className="text-center font-medium px-3 py-2 hidden sm:table-cell"><Tip k="overlap">Shared KW</Tip></th>
+              <th className="text-center font-medium px-3 py-2 hidden sm:table-cell">Avg Pos</th>
             </tr></thead>
             <tbody>
               {/* User row */}
               <tr className="border-b border-border font-medium">
                 <td className="px-3 py-2 text-[#06B6D4]">{domain} (you)</td>
-                <td className="px-3 py-2 text-right">{fmtNum(userEntry.traffic)}</td>
-                <td className="px-3 py-2 text-right">{fmtNum(userEntry.keywords)}</td>
-                <td className="px-3 py-2 text-right hidden sm:table-cell">—</td>
-                <td className="px-3 py-2 text-right hidden sm:table-cell">—</td>
+                <td className="px-3 py-2 text-center">{fmtNum(userEntry.traffic)}</td>
+                <td className="px-3 py-2 text-center">{fmtNum(userEntry.keywords)}</td>
+                <td className="px-3 py-2 text-center hidden sm:table-cell">—</td>
+                <td className="px-3 py-2 text-center hidden sm:table-cell">—</td>
               </tr>
               {/* Competitors */}
               {competitors.map((c: any, i: number) => (
@@ -81,10 +81,10 @@ export function TabCompetitors({ data }: { data: any }) {
                     {c.domain}
                     {c.traffic > userTraffic * 1000 && <span className="text-[10px] text-text-tertiary ml-1">(mega site)</span>}
                   </td>
-                  <td className="px-3 py-2 text-right">{fmtNum(c.traffic || 0)}</td>
-                  <td className="px-3 py-2 text-right">{fmtNum(c.keywords || 0)}</td>
-                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.overlap || "—"}</td>
-                  <td className="px-3 py-2 text-right hidden sm:table-cell">{c.avg_position || "—"}</td>
+                  <td className="px-3 py-2 text-center">{fmtNum(c.traffic || 0)}</td>
+                  <td className="px-3 py-2 text-center">{fmtNum(c.keywords || 0)}</td>
+                  <td className="px-3 py-2 text-center hidden sm:table-cell">{c.overlap || "—"}</td>
+                  <td className="px-3 py-2 text-center hidden sm:table-cell">{c.avg_position || "—"}</td>
                 </tr>
               ))}
             </tbody>

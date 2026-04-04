@@ -30,18 +30,18 @@ export function TabAudit({ data }: { data: any }) {
 
   return (
     <div className="space-y-4">
-      {/* ── Lighthouse scores (existing, unchanged) ── */}
+      {/* ── Lighthouse scores ── */}
       <div>
         <div className="text-sm font-medium mb-2"><Tip k="lighthouse">Lighthouse scores</Tip></div>
-        {mobilePerfGap > 15 && (
-          <div className="text-xs text-warning bg-warning/10 px-3 py-1.5 rounded-lg mb-2">
-            Your mobile performance ({lh.mobile?.performance || 0}) is significantly lower than desktop ({lh.desktop?.performance || 0}) — this gap is hurting your Google rankings.
-          </div>
-        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <LighthouseDevice label="Mobile (used for rankings)" data={lh.mobile} />
           <LighthouseDevice label="Desktop" data={lh.desktop} />
         </div>
+        {mobilePerfGap > 15 && (
+          <div className="text-xs text-warning bg-warning/10 px-3 py-1.5 rounded-lg mt-2">
+            Your mobile performance ({lh.mobile?.performance || 0}) is significantly lower than desktop ({lh.desktop?.performance || 0}) — this gap is hurting your Google rankings. The AI action plan has steps to fix this.
+          </div>
+        )}
       </div>
 
       {/* ── Core Web Vitals (existing, unchanged) ── */}
@@ -55,22 +55,63 @@ export function TabAudit({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* ── Audit checklist (existing, unchanged) ── */}
+      {/* ── Audit checklist (enhanced with image + tech data) ── */}
       <div>
-        <div className="text-sm font-medium mb-2 flex items-center gap-2 flex-wrap">
-          Audit checklist
-          {passCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success">{passCount} pass</span>}
-          {warnCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-warning/10 text-warning">{warnCount} warnings</span>}
-          {failCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-danger/10 text-danger">{failCount} errors</span>}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-          {checklist.map((item: any, i: number) => (
-            <div key={i} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border text-xs">
-              <StatusIcon status={item.status} />
-              {item.item}
-            </div>
-          ))}
-        </div>
+        {(() => {
+          // Build enhanced checklist from base + image audit + tech stack
+          const enhanced = [...checklist];
+          // Add image audit items
+          if (imageAudit.missing_alt_count > 0) {
+            enhanced.push({ item: `${imageAudit.missing_alt_count} images without alt text`, status: 'fail' as const });
+          }
+          if (imageAudit.oversized_count > 0) {
+            enhanced.push({ item: `${imageAudit.oversized_count} images over 200KB`, status: 'warn' as const });
+          }
+          // Add missing tech items
+          const missing = techCategories.missing_recommended || [];
+          for (const m of missing) {
+            if (m.toLowerCase().includes('no schema')) {
+              enhanced.push({ item: 'No structured data detected', status: 'fail' as const });
+            }
+            if (m.toLowerCase().includes('no caching')) {
+              enhanced.push({ item: 'No caching plugin installed', status: 'warn' as const });
+            }
+          }
+          // Deduplicate by item text
+          const seen = new Set<string>();
+          const unique = enhanced.filter((c: any) => {
+            const key = c.item.toLowerCase();
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+          // Sort: fail first, warn second, pass last
+          const order = { fail: 0, warn: 1, pass: 2 };
+          unique.sort((a: any, b: any) => (order[a.status as keyof typeof order] ?? 1) - (order[b.status as keyof typeof order] ?? 1));
+
+          const ePassCount = unique.filter((c: any) => c.status === 'pass').length;
+          const eWarnCount = unique.filter((c: any) => c.status === 'warn').length;
+          const eFailCount = unique.filter((c: any) => c.status === 'fail').length;
+
+          return (
+            <>
+              <div className="text-sm font-medium mb-2 flex items-center gap-2 flex-wrap">
+                Audit checklist
+                {ePassCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success">{ePassCount} pass</span>}
+                {eWarnCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-warning/10 text-warning">{eWarnCount} warnings</span>}
+                {eFailCount > 0 && <span className="text-xs px-2 py-0.5 rounded-full bg-danger/10 text-danger">{eFailCount} errors</span>}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {unique.map((item: any, i: number) => (
+                  <div key={i} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border text-xs">
+                    <StatusIcon status={item.status} />
+                    {item.item}
+                  </div>
+                ))}
+              </div>
+            </>
+          );
+        })()}
       </div>
 
       {/* ── Image SEO audit ── */}

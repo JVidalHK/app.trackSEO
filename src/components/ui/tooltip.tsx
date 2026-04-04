@@ -6,14 +6,31 @@ import { createPortal } from "react-dom";
 export function Tooltip({ text, children }: { text: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  const [pos, setPos] = useState<{ top: number; left: number; below: boolean } | null>(null);
 
   const updatePos = useCallback(() => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
+    const tooltipWidth = 224; // w-56 = 14rem = 224px
+    const tooltipHeight = 60; // approximate tooltip height
+    const margin = 8;
+
+    // Calculate horizontal position, clamped to viewport
+    let left = rect.left + rect.width / 2;
+    const halfWidth = tooltipWidth / 2;
+    if (left - halfWidth < margin) left = halfWidth + margin;
+    if (left + halfWidth > window.innerWidth - margin) left = window.innerWidth - halfWidth - margin;
+
+    // Show below if not enough space above
+    const spaceAbove = rect.top;
+    const below = spaceAbove < tooltipHeight + margin;
+
     setPos({
-      top: rect.top + window.scrollY - 4,
-      left: rect.left + rect.width / 2,
+      top: below
+        ? rect.bottom + window.scrollY + 6
+        : rect.top + window.scrollY - 6,
+      left,
+      below,
     });
   }, []);
 
@@ -27,9 +44,11 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
     }
     document.addEventListener("click", handleClick);
     window.addEventListener("scroll", updatePos, true);
+    window.addEventListener("resize", updatePos);
     return () => {
       document.removeEventListener("click", handleClick);
       window.removeEventListener("scroll", updatePos, true);
+      window.removeEventListener("resize", updatePos);
     };
   }, [open, updatePos]);
 
@@ -39,7 +58,7 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
       className="relative inline-flex items-center gap-1 cursor-help"
       onMouseEnter={() => { setOpen(true); updatePos(); }}
       onMouseLeave={() => setOpen(false)}
-      onClick={() => { setOpen(!open); updatePos(); }}
+      onClick={(e) => { e.stopPropagation(); setOpen(!open); updatePos(); }}
     >
       {children}
       <span className="w-3.5 h-3.5 rounded-full border border-border-light flex items-center justify-center text-[9px] text-text-tertiary flex-shrink-0">
@@ -51,7 +70,7 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
           style={{
             top: pos.top,
             left: pos.left,
-            transform: "translate(-50%, -100%)",
+            transform: pos.below ? "translateX(-50%)" : "translate(-50%, -100%)",
           }}
         >
           {text}

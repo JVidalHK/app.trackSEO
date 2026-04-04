@@ -23,10 +23,10 @@ export function TabPagesTech({ data }: { data: any }) {
             <thead><tr className="border-b border-border text-text-secondary">
               <th className="text-left font-medium px-3 py-2">Page</th>
               <th className="text-center font-medium px-3 py-2"><Tip k="seo_score">SEO score</Tip></th>
-              <th className="text-left font-medium px-3 py-2">Load time</th>
-              <th className="text-left font-medium px-3 py-2 hidden sm:table-cell">Size</th>
-              <th className="text-left font-medium px-3 py-2 hidden sm:table-cell">Words</th>
-              <th className="text-left font-medium px-3 py-2">Issues</th>
+              <th className="text-center font-medium px-3 py-2">Load time</th>
+              <th className="text-center font-medium px-3 py-2 hidden sm:table-cell">Size</th>
+              <th className="text-center font-medium px-3 py-2 hidden sm:table-cell">Words</th>
+              <th className="text-center font-medium px-3 py-2">Issues</th>
             </tr></thead>
             <tbody>
               {pages.map((p: any, i: number) => {
@@ -36,10 +36,10 @@ export function TabPagesTech({ data }: { data: any }) {
                   <tr key={i} className="border-b border-border last:border-b-0">
                     <td className="px-3 py-2 text-info max-w-[200px] truncate">{p.url}</td>
                     <td className="px-3 py-2 text-center"><span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-medium ${scoreCls}`}>{Math.round(score)}</span></td>
-                    <td className="px-3 py-2">{p.load_time_ms ? `${(p.load_time_ms / 1000).toFixed(1)}s` : "—"}</td>
-                    <td className="px-3 py-2 hidden sm:table-cell">{p.size_bytes ? formatBytes(p.size_bytes) : "—"}</td>
-                    <td className="px-3 py-2 hidden sm:table-cell">{(p.word_count || 0).toLocaleString()}</td>
-                    <td className="px-3 py-2">
+                    <td className="px-3 py-2 text-center">{p.load_time_ms ? `${(p.load_time_ms / 1000).toFixed(1)}s` : "—"}</td>
+                    <td className="px-3 py-2 text-center hidden sm:table-cell">{p.size_bytes ? formatBytes(p.size_bytes) : "—"}</td>
+                    <td className="px-3 py-2 text-center hidden sm:table-cell">{(p.word_count || 0).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-center">
                       <span className={p.issues > 0 ? (p.issues >= 3 ? "text-danger" : "text-warning") : "text-success"}>{p.issues}</span>
                     </td>
                   </tr>

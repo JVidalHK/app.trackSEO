@@ -122,9 +122,9 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
               <thead><tr className="border-b border-border text-text-secondary">
                 <th className="text-left font-medium px-3 py-2">Suggested content</th>
                 <th className="text-left font-medium px-3 py-2">Target keyword</th>
-                <th className="text-left font-medium px-3 py-2">Monthly vol</th>
+                <th className="text-center font-medium px-3 py-2">Monthly vol</th>
                 <th className="text-center font-medium px-3 py-2"><Tip k="difficulty">KD</Tip></th>
-                <th className="text-left font-medium px-3 py-2">Est. traffic</th>
+                <th className="text-center font-medium px-3 py-2">Est. traffic</th>
               </tr></thead>
               <tbody>
                 {contentRoadmap.map((item: any, i: number) => {
@@ -137,9 +137,9 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
                         <div className="text-[10px] text-text-secondary mt-0.5">{item.word_count_recommendation ? `${item.word_count_recommendation}+ words` : ""} {item.content_type || ""}</div>
                       </td>
                       <td className="px-3 py-2 text-text-secondary">{item.target_keyword}</td>
-                      <td className="px-3 py-2">{item.volume ? item.volume.toLocaleString() : "—"}</td>
+                      <td className="px-3 py-2 text-center">{item.volume ? item.volume.toLocaleString() : "—"}</td>
                       <td className="px-3 py-2 text-center"><span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${kdCls}`}>{kd || "—"}</span></td>
-                      <td className="px-3 py-2 text-success font-medium">+{(item.estimated_traffic_monthly || 0).toLocaleString()}/mo</td>
+                      <td className="px-3 py-2 text-center text-success font-medium">+{(item.estimated_traffic_monthly || 0).toLocaleString()}/mo</td>
                     </tr>
                   );
                 })}
@@ -160,17 +160,17 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
             <table className="w-full text-xs">
               <thead><tr className="border-b border-border text-text-secondary">
                 <th className="text-left font-medium px-3 py-2">Keyword</th>
-                <th className="text-left font-medium px-3 py-2"><Tip k="position">Pos</Tip></th>
-                <th className="text-left font-medium px-3 py-2">Searches</th>
-                <th className="text-left font-medium px-3 py-2">Traffic</th>
+                <th className="text-center font-medium px-3 py-2"><Tip k="position">Pos</Tip></th>
+                <th className="text-center font-medium px-3 py-2">Monthly searches</th>
+                <th className="text-center font-medium px-3 py-2">Your traffic</th>
               </tr></thead>
               <tbody>
                 {keywords.map((kw: any, i: number) => (
                   <tr key={i} className="border-b border-border last:border-b-0">
                     <td className="px-3 py-2 font-medium">{kw.keyword}</td>
-                    <td className="px-3 py-2"><PositionPill position={kw.position || 0} /></td>
-                    <td className="px-3 py-2">{(kw.volume || 0).toLocaleString()}</td>
-                    <td className="px-3 py-2">{(kw.traffic || 0).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-center"><PositionPill position={kw.position || 0} /></td>
+                    <td className="px-3 py-2 text-center">{(kw.volume || 0).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-center">{(kw.traffic || 0).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
