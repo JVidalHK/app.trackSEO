@@ -170,3 +170,13 @@ export function SectionTitle({ children, action }: { children: React.ReactNode; 
     </div>
   );
 }
+
+export function PageLink({ url, domain }: { url: string; domain?: string }) {
+  const href = url.startsWith("http") ? url : `https://${domain || ""}${url}`;
+  const display = url.startsWith("http") ? new URL(url).pathname : url;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-info hover:underline" onClick={(e) => e.stopPropagation()}>
+      {display}
+    </a>
+  );
+}

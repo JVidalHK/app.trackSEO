@@ -45,6 +45,7 @@ export async function POST(request: Request) {
     }, { status: 402 });
   }
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.trackseo.pro";
   const reportId = uuidv4();
 
   // Create report row in Supabase
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
           domain,
           userId: user.id,
           reportId,
+          webhookUrl: `${appUrl}/api/webhooks/report-complete`,
         }),
       }
     );

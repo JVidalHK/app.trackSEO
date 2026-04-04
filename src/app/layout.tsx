@@ -9,6 +9,8 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
+const isProduction = process.env.NEXT_PUBLIC_APP_URL === "https://app.trackseo.pro";
+
 export const metadata: Metadata = {
   title: "TrackSEO — Track your SEO like a Pro",
   description: "AI-powered SEO audit reports with actionable recommendations",
@@ -20,6 +22,10 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
+  // Block search engines on non-production deployments
+  ...(!isProduction && {
+    robots: { index: false, follow: false },
+  }),
 };
 
 export default function RootLayout({
