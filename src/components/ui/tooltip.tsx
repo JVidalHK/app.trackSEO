@@ -8,6 +8,7 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
   const ref = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLSpanElement>(null);
   const [style, setStyle] = useState<React.CSSProperties>({});
+  const isTouchDevice = useRef(false);
 
   const updatePos = useCallback(() => {
     if (!ref.current) return;
@@ -15,16 +16,12 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
     const tooltipWidth = 224;
     const margin = 12;
 
-    // Horizontal: center on trigger, clamp to viewport
     let left = rect.left + rect.width / 2 - tooltipWidth / 2;
     if (left < margin) left = margin;
     if (left + tooltipWidth > window.innerWidth - margin) left = window.innerWidth - tooltipWidth - margin;
 
-    // Vertical: prefer above, fall back to below
-    // Measure actual tooltip height if rendered
     const tooltipHeight = tooltipRef.current?.offsetHeight || 48;
-    const spaceAbove = rect.top;
-    const showBelow = spaceAbove < tooltipHeight + margin;
+    const showBelow = rect.top < tooltipHeight + margin;
 
     const top = showBelow
       ? rect.bottom + 6
@@ -35,19 +32,20 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
 
   useEffect(() => {
     if (!open) return;
-    // Delay to allow tooltip to render so we can measure height
     requestAnimationFrame(updatePos);
 
-    function handleClickOutside(e: MouseEvent) {
+    function handleClickOutside(e: MouseEvent | TouchEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }
     }
     document.addEventListener("click", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     window.addEventListener("scroll", updatePos, true);
     window.addEventListener("resize", updatePos);
     return () => {
       document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
       window.removeEventListener("scroll", updatePos, true);
       window.removeEventListener("resize", updatePos);
     };
@@ -57,9 +55,14 @@ export function Tooltip({ text, children }: { text: string; children: React.Reac
     <span
       ref={ref}
       className="relative inline-flex items-center gap-1 cursor-help"
-      onMouseEnter={() => { setOpen(true); }}
-      onMouseLeave={() => setOpen(false)}
-      onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
+      onTouchStart={() => { isTouchDevice.current = true; }}
+      onMouseEnter={() => { if (!isTouchDevice.current) setOpen(true); }}
+      onMouseLeave={() => { if (!isTouchDevice.current) setOpen(false); }}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setOpen((prev) => !prev);
+      }}
     >
       {children}
       <span className="w-3.5 h-3.5 rounded-full border border-border-light flex items-center justify-center text-[9px] text-text-tertiary flex-shrink-0">
