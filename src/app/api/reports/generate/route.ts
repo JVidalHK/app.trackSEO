@@ -71,6 +71,7 @@ export async function POST(request: Request) {
           domain,
           userId: user.id,
           reportId,
+          webhookUrl: `${appUrl}/api/webhooks/report-complete`,
         }),
       }
     );
