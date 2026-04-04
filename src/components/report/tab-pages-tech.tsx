@@ -1,6 +1,6 @@
 "use client";
 
-import { Tip, SectionTitle } from "./shared";
+import { Tip, SectionTitle, PageLink } from "./shared";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -34,7 +34,7 @@ export function TabPagesTech({ data }: { data: any }) {
                 const scoreCls = score >= 80 ? "bg-[#E1F5EE] text-[#085041]" : score >= 50 ? "bg-[#FAEEDA] text-[#633806]" : "bg-[#FCEBEB] text-[#791F1F]";
                 return (
                   <tr key={i} className="border-b border-border last:border-b-0">
-                    <td className="px-3 py-2 text-info max-w-[200px] truncate">{p.url}</td>
+                    <td className="px-3 py-2 max-w-[200px] truncate"><PageLink url={p.url} domain={data.domain} /></td>
                     <td className="px-3 py-2 text-center"><span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-medium ${scoreCls}`}>{Math.round(score)}</span></td>
                     <td className="px-3 py-2 text-center">{p.load_time_ms ? `${(p.load_time_ms / 1000).toFixed(1)}s` : "—"}</td>
                     <td className="px-3 py-2 text-center hidden sm:table-cell">{p.size_bytes ? formatBytes(p.size_bytes) : "—"}</td>
@@ -74,9 +74,9 @@ export function TabPagesTech({ data }: { data: any }) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-xs">
-                    <span className="font-medium text-info">{link.from_page}</span>
+                    <span className="font-medium"><PageLink url={link.from_page} domain={data.domain} /></span>
                     <span className="text-text-tertiary mx-1">should link to</span>
-                    <span className="font-medium text-info">{link.to_page}</span>
+                    <span className="font-medium"><PageLink url={link.to_page} domain={data.domain} /></span>
                   </div>
                   <p className="text-xs text-text-secondary leading-relaxed mt-1">{link.reason}</p>
                   {link.shared_keywords > 0 && (

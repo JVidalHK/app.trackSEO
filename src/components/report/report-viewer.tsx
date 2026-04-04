@@ -40,9 +40,12 @@ export function ReportViewer({ data, domain, date, market, shared }: {
   const techStack = data?.tech_stack;
   const checklist = data?.audit_checklist || [];
   const actions = data?.action_plan || [];
+  const perfIssues = (data?.tech_performance_issues || []).filter((i: any) => i.status === "issue");
+  const imageAudit = data?.image_audit || {};
   const failCount = checklist.filter((c: any) => c.status === "fail").length;
   const warnCount = checklist.filter((c: any) => c.status === "warn").length;
-  const issueCount = failCount + warnCount + actions.length;
+  // Count real issues: checklist fails + warns + perf engine issues + image issues
+  const issueCount = failCount + warnCount + perfIssues.length + (imageAudit.missing_alt_count || 0) + (imageAudit.oversized_count || 0);
   const quickWins = actions.filter((a: any) => a.priority === "high").length || (scores.overall < 85 ? Math.min(actions.length, 3) : 0);
 
   function setTab(index: number) {

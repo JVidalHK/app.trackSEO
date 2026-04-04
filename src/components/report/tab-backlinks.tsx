@@ -47,10 +47,6 @@ export function TabBacklinks({ data }: { data: any }) {
         </div>
       </div>
 
-      {bl.source === "moz" && (
-        <div className="text-[10px] text-text-tertiary text-right">Data powered by Moz</div>
-      )}
-
       <div className="border-2 border-dashed border-border rounded-xl p-6 text-center">
         <div className="text-sm font-medium mb-2">Deep backlink analysis</div>
         <span className="inline-block text-xs px-3 py-1 rounded-full bg-warning/15 text-warning font-medium">Coming soon</span>

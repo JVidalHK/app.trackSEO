@@ -32,4 +32,24 @@ export const TOOLTIPS: Record<string, string> = {
   lighthouse: "Google Lighthouse tests speed, accessibility, and SEO quality. 0-100 scores, higher is better.",
   core_web_vitals: "Google's key page experience metrics. These directly affect your search rankings.",
   action_plan: "Our AI analyzed your site and created a prioritized to-do list. Click any card for step-by-step instructions.",
+  // Keyword tables
+  kd: "Keyword Difficulty — how hard it is to rank. Under 30 is easy, 30-60 medium, 60+ hard.",
+  pos: "Your position in Google results. Position 1 = first result. Top 3 gets ~60% of clicks.",
+  competitors: "How many of your detected competitors rank for this keyword.",
+  opp_score: "Opportunity score combines volume, difficulty, and competitor coverage. Higher = easier win with more traffic.",
+  keyword_opportunities: "Keywords your competitors rank for that you don't. Ranked by opportunity score — higher means easier win with more traffic.",
+  page_mapping: "Shows which keywords each page ranks for and flags missed optimizations — like a page ranking for a keyword but not including it in the title or H1.",
+  content_roadmap: "Based on your keyword gaps and competitor analysis, these are the top content pieces you should create to capture new search traffic.",
+  // Pages and linking
+  internal_links: "Pages that rank for related keywords but don't link to each other. Adding internal links between related pages strengthens both pages in Google.",
+  // Technical audit
+  image_audit: "Images affect page speed, accessibility, and search rankings. Missing alt text hurts accessibility and image search. Large images slow your site down.",
+  alt_text: "Alt text describes images for screen readers and search engines. Missing alt text means Google can't understand your images.",
+  oversized_images: "Images over 200KB slow your site. Compress them without visible quality loss to speed up page loads.",
+  tech_stack: "We scan your site's HTML, headers, scripts, and cookies to identify every technology. We use this to give you platform-specific recommendations.",
+  perf_issues: "We cross-reference your tech stack with page speed data to find platform-specific performance problems.",
+  speed_gains: "The projected improvement if you fix all performance issues above, based on resource sizes and render-blocking analysis.",
+  // Backlinks
+  pa: "Page Authority — predicts how well a specific page will rank. 0-100 scale based on link profile quality.",
+  spam_score: "Spam Score — predicts how likely a site is to be penalized by search engines. Under 5 is healthy, 6-10 moderate, 11+ high risk.",
 };

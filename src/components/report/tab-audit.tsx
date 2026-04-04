@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tip, StatusIcon, ScoreColor, SectionTitle } from "./shared";
+import { Tip, StatusIcon, ScoreColor, SectionTitle, PageLink } from "./shared";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -133,7 +133,7 @@ export function TabAudit({ data }: { data: any }) {
                 <div className="text-xs font-medium text-text-secondary mb-2"><Tip k="alt_text">Missing alt text</Tip></div>
                 {(imageAudit.missing_alt || []).slice(0, 4).map((img: any, i: number) => (
                   <div key={i} className="flex items-center gap-2 py-1.5 border-b border-border last:border-b-0 text-xs">
-                    <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-medium">{getFileName(img.url)}</span>
+                    <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-medium">{img.url?.startsWith("http") ? <a href={img.url} target="_blank" rel="noopener noreferrer" className="text-info hover:underline" onClick={(e) => e.stopPropagation()}>{getFileName(img.url)}</a> : getFileName(img.url)}</span>
                     <span className="text-danger text-[10px]">No alt</span>
                   </div>
                 ))}
@@ -145,7 +145,7 @@ export function TabAudit({ data }: { data: any }) {
                 <div className="text-xs font-medium text-text-secondary mb-2"><Tip k="oversized_images">Oversized images</Tip></div>
                 {(imageAudit.oversized || []).slice(0, 4).map((img: any, i: number) => (
                   <div key={i} className="flex items-center gap-2 py-1.5 border-b border-border last:border-b-0 text-xs">
-                    <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-medium">{getFileName(img.url)}</span>
+                    <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-medium">{img.url?.startsWith("http") ? <a href={img.url} target="_blank" rel="noopener noreferrer" className="text-info hover:underline" onClick={(e) => e.stopPropagation()}>{getFileName(img.url)}</a> : getFileName(img.url)}</span>
                     <span className="text-danger font-medium min-w-[50px] text-right">{fmtSize(img.size_kb)}</span>
                     <span className="text-success text-[10px] min-w-[60px] text-right">save {fmtSize(img.potential_save_kb)}</span>
                   </div>

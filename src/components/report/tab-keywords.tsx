@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Doughnut, CHART_COLORS } from "./chart-wrapper";
-import { PositionPill, Tip, SectionTitle } from "./shared";
+import { PositionPill, Tip, SectionTitle, PageLink } from "./shared";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -104,7 +104,7 @@ export function TabKeywords({ data }: { data: any }) {
                 <td className="px-3 py-2 text-center">{(k.traffic || 0).toLocaleString()}</td>
                 <td className="px-3 py-2 text-center hidden sm:table-cell text-text-secondary">{k.cpc ? `$${k.cpc.toFixed(2)}` : "—"}</td>
                 <td className="px-3 py-2 text-center hidden sm:table-cell text-text-secondary capitalize">{k.intent || "—"}</td>
-                <td className="px-3 py-2 hidden md:table-cell text-info truncate max-w-[120px]">{k.url || "—"}</td>
+                <td className="px-3 py-2 hidden md:table-cell truncate max-w-[120px]">{k.url ? <PageLink url={k.url} domain={data.domain} /> : "—"}</td>
               </tr>
             ))}
           </tbody>
@@ -213,7 +213,7 @@ export function TabKeywords({ data }: { data: any }) {
                   const isOk = m.issue === "Well optimised";
                   return (
                     <tr key={i} className="border-b border-border last:border-b-0">
-                      <td className="px-3 py-2 text-info">{m.page}</td>
+                      <td className="px-3 py-2"><PageLink url={m.page} domain={data.domain} /></td>
                       <td className="px-3 py-2">{m.keyword_count}</td>
                       <td className="px-3 py-2 font-medium">{m.top_keyword}</td>
                       <td className="px-3 py-2 text-center">{m.in_title ? <CheckSvg /> : <CrossSvg />}</td>

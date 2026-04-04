@@ -32,7 +32,7 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
   const keywords = data.keywords?.items?.slice(0, 5) || [];
   const aiScore = data.ai_visibility?.readiness_score ?? data.scores?.ai_readiness ?? 0;
   const checklist = data.audit_checklist || [];
-  const techPerfIssues = (data.tech_performance_issues || []).filter((i: any) => i.status === "issue");
+  // Tech perf issues shown separately — no longer mixed into action plan
   const contentRoadmap = data.content_roadmap || [];
 
   return (
@@ -101,9 +101,6 @@ export function TabOverview({ data, onTabChange }: { data: any; onTabChange: (ta
           <div className="space-y-1.5">
             {actions.map((a: any, i: number) => (
               <ExpandableCard key={i} priority={a.priority} title={a.title} description={a.description} timeEstimate={a.time_estimate} steps={a.steps} expectedImpact={a.expected_impact} />
-            ))}
-            {techPerfIssues.map((issue: any, i: number) => (
-              <TechIssueCard key={`tech-${i}`} issue={issue} />
             ))}
           </div>
         </div>
@@ -244,39 +241,6 @@ function MetricCard({ label, value, change, suffix, positive, warn }: { label: R
         {suffix && <span className="text-xs text-text-secondary ml-1">{suffix}</span>}
         {change && <span className={`text-xs ml-1 ${positive ? "text-success" : warn ? "text-warning" : "text-text-secondary"}`}>{change}</span>}
       </div>
-    </div>
-  );
-}
-
-function TechIssueCard({ issue }: { issue: any }) {
-  const [open, setOpen] = useState(false);
-  const borderColor = issue.impact === "high" ? "border-l-danger" : "border-l-warning";
-  const badgeCls = issue.impact === "high" ? "bg-danger/10 text-danger" : "bg-warning/10 text-warning";
-
-  return (
-    <div
-      onClick={() => setOpen(!open)}
-      className={`rounded-r-lg p-3 border border-border border-l-[3px] ${borderColor} cursor-pointer hover:border-border-light transition-colors`}
-    >
-      <div className="flex items-center gap-2 mb-1 flex-wrap">
-        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${badgeCls}`}>Tech stack</span>
-        <span className="text-xs font-medium flex-1 min-w-[180px]">{issue.title}</span>
-      </div>
-      <p className="text-xs text-text-secondary leading-relaxed">{issue.description}</p>
-      {issue.estimated_gain_ms > 0 && (
-        <span className="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success mt-1 inline-block">
-          Quick win — ~{(issue.estimated_gain_ms / 1000).toFixed(1)}s faster
-        </span>
-      )}
-      {open && issue.fix_instructions && (
-        <div className="mt-2 pt-2 border-t border-border text-xs text-text-secondary leading-relaxed">
-          <span className="font-medium text-text-primary">How to fix this:</span>
-          <p className="mt-1 whitespace-pre-line">{issue.fix_instructions}</p>
-          {issue.estimated_gain_ms > 0 && (
-            <p className="text-success font-medium mt-2">Expected: {(issue.estimated_gain_ms / 1000).toFixed(1)}s faster page load</p>
-          )}
-        </div>
-      )}
     </div>
   );
 }
