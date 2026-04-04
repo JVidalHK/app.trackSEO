@@ -35,7 +35,7 @@ export function TabAudit({ data }: { data: any }) {
     <div className="space-y-4">
       {/* ── Lighthouse scores ── */}
       <div>
-        <div className="text-sm font-medium mb-2"><Tip k="lighthouse">Lighthouse scores</Tip></div>
+        <div className="text-sm font-medium mb-2"><Tip k="lighthouse">Page Speed scores</Tip></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <LighthouseDevice label="Mobile (used for rankings)" data={lh.mobile} />
           <LighthouseDevice label="Desktop" data={lh.desktop} />
