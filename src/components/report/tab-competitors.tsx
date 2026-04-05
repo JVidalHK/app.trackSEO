@@ -154,7 +154,7 @@ export function TabCompetitors({ data }: { data: any }) {
           </div>
         </div>
       )}
-      {/* AI-suggested competitors when data competitors are weak */}
+      {/* AI-suggested competitors with enriched metrics */}
       {suggestedCompetitors.length > 0 && (
         <div>
           <div className="text-sm font-medium mb-2 flex items-center gap-2">
@@ -162,18 +162,27 @@ export function TabCompetitors({ data }: { data: any }) {
             Recommended competitors to watch
           </div>
           <div className="text-xs text-text-secondary mb-2">Our AI identified these as your most relevant direct competitors based on your industry and niche.</div>
-          <div className="space-y-1.5">
-            {suggestedCompetitors.map((c: any, i: number) => (
-              <div key={i} className="flex items-start gap-2 p-3 border border-border rounded-lg">
-                <div className="w-5 h-5 rounded-full bg-warning/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.5 6.5L16 7.5L12 11.5L13 16L8 13.5L3 16L4 11.5L0 7.5L5.5 6.5L8 1Z" fill="#F59E0B" /></svg>
-                </div>
-                <div>
-                  <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-info hover:underline">{c.domain}</a>
-                  {c.reason && <div className="text-xs text-text-secondary mt-0.5">{c.reason}</div>}
-                </div>
-              </div>
-            ))}
+          <div className="bg-surface rounded-xl border border-border overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead><tr className="border-b border-border text-text-secondary">
+                <th className="text-left font-medium px-3 py-2">Competitor</th>
+                <th className="text-center font-medium px-3 py-2">Est. Traffic</th>
+                <th className="text-center font-medium px-3 py-2">Keywords</th>
+                <th className="text-left font-medium px-3 py-2">Why relevant</th>
+              </tr></thead>
+              <tbody>
+                {suggestedCompetitors.map((c: any, i: number) => (
+                  <tr key={i} className="border-b border-border last:border-b-0">
+                    <td className="px-3 py-2">
+                      <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer" className="font-medium text-info hover:underline">{c.domain}</a>
+                    </td>
+                    <td className="px-3 py-2 text-center">{c.traffic ? fmtNum(c.traffic) : "—"}</td>
+                    <td className="px-3 py-2 text-center">{c.keywords ? fmtNum(c.keywords) : "—"}</td>
+                    <td className="px-3 py-2 text-text-secondary">{c.reason || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
