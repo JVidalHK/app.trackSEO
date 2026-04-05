@@ -206,7 +206,7 @@ export const sampleReportData = {
     },
   },
   tech_performance_issues: [
-    { title: "Self-host Google Fonts for faster loading", impact: "low", description: "Loading fonts from Google's CDN adds DNS lookups and connection time. Self-hosting eliminates this overhead.", fix_instructions: "Download fonts from google-webfonts-helper and host them locally. Next.js has built-in font optimization with next/font.", estimated_gain_ms: 200, estimated_save_kb: 0, status: "issue", source: "tech" },
+    { title: "Self-host Google Fonts for faster loading", impact: "medium", description: "Loading fonts from Google's CDN adds DNS lookups and connection time. Self-hosting eliminates this overhead and improves LCP.", fix_instructions: "Download fonts from google-webfonts-helper and host them locally. Next.js has built-in font optimization with next/font — use it for automatic self-hosting.", estimated_gain_ms: 200, estimated_save_kb: 0, status: "issue", source: "tech" },
     { title: "Vercel Edge Network detected and configured", impact: "none", description: "Static assets served from edge servers close to visitors worldwide. Excellent CDN coverage.", fix_instructions: "", estimated_gain_ms: 0, estimated_save_kb: 0, status: "good", source: "tech", tech_name: "Vercel" },
     { title: "HSTS enabled", impact: "none", description: "HTTP Strict Transport Security is active — browsers always use HTTPS.", fix_instructions: "", estimated_gain_ms: 0, estimated_save_kb: 0, status: "good", source: "tech", tech_name: "HSTS" },
   ],
