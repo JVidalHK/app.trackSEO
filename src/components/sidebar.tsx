@@ -33,7 +33,37 @@ export function Sidebar({ user }: SidebarProps) {
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
 
-  const credits = user?.credits_remaining ?? 0;
+  const [credits, setCredits] = useState(user?.credits_remaining ?? 0);
+
+  // Real-time credits refresh via Supabase Realtime
+  useEffect(() => {
+    setCredits(user?.credits_remaining ?? 0);
+  }, [user?.credits_remaining]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    let userId: string | null = null;
+
+    supabase.auth.getUser().then(({ data }) => {
+      userId = data.user?.id ?? null;
+      if (!userId) return;
+
+      const channel = supabase
+        .channel("credits-updates")
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "profiles", filter: `id=eq.${userId}` },
+          (payload) => {
+            const newCredits = payload.new?.credits_remaining;
+            if (typeof newCredits === "number") setCredits(newCredits);
+          }
+        )
+        .subscribe();
+
+      return () => { supabase.removeChannel(channel); };
+    });
+  }, []);
+
   const initials = (user?.full_name || user?.email || "U")
     .split(" ")
     .map((w) => w[0])

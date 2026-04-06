@@ -79,8 +79,11 @@ export function TabCompetitors({ data }: { data: any }) {
               {competitors.map((c: any, i: number) => (
                 <tr key={i} className="border-b border-border last:border-b-0">
                   <td className="px-3 py-2">
-                    {c.domain}
-                    {c.traffic > userTraffic * 1000 && <span className="text-[10px] text-text-tertiary ml-1">(mega site)</span>}
+                    <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer" className="text-info hover:underline">
+                      {c.display_name || c.domain}
+                    </a>
+                    {c.description && <span className="text-[10px] text-text-tertiary ml-1.5">· {c.description}</span>}
+                    {!c.description && c.traffic > userTraffic * 1000 && <span className="text-[10px] text-text-tertiary ml-1">(mega site)</span>}
                   </td>
                   <td className="px-3 py-2 text-center">{fmtNum(c.traffic || 0)}</td>
                   <td className="px-3 py-2 text-center">{fmtNum(c.keywords || 0)}</td>
@@ -94,7 +97,7 @@ export function TabCompetitors({ data }: { data: any }) {
 
         {giantCompetitors.length > 0 && similarCompetitors.length > 0 && (
           <div className="text-[10px] text-text-tertiary mt-1.5">
-            {giantCompetitors.map((c: any) => c.domain).join(", ")} are large platforms that rank for some of your keywords. Focus on competing with sites closer to your size.
+            {giantCompetitors.map((c: any) => c.display_name || c.domain).join(", ")} are large platforms that rank for some of your keywords. Focus on competing with sites closer to your size.
           </div>
         )}
       </div>
@@ -129,7 +132,8 @@ export function TabCompetitors({ data }: { data: any }) {
             <Bar
               data={{
                 labels: chartDomains.map((d: any) => {
-                  const label = d.domain.length > 20 ? d.domain.slice(0, 18) + "…" : d.domain;
+                  const name = d.display_name || d.domain;
+                  const label = name.length > 20 ? name.slice(0, 18) + "…" : name;
                   return d.isUser ? `${label} (you)` : label;
                 }),
                 datasets: [{
