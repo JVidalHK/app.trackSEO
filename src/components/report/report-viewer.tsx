@@ -96,7 +96,7 @@ export function ReportViewer({ data, domain, date, market, shared }: {
         </div>
         {!shared && (
           <div className="flex gap-1.5">
-            <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={() => window.print()}>
+            <button className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors" onClick={() => { const prev = document.title; document.title = `${domain} - TrackSEO`; window.print(); document.title = prev; }}>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M4 6V2h8v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M4 12H2V8h12v4h-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
