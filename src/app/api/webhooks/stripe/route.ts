@@ -199,7 +199,6 @@ export async function POST(request: Request) {
         if (error) console.error("Failed to insert purchase:", error);
       }
 
-      console.log("Stripe: credits added", { userId, credits, receiptUrl: !!receiptUrl });
       break;
     }
 
@@ -235,7 +234,6 @@ export async function POST(request: Request) {
           const newCredits = Math.max(0, (profile?.credits_remaining || 0) - purchase.credits_added);
           await supabase.from("profiles").update({ credits_remaining: newCredits }).eq("id", purchase.user_id);
 
-          console.log("Stripe: refund processed", { userId: purchase.user_id, credits: purchase.credits_added });
         }
       }
       break;

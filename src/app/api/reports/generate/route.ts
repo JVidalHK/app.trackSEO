@@ -11,9 +11,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { domain } = await request.json();
-  if (!domain) {
+  const { domain: rawDomain } = await request.json();
+  if (!rawDomain) {
     return NextResponse.json({ error: "Domain is required" }, { status: 400 });
+  }
+
+  // Server-side domain validation and sanitization
+  const domain = String(rawDomain).trim().toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/.*$/, "")
+    .replace(/[?#].*$/, "");
+
+  const DOMAIN_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
+  if (!DOMAIN_REGEX.test(domain) || domain.length > 253) {
+    return NextResponse.json({ error: "Invalid domain format" }, { status: 400 });
   }
 
   const serviceClient = createServiceClient();
@@ -33,14 +45,12 @@ export async function POST(request: Request) {
     }
   } catch { /* is_banned column may not exist yet */ }
 
-  console.log("DEBUG generate:", { userId: user.id, profile, profileError });
 
   // Atomically deduct 1 credit
   const { data: success, error: rpcError } = await serviceClient.rpc("deduct_credit", {
     p_user_id: user.id,
   });
 
-  console.log("DEBUG deduct_credit:", { success, rpcError, type: typeof success });
 
   if (success !== true) {
     return NextResponse.json({

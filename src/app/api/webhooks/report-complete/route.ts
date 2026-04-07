@@ -11,14 +11,26 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { reportId, domain, userId, status, scores, cogs_cents } = body;
-  console.log("Webhook received:", { reportId, domain, status });
+  const { reportId, domain, status, scores, cogs_cents } = body;
 
   if (!reportId) {
     return NextResponse.json({ error: "Missing reportId" }, { status: 400 });
   }
 
   const supabase = createServiceClient();
+
+  // Verify report exists and get the actual owner from DB (never trust userId from webhook body)
+  const { data: report } = await supabase
+    .from("reports")
+    .select("user_id")
+    .eq("id", reportId)
+    .single();
+
+  if (!report) {
+    return NextResponse.json({ error: "Report not found" }, { status: 404 });
+  }
+
+  const userId = report.user_id;
 
   if (status === "completed") {
     // Fetch the full report from the engine
@@ -33,7 +45,6 @@ export async function POST(request: Request) {
       );
       if (res.ok) {
         reportData = await res.json();
-        console.log("Report data fetched:", { domain, hasData: !!reportData, keys: Object.keys(reportData || {}).length });
       } else {
         console.error("Report fetch failed:", res.status, await res.text().catch(() => ""));
       }
@@ -63,7 +74,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "DB update failed", detail: updateError.message }, { status: 500 });
     }
 
-    console.log("Report updated in Supabase:", { reportId, status: "completed" });
 
     // Increment reports count + check achievements
     if (userId) {
