@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 const DOMAIN_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
 
@@ -10,7 +11,33 @@ interface DomainInputProps {
   existingDomains?: { domain: string; date: string }[];
 }
 
-export function DomainInput({ credits, existingDomains = [] }: DomainInputProps) {
+export function DomainInput({ credits: initialCredits, existingDomains = [] }: DomainInputProps) {
+  // Live credits state — updates via Supabase Realtime
+  const [credits, setCredits] = useState(initialCredits);
+
+  useEffect(() => {
+    setCredits(initialCredits);
+  }, [initialCredits]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      const userId = data.user?.id;
+      if (!userId) return;
+      const channel = supabase
+        .channel("credits-domain-input")
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "profiles", filter: `id=eq.${userId}` },
+          (payload) => {
+            const newCredits = payload.new?.credits_remaining;
+            if (typeof newCredits === "number") setCredits(newCredits);
+          }
+        )
+        .subscribe();
+      return () => { supabase.removeChannel(channel); };
+    });
+  }, []);
   const [domain, setDomain] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -75,7 +102,12 @@ export function DomainInput({ credits, existingDomains = [] }: DomainInputProps)
 
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Failed to start report");
+        if (res.status === 402) {
+          setCredits(0);
+          router.push("/dashboard/credits");
+        } else {
+          setError(data.error || "Failed to start report");
+        }
         setLoading(false);
         return;
       }
