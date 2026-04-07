@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function DELETE(
@@ -6,6 +6,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+
+  // Use regular client to verify auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -13,8 +15,11 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // Use service client to bypass RLS for delete operations
+  const admin = createServiceClient();
+
   // Only delete if report belongs to user and is not a sample
-  const { data: report } = await supabase
+  const { data: report } = await admin
     .from("reports")
     .select("id, is_sample")
     .eq("id", id)
@@ -27,12 +32,16 @@ export async function DELETE(
 
   if (report.is_sample) {
     // Soft-delete: hide from user's view without removing from DB
-    await supabase.from("reports").update({ status: "dismissed" }).eq("id", id).eq("user_id", user.id);
+    await admin.from("reports").update({ status: "dismissed" }).eq("id", id).eq("user_id", user.id);
   } else {
     // Delete associated domain_tracking entries first
-    await supabase.from("domain_tracking").delete().eq("report_id", id);
+    await admin.from("domain_tracking").delete().eq("report_id", id);
     // Then delete the report
-    await supabase.from("reports").delete().eq("id", id).eq("user_id", user.id);
+    const { error } = await admin.from("reports").delete().eq("id", id).eq("user_id", user.id);
+    if (error) {
+      console.error("Delete failed:", error);
+      return NextResponse.json({ error: "Delete failed" }, { status: 500 });
+    }
   }
 
   return NextResponse.json({ ok: true });
