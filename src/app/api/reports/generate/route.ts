@@ -88,6 +88,7 @@ export async function POST(request: Request) {
           reportId,
           webhookUrl: `${appUrl}/api/webhooks/report-complete`,
         }),
+        signal: AbortSignal.timeout(10000),
       }
     );
 

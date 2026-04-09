@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ScoreRing } from "@/components/ui/score-ring";
 import { TabOverview } from "./tab-overview";
-import { TabKeywords } from "./tab-keywords";
-import { TabAIVisibility } from "./tab-ai-visibility";
-import { TabPagesTech } from "./tab-pages-tech";
-import { TabAudit } from "./tab-audit";
-import { TabCompetitors } from "./tab-competitors";
-import { TabBacklinks } from "./tab-backlinks";
-import { PdfReport } from "./pdf-report";
+
+// Lazy-load non-default tabs (code-splitting)
+const TabKeywords = lazy(() => import("./tab-keywords").then(m => ({ default: m.TabKeywords })));
+const TabAIVisibility = lazy(() => import("./tab-ai-visibility").then(m => ({ default: m.TabAIVisibility })));
+const TabPagesTech = lazy(() => import("./tab-pages-tech").then(m => ({ default: m.TabPagesTech })));
+const TabAudit = lazy(() => import("./tab-audit").then(m => ({ default: m.TabAudit })));
+const TabCompetitors = lazy(() => import("./tab-competitors").then(m => ({ default: m.TabCompetitors })));
+const TabBacklinks = lazy(() => import("./tab-backlinks").then(m => ({ default: m.TabBacklinks })));
+const PdfReport = lazy(() => import("./pdf-report").then(m => ({ default: m.PdfReport })));
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -136,20 +138,24 @@ export function ReportViewer({ data, domain, date, market, shared }: {
 
       {/* Tab content */}
       {activeTab === 0 && <TabOverview data={data} onTabChange={setTab} />}
-      {activeTab === 1 && <TabKeywords data={data} />}
-      {activeTab === 2 && <TabAIVisibility data={data} />}
-      {activeTab === 3 && <TabPagesTech data={data} />}
-      {activeTab === 4 && <TabAudit data={data} />}
-      {activeTab === 5 && <TabCompetitors data={{ ...data, domain }} />}
-      {activeTab === 6 && <TabBacklinks data={data} />}
+      <Suspense fallback={<div className="py-8 text-center text-xs text-text-tertiary">Loading...</div>}>
+        {activeTab === 1 && <TabKeywords data={data} />}
+        {activeTab === 2 && <TabAIVisibility data={data} />}
+        {activeTab === 3 && <TabPagesTech data={data} />}
+        {activeTab === 4 && <TabAudit data={data} />}
+        {activeTab === 5 && <TabCompetitors data={{ ...data, domain }} />}
+        {activeTab === 6 && <TabBacklinks data={data} />}
+      </Suspense>
 
       <div className="text-center py-3 text-xs text-text-tertiary">
         Powered by TrackSEO · Data freshness: live
       </div>
     </div>
-    <div className="print-only hidden">
-      <PdfReport data={data} domain={domain} date={date} market={market} />
-    </div>
+    <Suspense fallback={null}>
+      <div className="print-only hidden">
+        <PdfReport data={data} domain={domain} date={date} market={market} />
+      </div>
+    </Suspense>
     </>
   );
 }

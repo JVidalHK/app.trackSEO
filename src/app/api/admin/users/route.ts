@@ -10,10 +10,11 @@ export async function GET(request: Request) {
   if (!user || !isAdmin(user.email)) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { searchParams } = new URL(request.url);
-  const page = parseInt(searchParams.get("page") || "1");
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
   const limit = 50;
   const search = searchParams.get("search") || "";
-  const sort = searchParams.get("sort") || "created_at";
+  const ALLOWED_SORTS = ["created_at", "email", "full_name", "credits_remaining", "total_reports_run"];
+  const sort = ALLOWED_SORTS.includes(searchParams.get("sort") || "") ? searchParams.get("sort")! : "created_at";
   const order = searchParams.get("order") === "asc";
   const offset = (page - 1) * limit;
 

@@ -78,9 +78,6 @@ export async function POST(request: Request) {
 
     const session = await stripeRes.json();
 
-    console.log("Stripe checkout params:", Object.fromEntries(params.entries()));
-    console.log("Stripe checkout response:", { ok: stripeRes.ok, status: stripeRes.status, allow_promotion_codes: session.allow_promotion_codes });
-
     if (!stripeRes.ok) {
       console.error("Stripe API error:", session);
       const msg = session.error?.message || "Stripe error";
