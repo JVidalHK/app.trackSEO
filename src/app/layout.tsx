@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PostHogProvider } from "@/components/posthog-provider";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -36,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );
